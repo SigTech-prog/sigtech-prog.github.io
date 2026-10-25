@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fortifiers Pharmacy · Ibadan Road, Ile-Ife</title>
+    <meta name="description" content="Fortifiers Pharmacy on Ibadan Road, opposite Ooni layout, Ile-Ife. Check if your medicine is in stock on WhatsApp before you come." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --x-green: var(--fill-system-green);
+        --x-green-strong: #007a4a;
+        --x-on-green: var(--hero-text);
+        --x-green-ink: light-dark(#007a4a, #3ddc97);
+        --x-green-wash: rgb(0 166 101 / 0.1);
+      }
+
+      /* Call-to-action buttons */
+      .x-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-cta {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: var(--tap); padding: 10px 18px;
+        border-radius: var(--r-pill);
+        font: var(--type-body-strong); text-decoration: none;
+        border: 1px solid var(--stroke-primary);
+        background: var(--fill-primary-on); color: var(--text-primary);
+        transition: box-shadow var(--dur-quick) ease, transform var(--dur-quick) var(--ease-out);
+      }
+      .x-cta:hover { box-shadow: inset 0 0 0 100px var(--hover-wash); }
+      .x-cta:active { transform: scale(0.97); }
+      .x-cta svg { width: 18px; height: 18px; flex: none; }
+      .x-cta--go, .hero .x-cta--go { background: var(--x-green-strong); color: var(--x-on-green); border-color: transparent; }
+      .x-cta--go:hover { box-shadow: inset 0 0 0 100px var(--hover-wash-primary-on); }
+      .hero .x-cta:not(.x-cta--go) {
+        background: var(--hero-glass); color: var(--hero-text); border-color: var(--hero-glass-stroke);
+        -webkit-backdrop-filter: var(--hark-blur); backdrop-filter: var(--hark-blur);
+      }
+      @media (max-width: 599px) { .x-ctas .x-cta { flex: 1 1 100%; } }
+
+      /* Rating strip */
+      .x-rating {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+        margin-top: 16px; padding: 16px 20px;
+        border-radius: var(--r-m); background: var(--fill-tertiary);
+      }
+      .x-rating__fig { font: var(--type-figure); font-variant-numeric: tabular-nums; }
+      .x-stars { position: relative; display: inline-block; width: 110px; height: 20px; flex: none; }
+      .x-stars svg { position: absolute; inset: 0; width: 110px; height: 20px; }
+      .x-stars__on { position: absolute; inset: 0 auto 0 0; overflow: hidden; width: 96%; }
+      .x-stars__on svg { color: var(--x-green); }
+      .x-stars__off svg { color: var(--stroke-primary); }
+      .x-rating__label { font-size: var(--size-small); color: var(--text-secondary); }
+
+      /* Interactive stage: particle cross and capsules */
+      .x-stage {
+        position: relative; overflow: hidden;
+        height: clamp(340px, 62vh, 520px);
+        border-radius: var(--r-xl);
+        background:
+          radial-gradient(circle at 50% 45%, var(--x-green-wash), transparent 62%),
+          var(--fill-primary-on);
+        border: 1px solid var(--stroke-secondary);
+        color: var(--text-primary);
+        touch-action: pan-y;
+        user-select: none; -webkit-user-select: none;
+      }
+      .x-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+      .x-stage canvas:active { cursor: grabbing; }
+      .x-stage__bar {
+        position: absolute; left: 12px; right: 12px; bottom: 12px;
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+        pointer-events: none;
+      }
+      .x-stage__hint {
+        padding: 6px 12px; border-radius: var(--r-pill);
+        background: var(--mat-agent); -webkit-backdrop-filter: var(--hark-blur); backdrop-filter: var(--hark-blur);
+        border: 1px solid var(--stroke-secondary);
+        font: var(--type-tag); color: var(--text-secondary);
+      }
+      .x-tilt {
+        pointer-events: auto;
+        min-height: var(--tap); padding: 8px 16px; border-radius: var(--r-pill);
+        background: var(--mat-agent); -webkit-backdrop-filter: var(--hark-blur); backdrop-filter: var(--hark-blur);
+        border: 1px solid var(--stroke-primary); color: var(--text-primary);
+        font: var(--type-label); cursor: pointer;
+      }
+      .x-tilt[aria-pressed="true"] { background: var(--x-green-strong); color: var(--x-on-green); border-color: transparent; }
+      .x-tilt[hidden] { display: none; }
+
+      /* Flip cards */
+      .x-flips { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      @media (min-width: 640px) { .x-flips { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .x-flip {
+        position: relative; display: block; width: 100%; min-height: 220px;
+        padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left;
+        cursor: pointer; perspective: 900px; -webkit-tap-highlight-color: transparent;
+      }
+      .x-flip__inner {
+        position: absolute; inset: 0;
+        transform-style: preserve-3d;
+        transition: transform 600ms var(--ease-out);
+      }
+      .x-flip[aria-pressed="true"] .x-flip__inner { transform: rotateY(180deg); }
+      .x-flip__face {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; gap: 10px;
+        padding: 22px 24px; border-radius: var(--r-m);
+        background: var(--fill-tertiary);
+        -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      }
+      .x-flip__face--back { transform: rotateY(180deg); background: var(--x-green-strong); color: var(--x-on-green); }
+      .x-flip__icon { width: 36px; height: 36px; border-radius: var(--r-s); display: grid; place-items: center; background: var(--fill-primary-on); color: var(--x-green-ink); }
+      .x-flip__icon svg { width: 20px; height: 20px; }
+      .x-flip h3 { font: var(--type-heading); }
+      .x-flip p { font-size: var(--size-body); }
+      .x-flip__more { margin-top: auto; font: var(--type-tag); color: var(--text-secondary); }
+      .x-flip__face--back .x-flip__more { color: inherit; opacity: 0.8; }
+      .x-flip:focus-visible { outline: 2px solid var(--x-green-ink); outline-offset: 3px; border-radius: var(--r-m); }
+      @media (prefers-reduced-motion: reduce) {
+        .x-flip__inner { transition: none; }
+      }
+
+      /* Small green marks */
+      .x-green { color: var(--x-green-ink); }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <section class="hero">
+          <img class="hero__img" src="fortifiers_hero.jpg" alt="A clean, modern pharmacy counter with stocked shelves" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">Ile-Ife · Osun</p>
+            <h1>Fortifiers Pharmacy</h1>
+            <p class="hero__sub">Your neighbourhood pharmacy on Ibadan Road, Ile-Ife.</p>
+            <p class="hero__meta">Check if your medicine is in stock before you come.</p>
+            <div class="x-ctas">
+              <a class="x-cta x-cta--go" href="https://wa.me/2347033300824?text=Hi%20Fortifiers%20Pharmacy%2C%20do%20you%20have" target="_blank" rel="noopener"
+                ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.1-1.2l-.5-.3Z"/></svg
+                >Ask on WhatsApp</a
+              >
+              <a class="x-cta" href="tel:+2347033300824"
+                ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3l2 5-2.5 1.5a11 11 0 0 0 7 7L16 14l5 2v3a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg
+                >Call +234 703 330 0824</a
+              >
+            </div>
+          </div>
+        </section>
+
+        <div class="x-rating" role="group" aria-label="Rated 4.8 out of 5 from 26 Google reviews">
+          <span class="x-rating__fig">4.8</span>
+          <span class="x-stars" aria-hidden="true">
+            <span class="x-stars__off"><svg viewBox="0 0 110 20"><g fill="currentColor"><path id="x-star" d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z"/><use href="#x-star" x="22.5"/><use href="#x-star" x="45"/><use href="#x-star" x="67.5"/><use href="#x-star" x="90"/></g></svg></span>
+            <span class="x-stars__on"><svg viewBox="0 0 110 20"><g fill="currentColor"><use href="#x-star"/><use href="#x-star" x="22.5"/><use href="#x-star" x="45"/><use href="#x-star" x="67.5"/><use href="#x-star" x="90"/></g></svg></span>
+          </span>
+          <span class="x-rating__label">from 26 Google reviews</span>
+        </div>
+
+        <section class="section" id="help" data-nav="Services">
+          <div class="head">
+            <p class="head__eyebrow">How we help</p>
+            <h2>Everything you come to a pharmacy for, on your street.</h2>
+            <p class="head__sub">Tap a card to read more.</p>
+          </div>
+          <div class="x-flips">
+            <button class="x-flip" type="button" aria-pressed="false">
+              <span class="x-flip__inner">
+                <span class="x-flip__face">
+                  <span class="x-flip__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span>
+                  <h3>Prescriptions filled</h3>
+                  <span class="x-flip__more">Tap to flip</span>
+                </span>
+                <span class="x-flip__face x-flip__face--back">
+                  <h3>Prescriptions filled</h3>
+                  <p>Send a photo of your prescription first. We tell you what we have, then get it ready for you.</p>
+                  <span class="x-flip__more">Tap to flip back</span>
+                </span>
+              </span>
+            </button>
+            <button class="x-flip" type="button" aria-pressed="false">
+              <span class="x-flip__inner">
+                <span class="x-flip__face">
+                  <span class="x-flip__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-35 12 12)"/><path d="M9.6 8.6l4.1 5.8"/></svg></span>
+                  <h3>Over-the-counter medicines</h3>
+                  <span class="x-flip__more">Tap to flip</span>
+                </span>
+                <span class="x-flip__face x-flip__face--back">
+                  <h3>Over-the-counter medicines</h3>
+                  <p>Everyday medicines for home and family, no prescription needed. Ask us if what you need is on the shelf.</p>
+                  <span class="x-flip__more">Tap to flip back</span>
+                </span>
+              </span>
+            </button>
+            <button class="x-flip" type="button" aria-pressed="false">
+              <span class="x-flip__inner">
+                <span class="x-flip__face">
+                  <span class="x-flip__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"/></svg></span>
+                  <h3>Health and wellness products</h3>
+                  <span class="x-flip__more">Tap to flip</span>
+                </span>
+                <span class="x-flip__face x-flip__face--back">
+                  <h3>Health and wellness products</h3>
+                  <p>Personal care and everyday health items for the whole household, all in one stop.</p>
+                  <span class="x-flip__more">Tap to flip back</span>
+                </span>
+              </span>
+            </button>
+            <button class="x-flip" type="button" aria-pressed="false">
+              <span class="x-flip__inner">
+                <span class="x-flip__face">
+                  <span class="x-flip__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></span>
+                  <h3>Friendly advice from the pharmacist</h3>
+                  <span class="x-flip__more">Tap to flip</span>
+                </span>
+                <span class="x-flip__face x-flip__face--back">
+                  <h3>Friendly advice from the pharmacist</h3>
+                  <p>Not sure how to take something? Ask at the counter or on WhatsApp. We are happy to talk it through.</p>
+                  <span class="x-flip__more">Tap to flip back</span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <p class="fineprint">Opening hours coming soon.</p>
+        </section>
+
+        <section class="section" id="care" data-nav="Play">
+          <div class="head">
+            <p class="head__eyebrow">A little calm while you wait</p>
+            <h2>Care, close to home.</h2>
+            <p class="head__sub">Drag the cross to spin it, tap to scatter it. The capsules move when you touch them.</p>
+          </div>
+          <div class="x-stage" id="stage">
+            <canvas id="stage-canvas" role="img" aria-label="A green pharmacy cross made of glowing particles, with floating capsules around it"></canvas>
+            <div class="x-stage__bar">
+              <span class="x-stage__hint">Drag to spin · tap to scatter</span>
+              <button class="x-tilt" id="tilt" type="button" aria-pressed="false" hidden>Turn on tilt</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="check" data-nav="Check stock">
+          <div class="head">
+            <p class="head__eyebrow">Check before you come</p>
+            <h2>Save the trip: ask us first.</h2>
+            <p class="head__sub">Three steps, usually one message.</p>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <div class="step__intro">
+                <p class="step__num">01</p>
+                <p class="step__eyebrow">On WhatsApp</p>
+              </div>
+              <div>
+                <h3>Message us the medicine name or a photo of your prescription</h3>
+                <div class="x-ctas">
+                  <a class="x-cta x-cta--go" href="https://wa.me/2347033300824?text=Hi%20Fortifiers%20Pharmacy%2C%20do%20you%20have" target="_blank" rel="noopener">Ask on WhatsApp</a>
+                </div>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro">
+                <p class="step__num">02</p>
+                <p class="step__eyebrow">We reply</p>
+              </div>
+              <div>
+                <h3>We confirm it's in stock</h3>
+                <p>We check the shelf and let you know.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro">
+                <p class="step__num">03</p>
+                <p class="step__eyebrow">At the counter</p>
+              </div>
+              <div>
+                <h3>Pick it up</h3>
+                <p>Come to Ibadan Road, opposite Ooni layout, and collect.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="find" data-nav="Find us">
+          <div class="head">
+            <p class="head__eyebrow">Find us</p>
+            <h2>Ibadan Road, opposite Ooni layout, Ile-Ife.</h2>
+            <p class="head__sub">Osun, Nigeria</p>
+          </div>
+          <aside class="callout" aria-label="Visit or contact">
+            <p class="callout__head">Fortifiers Pharmacy</p>
+            <p class="callout__lead"><strong>Opposite Ooni layout on Ibadan Road.</strong> Call or message before you set off.</p>
+            <div class="x-ctas">
+              <a class="x-cta x-cta--go" href="https://wa.me/2347033300824?text=Hi%20Fortifiers%20Pharmacy%2C%20do%20you%20have" target="_blank" rel="noopener">Ask on WhatsApp</a>
+              <a class="x-cta" href="tel:+2347033300824">Call +234 703 330 0824</a>
+              <a class="x-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Fortifiers%20Pharmacy%20Ibadan%20Road%20Ile-Ife" target="_blank" rel="noopener">Open in Google Maps</a>
+            </div>
+          </aside>
+        </section>
+      </main>
+      <footer class="foot">
+        <p><strong>Fortifiers Pharmacy · Ibadan Road, Ile-Ife</strong><br />Sample website designed by Mayo · <a class="link" href="tel:+2349037499964">+234 903 749 9964</a></p>
+        <nav aria-label="Back to sections" data-auto></nav>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      // Flip cards
+      document.querySelectorAll(".x-flip").forEach(function (b) {
+        b.addEventListener("click", function () {
+          b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+        });
+      });
+    </script>
+    <script>
+      (function () {
+        var stage = document.getElementById("stage");
+        var cv = document.getElementById("stage-canvas");
+        var ctx = cv.getContext("2d");
+        var tiltBtn = document.getElementById("tilt");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var low = (navigator.hardwareConcurrency || 4) <= 4 || window.innerWidth < 600;
+        var DPR = Math.min(window.devicePixelRatio || 1, low ? 1.25 : 1.75);
+        var W = 0, H = 0, S = 1;
+        var green = "#00a665", ink = "#1d1d1f", bg = "#f5f5f7";
+        var sprite = document.createElement("canvas");
+
+        function readColors() {
+          var cs = getComputedStyle(document.documentElement);
+          green = cs.getPropertyValue("--fill-system-green").trim() || green;
+          ink = getComputedStyle(stage).color || ink;
+          var probe = getComputedStyle(stage).backgroundColor;
+          bg = probe && probe !== "rgba(0, 0, 0, 0)" ? probe : bg;
+          // Glow sprite: one soft dot drawn once, stamped per particle.
+          var r = 16; sprite.width = sprite.height = r * 2;
+          var s = sprite.getContext("2d");
+          var g = s.createRadialGradient(r, r, 0, r, r, r);
+          g.addColorStop(0, green); g.addColorStop(0.25, green);
+          g.addColorStop(1, "transparent");
+          s.clearRect(0, 0, r * 2, r * 2);
+          s.fillStyle = g; s.beginPath(); s.arc(r, r, r, 0, Math.PI * 2); s.fill();
+        }
+
+        // Particles of a 3D cross: two bars, extruded in depth.
+        var N = low ? 420 : 760;
+        var P = [];
+        function inCross(x, y) { return (Math.abs(x) <= 0.5 && Math.abs(y) <= 1.5) || (Math.abs(y) <= 0.5 && Math.abs(x) <= 1.5); }
+        for (var i = 0; i < N; i++) {
+          var x, y, z, onEdge = Math.random() < 0.55;
+          do { x = Math.random() * 3 - 1.5; y = Math.random() * 3 - 1.5; } while (!inCross(x, y));
+          z = (Math.random() - 0.5) * 0.7;
+          if (onEdge) z = Math.random() < 0.5 ? -0.35 : 0.35;
+          P.push({ hx: x, hy: y, hz: z, ox: 0, oy: 0, oz: 0, vx: 0, vy: 0, vz: 0, s: 0.6 + Math.random() * 0.6 });
+        }
+
+        // Capsules: soft rigid pills with simple circle physics.
+        var C = [];
+        function makeCapsules() {
+          C.length = 0;
+          var n = W < 600 ? 6 : 9;
+          for (var k = 0; k < n; k++) {
+            var r = (W < 600 ? 9 : 12) + Math.random() * 6;
+            C.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+              r: r, len: r * 2.4, a: Math.random() * Math.PI, va: (Math.random() - 0.5) * 0.01, ph: Math.random() * 6.28 });
+          }
+        }
+
+        function resize() {
+          var b = stage.getBoundingClientRect();
+          W = b.width; H = b.height;
+          cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+          S = Math.min(W, H) * 0.24;
+          if (!C.length) makeCapsules();
+          C.forEach(function (c) { c.x = Math.min(Math.max(c.x, c.r), W - c.r); c.y = Math.min(Math.max(c.y, c.r), H - c.r); });
+          if (!running) draw();
+        }
+
+        var rx = -0.25, ry = 0.5, vry = 0.004, vrx = 0;
+        var gx = 0, gy = 0, tiltOn = false;
+        var pointer = { x: -999, y: -999, down: false, active: false, sx: 0, sy: 0, lx: 0, ly: 0, t: 0, moved: 0 };
+
+        function scatter() {
+          for (var i = 0; i < N; i++) {
+            var p = P[i];
+            var a = Math.random() * 6.283, b = Math.acos(Math.random() * 2 - 1), f = 0.08 + Math.random() * 0.14;
+            p.vx += Math.sin(b) * Math.cos(a) * f + p.hx * 0.04;
+            p.vy += Math.sin(b) * Math.sin(a) * f + p.hy * 0.04;
+            p.vz += Math.cos(b) * f;
+          }
+          C.forEach(function (c) {
+            var dx = c.x - W / 2, dy = c.y - H / 2, d = Math.hypot(dx, dy) || 1;
+            c.vx += (dx / d) * 4; c.vy += (dy / d) * 4; c.va += (Math.random() - 0.5) * 0.1;
+          });
+          if (!running) loopOnce();
+        }
+
+        function pill(c) {
+          ctx.save();
+          ctx.translate(c.x, c.y); ctx.rotate(c.a);
+          var h = c.len / 2, r = c.r;
+          ctx.beginPath();
+          ctx.arc(-h + r, 0, r, Math.PI / 2, Math.PI * 1.5); ctx.lineTo(0, -r); ctx.lineTo(0, r); ctx.closePath();
+          ctx.fillStyle = green; ctx.globalAlpha = 0.85; ctx.fill();
+          ctx.beginPath();
+          ctx.arc(h - r, 0, r, -Math.PI / 2, Math.PI / 2); ctx.lineTo(0, r); ctx.lineTo(0, -r); ctx.closePath();
+          ctx.fillStyle = bg; ctx.globalAlpha = 1; ctx.fill();
+          ctx.beginPath();
+          ctx.arc(-h + r, 0, r, Math.PI / 2, Math.PI * 1.5); ctx.arc(h - r, 0, r, -Math.PI / 2, Math.PI / 2); ctx.closePath();
+          ctx.strokeStyle = ink; ctx.globalAlpha = 0.18; ctx.lineWidth = 1; ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(-h + r, -r * 0.45); ctx.lineTo(-r * 0.2, -r * 0.45);
+          ctx.strokeStyle = bg; ctx.globalAlpha = 0.5; ctx.lineWidth = r * 0.25; ctx.lineCap = "round"; ctx.stroke();
+          ctx.restore();
+        }
+
+        var tNow = 0;
+        function step(dt) {
+          tNow += dt;
+          // Cross rotation: auto spin plus drag momentum.
+          if (!pointer.down) { vry += (0.004 - vry) * 0.02 * dt; vrx *= Math.pow(0.95, dt); rx += (-0.25 - rx) * 0.01 * dt; }
+          ry += vry * dt; rx += vrx * dt;
+          for (var i = 0; i < N; i++) {
+            var p = P[i];
+            p.vx += -p.ox * 0.012 * dt; p.vy += -p.oy * 0.012 * dt; p.vz += -p.oz * 0.012 * dt;
+            var d = Math.pow(0.92, dt);
+            p.vx *= d; p.vy *= d; p.vz *= d;
+            p.ox += p.vx * dt; p.oy += p.vy * dt; p.oz += p.vz * dt;
+          }
+          // Capsules: gentle float, tilt gravity, pointer push, walls, each other.
+          for (var k = 0; k < C.length; k++) {
+            var c = C[k];
+            c.vx += (gx * 0.12 + Math.sin(tNow * 0.01 + c.ph) * 0.006) * dt;
+            c.vy += (gy * 0.12 + Math.cos(tNow * 0.012 + c.ph) * 0.006) * dt;
+            if (pointer.active) {
+              var dx = c.x - pointer.x, dy = c.y - pointer.y, dd = dx * dx + dy * dy, R = 90;
+              if (dd < R * R) { var dist = Math.sqrt(dd) || 1, f = (1 - dist / R) * 0.9; c.vx += (dx / dist) * f * dt; c.vy += (dy / dist) * f * dt; c.va += (dx > 0 ? 1 : -1) * f * 0.004; }
+            }
+            for (var m = k + 1; m < C.length; m++) {
+              var o = C[m], ex = o.x - c.x, ey = o.y - c.y, md = c.r + o.r + 6, e2 = ex * ex + ey * ey;
+              if (e2 < md * md && e2 > 0.01) { var ed = Math.sqrt(e2), push = (md - ed) * 0.04; ex /= ed; ey /= ed; c.vx -= ex * push; c.vy -= ey * push; o.vx += ex * push; o.vy += ey * push; }
+            }
+            var damp = Math.pow(0.985, dt);
+            c.vx *= damp; c.vy *= damp; c.va *= Math.pow(0.99, dt);
+            var sp = Math.hypot(c.vx, c.vy); if (sp > 9) { c.vx *= 9 / sp; c.vy *= 9 / sp; }
+            c.x += c.vx * dt; c.y += c.vy * dt; c.a += c.va * dt;
+            var pad = c.len / 2;
+            if (c.x < pad) { c.x = pad; c.vx = Math.abs(c.vx) * 0.6; }
+            if (c.x > W - pad) { c.x = W - pad; c.vx = -Math.abs(c.vx) * 0.6; }
+            if (c.y < pad) { c.y = pad; c.vy = Math.abs(c.vy) * 0.6; }
+            if (c.y > H - pad) { c.y = H - pad; c.vy = -Math.abs(c.vy) * 0.6; }
+          }
+        }
+
+        function draw() {
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          ctx.clearRect(0, 0, W, H);
+          for (var k = 0; k < C.length; k++) pill(C[k]);
+          var cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
+          var mx = W / 2, my = H * 0.46, fov = 4.2, sz = Math.max(5, S * 0.07);
+          for (var i = 0; i < N; i++) {
+            var p = P[i];
+            var x = p.hx + p.ox, y = p.hy + p.oy, z = p.hz + p.oz;
+            var x1 = x * cy + z * sy, z1 = -x * sy + z * cy;
+            var y1 = y * cx - z1 * sx, z2 = y * sx + z1 * cx;
+            var k2 = fov / (fov + z2);
+            var px = mx + x1 * S * k2, py = my + y1 * S * k2;
+            var s = sz * p.s * k2;
+            ctx.globalAlpha = Math.max(0.15, Math.min(1, 0.75 - z2 * 0.35));
+            ctx.drawImage(sprite, px - s, py - s, s * 2, s * 2);
+          }
+          ctx.globalAlpha = 1;
+        }
+
+        var running = false, visible = false, last = 0, raf = 0;
+        function frame(t) {
+          var dt = last ? Math.min((t - last) / 16.67, 3) : 1; last = t;
+          step(dt); draw();
+          raf = requestAnimationFrame(frame);
+        }
+        function start() {
+          if (running || reduce.matches || !visible || document.hidden) return;
+          running = true; last = 0; raf = requestAnimationFrame(frame);
+        }
+        function stop() { running = false; cancelAnimationFrame(raf); }
+        // Reduced motion: no loop; settle instantly after an interaction.
+        function loopOnce() {
+          if (running) return;
+          for (var i = 0; i < N; i++) { var p = P[i]; p.ox = p.oy = p.oz = p.vx = p.vy = p.vz = 0; }
+          draw();
+        }
+
+        // Pointer: drag spins, a quick tap scatters, movement nudges capsules.
+        function local(e) { var b = cv.getBoundingClientRect(); return { x: e.clientX - b.left, y: e.clientY - b.top }; }
+        cv.addEventListener("pointerdown", function (e) {
+          var q = local(e);
+          pointer.down = true; pointer.active = true; pointer.x = pointer.sx = pointer.lx = q.x; pointer.y = pointer.sy = pointer.ly = q.y;
+          pointer.t = performance.now(); pointer.moved = 0; pointer.axis = null;
+        });
+        cv.addEventListener("pointermove", function (e) {
+          var q = local(e);
+          pointer.x = q.x; pointer.y = q.y; pointer.active = true;
+          if (!pointer.down) return;
+          var dx = q.x - pointer.lx, dy = q.y - pointer.ly;
+          pointer.moved += Math.abs(dx) + Math.abs(dy);
+          pointer.lx = q.x; pointer.ly = q.y;
+          vry = dx * 0.006; vrx = dy * 0.004;
+          ry += dx * 0.01; rx = Math.max(-1.2, Math.min(1.2, rx + dy * 0.006));
+          if (!running) draw();
+        });
+        function up() {
+          if (!pointer.down) return;
+          pointer.down = false;
+          if (pointer.moved < 8 && performance.now() - pointer.t < 350) scatter();
+        }
+        cv.addEventListener("pointerup", up);
+        cv.addEventListener("pointercancel", function () { pointer.down = false; pointer.active = false; });
+        cv.addEventListener("pointerleave", function () { up(); pointer.active = false; });
+        cv.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); scatter(); } });
+        cv.tabIndex = 0;
+
+        // Tilt: only after the visitor asks for it.
+        if ("DeviceOrientationEvent" in window && (window.matchMedia("(pointer: coarse)").matches)) tiltBtn.hidden = false;
+        function onTilt(e) {
+          if (e.gamma == null) return;
+          gx = Math.max(-1, Math.min(1, e.gamma / 35));
+          gy = Math.max(-1, Math.min(1, (e.beta - 35) / 35));
+        }
+        tiltBtn.addEventListener("click", function () {
+          if (tiltOn) {
+            window.removeEventListener("deviceorientation", onTilt); tiltOn = false; gx = gy = 0;
+            tiltBtn.setAttribute("aria-pressed", "false"); tiltBtn.textContent = "Turn on tilt"; return;
+          }
+          function enable() {
+            window.addEventListener("deviceorientation", onTilt); tiltOn = true;
+            tiltBtn.setAttribute("aria-pressed", "true"); tiltBtn.textContent = "Tilt on · tap to stop";
+          }
+          var D = window.DeviceOrientationEvent;
+          if (D && typeof D.requestPermission === "function") {
+            D.requestPermission().then(function (r) { if (r === "granted") enable(); else tiltBtn.textContent = "Tilt not allowed"; }).catch(function () { tiltBtn.textContent = "Tilt not available"; });
+          } else enable();
+        });
+
+        readColors();
+        resize();
+        window.addEventListener("resize", resize);
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (en) { visible = en[0].isIntersecting; visible ? start() : stop(); }).observe(stage);
+        } else { visible = true; start(); }
+        document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+        if (reduce.addEventListener) reduce.addEventListener("change", function () { reduce.matches ? (stop(), loopOnce()) : start(); });
+        // Follow the theme toggle.
+        new MutationObserver(function () { readColors(); if (!running) draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class"] });
+        if (window.matchMedia("(prefers-color-scheme: dark)").addEventListener) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); if (!running) draw(); });
+      })();
+    </script>
+  </body>
+</html>
