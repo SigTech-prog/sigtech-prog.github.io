@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dee Barber Shop — OAU Staff Quarters, Ile-Ife</title>
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --x-ink: #05070a;
+        --x-ink-2: #0b1016;
+        --x-neon: #19f6e8;
+        --x-neon-dim: #0fb7ad;
+        --x-chrome: #d7dee6;
+        --x-line: rgb(25 246 232 / 0.28);
+      }
+      html { background: var(--x-ink); }
+      body {
+        background: var(--x-ink);
+        color: #e8f3f4;
+        font-family: var(--sans);
+      }
+      .x-wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: var(--gutter); }
+      .x-cond {
+        font-weight: var(--weight-bold);
+        letter-spacing: -0.03em;
+        transform: scaleX(0.94);
+        transform-origin: left center;
+        text-transform: uppercase;
+        line-height: 1.02;
+      }
+      .x-neon { color: var(--x-neon); text-shadow: 0 0 6px rgb(25 246 232 / 0.65), 0 0 22px rgb(25 246 232 / 0.35); }
+
+      /* nav */
+      .x-nav {
+        position: sticky; top: 0; z-index: 40;
+        background: rgb(5 7 10 / 0.72);
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--x-line);
+      }
+      .x-nav__in { display: flex; align-items: center; gap: 10px; min-height: 56px; }
+      .x-nav__brand { font: var(--weight-bold) 15px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--x-chrome); }
+      .x-nav__links { margin-left: auto; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+      .x-nav__links::-webkit-scrollbar { display: none; }
+      .x-nav__links a {
+        flex: none; display: inline-flex; align-items: center; min-height: var(--tap);
+        padding: 0 12px; font: var(--type-tag); letter-spacing: 0.1em; text-transform: uppercase;
+        color: #9fb3b6; text-decoration: none; border-radius: var(--r-pill);
+      }
+      .x-nav__links a:hover, .x-nav__links a.is-on { color: var(--x-neon); }
+
+      /* hero */
+      .x-hero { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: hidden; }
+      .x-hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .x-hero__scrim {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(120% 70% at 70% 20%, rgb(25 246 232 / 0.16), transparent 60%),
+          linear-gradient(180deg, rgb(5 7 10 / 0.72) 0%, rgb(5 7 10 / 0.45) 35%, rgb(5 7 10 / 0.93) 85%, var(--x-ink) 100%);
+      }
+      .x-fx { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
+      .x-hero__copy { position: relative; padding-block: 24px 44px; display: grid; gap: 14px; }
+      .x-eyebrow { font: var(--type-tag); letter-spacing: 0.26em; text-transform: uppercase; color: var(--x-neon); }
+      .x-hero h1 { font-size: clamp(46px, 15vw, 116px); }
+      .x-hero__sub { font: var(--weight-medium) clamp(16px, 4.4vw, 22px)/1.3 var(--sans); color: #cfe0e2; max-width: 22ch; }
+      .x-meta { font: var(--type-small); color: #8fa3a6; }
+
+      /* buttons */
+      .x-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: var(--tap); padding: 0 20px; border-radius: var(--r-pill);
+        font: var(--weight-bold) 14px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase;
+        text-decoration: none; border: 1px solid var(--x-line); color: #e8f3f4;
+        background: #0d1318;
+        transition: transform var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out), background var(--dur-quick) var(--ease-out);
+        will-change: transform;
+      }
+      .x-btn:hover { background: #10262a; }
+      .x-btn--neon {
+        background: var(--x-neon); color: #04161a; border-color: var(--x-neon);
+        box-shadow: 0 0 18px rgb(25 246 232 / 0.45);
+      }
+      .x-btn--neon:hover { background: var(--x-neon); box-shadow: 0 0 28px rgb(25 246 232 / 0.7); }
+      .x-btn:focus-visible { outline: 2px solid var(--x-neon); outline-offset: 3px; }
+
+      /* sections */
+      .x-sec { padding-block: clamp(48px, 10vw, 88px); border-top: 1px solid rgb(255 255 255 / 0.07); }
+      .x-sec h2 { font-size: clamp(30px, 8vw, 54px); }
+      .x-sec__head { display: grid; gap: 10px; margin-bottom: 28px; }
+      .x-sec__sub { font: var(--type-body); color: #8fa3a6; max-width: 46ch; }
+
+      /* reveal */
+      .x-rev { opacity: 0; transform: translateY(18px); }
+      .x-rev.is-in { animation: xflick 900ms var(--ease-out) forwards; }
+      @keyframes xflick {
+        0% { opacity: 0; transform: translateY(18px); }
+        18% { opacity: 1; transform: translateY(0); }
+        26% { opacity: 0.25; }
+        38% { opacity: 1; }
+        46% { opacity: 0.5; }
+        60%, 100% { opacity: 1; transform: translateY(0); }
+      }
+
+      /* proof */
+      .x-proof { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+      .x-stars { font-size: 24px; letter-spacing: 4px; color: var(--x-neon); text-shadow: 0 0 12px rgb(25 246 232 / 0.5); }
+      .x-score { font: var(--weight-bold) clamp(34px, 9vw, 56px)/1 var(--sans); color: #fff; }
+      .x-proof p { font: var(--type-body); color: #8fa3a6; }
+
+      /* services deck */
+      .x-deck { position: relative; height: 420px; perspective: 1100px; touch-action: pan-y; }
+      .x-card {
+        position: absolute; inset: 0; margin: auto; width: min(340px, 84vw); height: 380px;
+        border-radius: var(--r-l); border: 1px solid var(--x-line);
+        background: linear-gradient(165deg, #121a22 0%, #080c11 70%);
+        box-shadow: 0 24px 60px rgb(0 0 0 / 0.6);
+        padding: 26px; display: grid; align-content: space-between;
+        transform-style: preserve-3d;
+        transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out);
+        will-change: transform;
+      }
+      .x-card__num { font: var(--weight-regular) 13px/1 var(--sans); letter-spacing: 0.3em; color: var(--x-neon); }
+      .x-card h3 { font-size: clamp(28px, 7vw, 38px); }
+      .x-card p { font: var(--type-body); color: #9fb3b6; }
+      .x-card__tag {
+        justify-self: start; font: var(--type-tag); letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--x-chrome); border: 1px solid var(--x-line); border-radius: var(--r-pill); padding: 7px 13px;
+      }
+      .x-deck__ctrl { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 20px; }
+      .x-dots { display: flex; gap: 8px; }
+      .x-dots button {
+        width: var(--tap); height: var(--tap); border: 0; background: none; padding: 0; cursor: pointer;
+        display: grid; place-items: center;
+      }
+      .x-dots button::after { content: ""; width: 9px; height: 9px; border-radius: 50%; background: rgb(255 255 255 / 0.22); transition: background var(--dur-quick); }
+      .x-dots button[aria-selected="true"]::after { background: var(--x-neon); box-shadow: 0 0 10px var(--x-neon); }
+      .x-hint { font: var(--type-caption); letter-spacing: 0.18em; text-transform: uppercase; color: #6f8488; text-align: center; margin-top: 8px; }
+
+      /* day chips */
+      .x-days { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-day {
+        flex: 1 1 96px; min-height: 58px; display: grid; place-items: center; gap: 2px;
+        border: 1px solid var(--x-line); border-radius: var(--r-m); text-decoration: none;
+        background: #0d1318; color: #e8f3f4;
+        font: var(--weight-bold) 15px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase;
+        transition: background var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out);
+      }
+      .x-day span { font: var(--type-caption); letter-spacing: 0.08em; text-transform: none; color: #a3b6b9; }
+      .x-day:hover { background: #10262a; box-shadow: 0 0 20px rgb(25 246 232 / 0.25); }
+
+      /* find us */
+      .x-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .x-panel { border: 1px solid var(--x-line); border-radius: var(--r-l); padding: 22px; background: #0d1318; display: grid; gap: 10px; align-content: start; }
+      .x-panel h3 { font: var(--weight-bold) 13px/1 var(--sans); letter-spacing: 0.22em; text-transform: uppercase; color: var(--x-neon); }
+      .x-panel p { font: var(--weight-medium) 17px/1.35 var(--sans); color: #dceaec; }
+      .x-panel a.x-link { color: var(--x-chrome); font: var(--type-body); }
+
+      /* footer */
+      .x-foot { border-top: 1px solid rgb(255 255 255 / 0.08); padding-block: 28px 40px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+      .x-foot p { font: var(--type-small); color: #7e9396; }
+      .x-foot a { color: var(--x-chrome); display: inline-flex; align-items: center; min-height: var(--tap); min-width: var(--tap); }
+
+      @media (max-width: 420px) { .x-deck { height: 380px; } .x-card { height: 344px; padding: 22px; } }
+      @media (prefers-reduced-motion: reduce) {
+        .x-rev { opacity: 1; transform: none; }
+        .x-rev.is-in { animation: none; }
+        .x-card, .x-btn { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="x-nav">
+      <div class="x-wrap x-nav__in">
+        <span class="x-nav__brand">Dee<span class="x-neon">.</span></span>
+        <nav class="x-nav__links" aria-label="Sections">
+          <a href="#services">Services</a>
+          <a href="#book">Book</a>
+          <a href="#find">Find us</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="x-hero" id="top">
+        <img class="x-hero__bg" src="dee_hero.jpg" alt="Inside Dee Barber Shop, lit in teal neon" />
+        <div class="x-hero__scrim"></div>
+        <canvas class="x-fx" id="fx" aria-hidden="true"></canvas>
+        <div class="x-wrap x-hero__copy">
+          <p class="x-eyebrow">OAU Staff Quarters · Ile-Ife</p>
+          <h1 class="x-cond">Dee<br />Barber<br /><span class="x-neon">Shop</span></h1>
+          <p class="x-hero__sub">Clean cuts at OAU Staff Quarters.</p>
+          <div class="x-btns">
+            <a class="x-btn x-btn--neon" data-magnet href="#book">Book a cut</a>
+            <a class="x-btn" href="tel:+2348064242355">Call +234 806 424 2355</a>
+            <a class="x-btn" href="https://wa.me/2348064242355" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <p class="x-meta">Swipe the pole. Tap a day to book on WhatsApp.</p>
+        </div>
+      </section>
+
+      <div class="x-wrap">
+        <section class="x-sec x-rev" id="proof">
+          <div class="x-proof">
+            <span class="x-score">4.2</span>
+            <span class="x-stars" aria-hidden="true">★★★★☆</span>
+            <p>4.2 stars from 70 Google reviews.</p>
+          </div>
+        </section>
+
+        <section class="x-sec x-rev" id="services">
+          <div class="x-sec__head">
+            <p class="x-eyebrow">What we do</p>
+            <h2 class="x-cond">Services</h2>
+            <p class="x-sec__sub">Swipe the stack. Prices on request — ask on WhatsApp or at the chair.</p>
+          </div>
+          <div class="x-deck" id="deck">
+            <article class="x-card">
+              <p class="x-card__num">01</p>
+              <div>
+                <h3 class="x-cond">Haircuts</h3>
+                <p>The everyday cut, shaped to your head and kept sharp.</p>
+              </div>
+              <span class="x-card__tag">Prices on request</span>
+            </article>
+            <article class="x-card">
+              <p class="x-card__num">02</p>
+              <div>
+                <h3 class="x-cond">Fades &amp; Lineups</h3>
+                <p>Low, mid or high fade with a crisp razor lineup.</p>
+              </div>
+              <span class="x-card__tag">Prices on request</span>
+            </article>
+            <article class="x-card">
+              <p class="x-card__num">03</p>
+              <div>
+                <h3 class="x-cond">Beard Trim &amp; Shape</h3>
+                <p>Trimmed, edged and balanced with your cut.</p>
+              </div>
+              <span class="x-card__tag">Prices on request</span>
+            </article>
+            <article class="x-card">
+              <p class="x-card__num">04</p>
+              <div>
+                <h3 class="x-cond">Kids' Cuts</h3>
+                <p>Quick, patient work for the young ones.</p>
+              </div>
+              <span class="x-card__tag">Prices on request</span>
+            </article>
+            <article class="x-card">
+              <p class="x-card__num">05</p>
+              <div>
+                <h3 class="x-cond">Hair Dye</h3>
+                <p>Colour applied clean, from a touch of tone to a full change.</p>
+              </div>
+              <span class="x-card__tag">Prices on request</span>
+            </article>
+          </div>
+          <div class="x-deck__ctrl"><div class="x-dots" id="dots" role="tablist" aria-label="Services"></div></div>
+          <p class="x-hint">Swipe or drag to change card</p>
+        </section>
+
+        <section class="x-sec x-rev" id="book">
+          <div class="x-sec__head">
+            <p class="x-eyebrow">Book</p>
+            <h2 class="x-cond">Pick a day</h2>
+            <p class="x-sec__sub">Tapping a day opens WhatsApp with your message ready to send.</p>
+          </div>
+          <div class="x-days">
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Monday" target="_blank" rel="noopener">Mon<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Tuesday" target="_blank" rel="noopener">Tue<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Wednesday" target="_blank" rel="noopener">Wed<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Thursday" target="_blank" rel="noopener">Thu<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Friday" target="_blank" rel="noopener">Fri<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Saturday" target="_blank" rel="noopener">Sat<span>Book on WhatsApp</span></a>
+            <a class="x-day" href="https://wa.me/2348064242355?text=Hi%20Dee%2C%20I'd%20like%20to%20book%20a%20cut%20on%20Sunday" target="_blank" rel="noopener">Sun<span>Book on WhatsApp</span></a>
+          </div>
+        </section>
+
+        <section class="x-sec x-rev" id="find">
+          <div class="x-sec__head">
+            <p class="x-eyebrow">Find us</p>
+            <h2 class="x-cond">Staff Quarters, OAU</h2>
+          </div>
+          <div class="x-grid">
+            <div class="x-panel">
+              <h3>Address</h3>
+              <p>Staff Quarters, OAU, Road 9, Kajola, Osun.</p>
+              <a class="x-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Dee%20Barber%20Shop%20OAU%20Staff%20Quarters%20Ile-Ife" target="_blank" rel="noopener">Open in Maps</a>
+            </div>
+            <div class="x-panel">
+              <h3>Talk to Dee</h3>
+              <p>+234 806 424 2355</p>
+              <div class="x-btns">
+                <a class="x-btn x-btn--neon" data-magnet href="https://wa.me/2348064242355" target="_blank" rel="noopener">WhatsApp</a>
+                <a class="x-btn" href="tel:+2348064242355">Call</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="x-wrap x-foot">
+      <p>Sample website designed by Mayo · <a href="tel:+2349037499964">+234 903 749 9964</a></p>
+      <p>Dee Barber Shop · OAU Staff Quarters, Ile-Ife</p>
+    </footer>
+
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ---- reveals ---- */
+        var revs = [].slice.call(document.querySelectorAll(".x-rev"));
+        if (!("IntersectionObserver" in window)) revs.forEach(function (r) { r.classList.add("is-in"); });
+        else {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+          }, { rootMargin: "0px 0px -12% 0px" });
+          revs.forEach(function (r) { io.observe(r); });
+        }
+
+        /* ---- nav current section ---- */
+        var links = [].slice.call(document.querySelectorAll(".x-nav__links a"));
+        var secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+        addEventListener("scroll", function () {
+          var y = scrollY + 90, best = -1;
+          secs.forEach(function (s, i) { if (s && s.offsetTop <= y) best = i; });
+          links.forEach(function (a, i) { a.classList.toggle("is-on", i === best); });
+        }, { passive: true });
+
+        /* ---- magnetic buttons ---- */
+        [].slice.call(document.querySelectorAll("[data-magnet]")).forEach(function (b) {
+          if (reduce) return;
+          function move(e) {
+            var r = b.getBoundingClientRect();
+            var p = e.touches ? e.touches[0] : e;
+            var dx = (p.clientX - (r.left + r.width / 2)) / r.width;
+            var dy = (p.clientY - (r.top + r.height / 2)) / r.height;
+            b.style.transform = "translate(" + (dx * 14).toFixed(1) + "px," + (dy * 10).toFixed(1) + "px)";
+          }
+          function reset() { b.style.transform = ""; }
+          b.addEventListener("pointermove", move);
+          b.addEventListener("pointerleave", reset);
+          b.addEventListener("pointerup", reset);
+          b.addEventListener("touchstart", move, { passive: true });
+          b.addEventListener("touchend", reset);
+        });
+
+        /* ---- services deck ---- */
+        var deck = document.getElementById("deck");
+        var cards = [].slice.call(deck.querySelectorAll(".x-card"));
+        var dots = document.getElementById("dots");
+        var idx = 0, tilt = 0, drag = null;
+        cards.forEach(function (c, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("role", "tab");
+          b.setAttribute("aria-label", c.querySelector("h3").textContent);
+          b.addEventListener("click", function () { idx = i; layout(); });
+          dots.appendChild(b);
+        });
+        function layout(dx) {
+          dx = dx || 0;
+          cards.forEach(function (c, i) {
+            var o = i - idx + dx / 260;
+            var a = Math.abs(o);
+            var hide = a > 2.6;
+            c.style.opacity = hide ? 0 : String(Math.max(0, 1 - a * 0.3));
+            c.style.zIndex = String(100 - Math.round(a * 10));
+            c.style.pointerEvents = Math.abs(o) < 0.5 ? "auto" : "none";
+            c.style.transform =
+              "translate3d(" + (o * 54).toFixed(1) + "px," + (a * 16).toFixed(1) + "px," + (-a * 150).toFixed(0) + "px)" +
+              " rotateY(" + (o * -14 + (reduce ? 0 : tilt)).toFixed(2) + "deg)" +
+              " rotateX(" + (reduce ? 0 : -tilt * 0.35).toFixed(2) + "deg)" +
+              " scale(" + (1 - a * 0.06).toFixed(3) + ")";
+          });
+          [].slice.call(dots.children).forEach(function (b, i) { b.setAttribute("aria-selected", i === idx ? "true" : "false"); });
+        }
+        deck.addEventListener("pointerdown", function (e) { drag = { x: e.clientX, id: e.pointerId }; deck.setPointerCapture(e.pointerId); });
+        deck.addEventListener("pointermove", function (e) {
+          var r = deck.getBoundingClientRect();
+          tilt = ((e.clientX - (r.left + r.width / 2)) / r.width) * 10;
+          if (drag) layout(e.clientX - drag.x); else layout();
+        });
+        function end(e) {
+          if (!drag) return;
+          var d = e.clientX - drag.x;
+          if (d < -50 && idx < cards.length - 1) idx++;
+          else if (d > 50 && idx > 0) idx--;
+          drag = null; layout();
+        }
+        deck.addEventListener("pointerup", end);
+        deck.addEventListener("pointercancel", function () { drag = null; layout(); });
+        deck.addEventListener("pointerleave", function () { tilt = 0; layout(); });
+        layout();
+
+        /* ---- hero: 3D barber pole + clipping particles ---- */
+        var cv = document.getElementById("fx"), ctx = cv.getContext("2d");
+        var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+        var pole = { x: 0, y: 0, w: 0, h: 0, phase: 0, spin: 1 };
+        var parts = [], pointer = { x: -999, y: -999, on: false };
+        function size() {
+          var r = cv.getBoundingClientRect();
+          W = r.width; H = r.height;
+          cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          pole.w = Math.max(34, Math.min(60, W * 0.1));
+          pole.h = Math.min(H * 0.34, 300);
+          pole.x = W - pole.w - Math.max(16, W * 0.06);
+          pole.y = H * 0.17;
+          seed();
+        }
+        function seed() {
+          parts = [];
+          var n = W < 520 ? 26 : 46;
+          for (var i = 0; i < n; i++) parts.push(mk(Math.random() * H));
+        }
+        function mk(y) {
+          return { x: Math.random() * W, y: y, vx: (Math.random() - 0.5) * 0.25, vy: 0.18 + Math.random() * 0.5,
+            l: 4 + Math.random() * 10, a: Math.random() * Math.PI, va: (Math.random() - 0.5) * 0.06, o: 0.18 + Math.random() * 0.4 };
+        }
+        function drawPole() {
+          var x = pole.x, y = pole.y, w = pole.w, h = pole.h, r = w / 2;
+          ctx.save();
+          ctx.shadowColor = "rgba(25,246,232,0.45)"; ctx.shadowBlur = 24;
+          ctx.fillStyle = "rgba(10,14,19,0.9)";
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
+          ctx.fill();
+          ctx.restore();
+          ctx.save();
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
+          ctx.clip();
+          ctx.fillStyle = "#f2f4f6"; ctx.fillRect(x, y, w, h);
+          /* stripes wrapped on a cylinder: column by column, with a sine mapping */
+          var cols = Math.max(14, Math.round(w));
+          var step = w / cols;
+          for (var i = 0; i < cols; i++) {
+            var t = (i + 0.5) / cols;             /* 0..1 across the pole */
+            var ang = Math.asin(Math.max(-1, Math.min(1, t * 2 - 1)));  /* cylinder mapping */
+            var shade = Math.cos(ang);            /* 0 at edges, 1 at centre */
+            var off = ang / Math.PI;              /* angular offset for the wrap */
+            for (var band = -2; band < h / 26 + 2; band++) {
+              var yy = y + band * 26 + (pole.phase + off) * 26;
+              var hue = ((band % 2) + 2) % 2;
+              ctx.fillStyle = hue === 0 ? "#d8232a" : "#1f4fd8";
+              ctx.fillRect(x + i * step, yy, step + 0.6, 13);
+            }
+            ctx.fillStyle = "rgba(0,0,0," + (0.5 * (1 - shade)).toFixed(3) + ")";
+            ctx.fillRect(x + i * step, y, step + 0.6, h);
+            ctx.fillStyle = "rgba(255,255,255," + (0.35 * Math.pow(Math.max(0, shade), 6)).toFixed(3) + ")";
+            ctx.fillRect(x + i * step, y, step + 0.6, h);
+          }
+          ctx.restore();
+          ctx.strokeStyle = "rgba(25,246,232,0.55)"; ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5, r); else ctx.rect(x, y, w, h);
+          ctx.stroke();
+          /* chrome caps */
+          ctx.fillStyle = "rgba(215,222,230,0.9)";
+          ctx.fillRect(x - 4, y - 12, w + 8, 10);
+          ctx.fillRect(x - 4, y + h + 2, w + 8, 10);
+        }
+        function step() {
+          ctx.clearRect(0, 0, W, H);
+          pole.phase = (pole.phase + 0.012 * pole.spin) % 2;
+          pole.spin += (1 - pole.spin) * 0.02;
+          drawPole();
+          for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            p.vy += 0.01;                       /* gravity */
+            if (pointer.on) {
+              var dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy;
+              if (d2 < 15000 && d2 > 1) { var f = (1 - d2 / 15000) * 1.3 / Math.sqrt(d2); p.vx += dx * f; p.vy += dy * f; }
+            }
+            p.vx *= 0.985; p.vy *= 0.99;
+            p.x += p.vx; p.y += p.vy; p.a += p.va + p.vx * 0.02;
+            if (p.y > H + 20 || p.x < -30 || p.x > W + 30) { parts[i] = mk(-20); continue; }
+            ctx.save();
+            ctx.translate(p.x, p.y); ctx.rotate(p.a);
+            ctx.strokeStyle = "rgba(220,235,238," + p.o.toFixed(2) + ")";
+            ctx.lineWidth = 1.1; ctx.lineCap = "round";
+            ctx.beginPath(); ctx.moveTo(-p.l / 2, 0); ctx.quadraticCurveTo(0, p.l * 0.22, p.l / 2, 0); ctx.stroke();
+            ctx.restore();
+          }
+          raf = requestAnimationFrame(step);
+        }
+        var raf = null, lastX = 0;
+        function pmove(e) {
+          var r = cv.getBoundingClientRect();
+          var p = e.touches ? e.touches[0] : e;
+          pointer.x = p.clientX - r.left; pointer.y = p.clientY - r.top; pointer.on = true;
+          var vx = Math.abs(pointer.x - lastX); lastX = pointer.x;
+          if (pointer.x > pole.x - 90 && pointer.y > pole.y - 60 && pointer.y < pole.y + pole.h + 60)
+            pole.spin = Math.min(9, pole.spin + vx * 0.12);
+          else pole.spin = Math.min(5, pole.spin + vx * 0.02);
+        }
+        cv.addEventListener("pointermove", pmove);
+        cv.addEventListener("pointerdown", pmove);
+        cv.addEventListener("pointerleave", function () { pointer.on = false; });
+        cv.addEventListener("touchmove", function (e) { pmove(e); }, { passive: true });
+        cv.addEventListener("touchend", function () { pointer.on = false; });
+        addEventListener("resize", function () { clearTimeout(size.t); size.t = setTimeout(size, 150); }, { passive: true });
+        size();
+        if (reduce) { pole.spin = 0; ctx.clearRect(0, 0, W, H); drawPole(); }
+        else {
+          var hero = document.querySelector(".x-hero");
+          if ("IntersectionObserver" in window) {
+            new IntersectionObserver(function (es) {
+              es.forEach(function (e) {
+                if (e.isIntersecting && !raf) raf = requestAnimationFrame(step);
+                else if (!e.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
+              });
+            }).observe(hero);
+          } else raf = requestAnimationFrame(step);
+        }
+      })();
+    </script>
+  </body>
+</html>
