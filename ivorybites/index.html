@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>IvoryBites Restaurant and Bakery — Ile-Ife</title>
+    <meta name="theme-color" content="#2a160d" />
+    <style>
+      :root {
+        --ivory: #fdf6ec;
+        --cream: #f6e7d2;
+        --caramel: #c87f33;
+        --caramel-deep: #a3621f;
+        --choc: #2a160d;
+        --choc-soft: #45291a;
+        --tomato: #c4361f;
+        --ink: #2a160d;
+        --ink-2: #6b4c38;
+        --r-s: 14px;
+        --r-m: 22px;
+        --r-l: 32px;
+        --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --max: 1040px;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--ivory);
+        color: var(--ink);
+        font: 400 16px/1.55 var(--sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1, h2, h3 { margin: 0; line-height: 1.05; letter-spacing: -0.02em; font-weight: 600; }
+      p { margin: 0; }
+      a { color: inherit; }
+      img { display: block; max-width: 100%; }
+
+      .wrap { max-width: var(--max); margin: 0 auto; padding-inline: 20px; }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        background: var(--choc);
+        isolation: isolate;
+      }
+      .hero__img {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; z-index: 0;
+        transform: scale(1.06);
+      }
+      .hero__veil {
+        position: absolute; inset: 0; z-index: 1;
+        background:
+          radial-gradient(120% 80% at 70% 10%, rgba(200,127,51,0.28), transparent 60%),
+          linear-gradient(180deg, rgba(42,22,13,0.72) 0%, rgba(42,22,13,0.45) 35%, rgba(42,22,13,0.92) 100%);
+      }
+      #physics {
+        position: absolute; inset: 0; z-index: 2;
+        width: 100%; height: 100%;
+        touch-action: pan-y;
+      }
+      .tilt {
+        margin-top: 12px; min-height: 44px; padding: 0 16px;
+        border-radius: 999px; border: 1px solid rgba(246,231,210,0.45);
+        background: rgba(42,22,13,0.4); color: var(--ivory);
+        font: 600 14px var(--sans); cursor: pointer;
+      }
+      .hero__copy {
+        position: relative; z-index: 3;
+        padding: 0 20px calc(40px + env(safe-area-inset-bottom)) 20px;
+        max-width: var(--max); margin: 0 auto; width: 100%;
+        color: var(--ivory);
+        pointer-events: none;
+      }
+      .hero__copy > * { pointer-events: auto; }
+      .eyebrow {
+        display: inline-block;
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+        font-weight: 600;
+        color: var(--cream);
+        border: 1px solid rgba(246,231,210,0.4);
+        border-radius: 999px; padding: 7px 14px;
+        background: rgba(42,22,13,0.35);
+        backdrop-filter: blur(6px);
+      }
+      .hero h1 {
+        font-size: clamp(42px, 13vw, 92px);
+        margin: 18px 0 14px;
+        text-shadow: 0 6px 30px rgba(0,0,0,0.45);
+      }
+      .hero h1 em { font-style: normal; color: var(--caramel); }
+      .hero__sub { font-size: clamp(17px, 4.6vw, 22px); color: var(--cream); max-width: 22ch; }
+      .hero__hint { margin-top: 14px; font-size: 12.5px; color: rgba(246,231,210,0.72); }
+
+      .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 9px;
+        min-height: 52px; padding: 0 22px;
+        border-radius: 999px; border: 1px solid transparent;
+        font-weight: 600; font-size: 16px; text-decoration: none;
+        transition: transform 0.18s var(--ease), background 0.2s, box-shadow 0.2s;
+        will-change: transform;
+      }
+      .btn--hot { background: var(--tomato); color: #fff; box-shadow: 0 10px 28px rgba(224,69,44,0.38); }
+      .btn--wa { background: var(--cream); color: var(--choc); }
+      .btn--ghost { background: transparent; color: var(--ivory); border-color: rgba(246,231,210,0.45); }
+      .btn--dark { background: var(--choc); color: var(--ivory); }
+      .btn:active { transform: scale(0.96); }
+
+      /* ---------- sections ---------- */
+      section.block { padding: clamp(64px, 12vw, 120px) 0; }
+      .tag {
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+        font-weight: 600; color: var(--caramel-deep);
+      }
+      h2 { font-size: clamp(30px, 7.5vw, 52px); margin-top: 12px; }
+      .lede { margin-top: 14px; color: var(--ink-2); font-size: 17px; max-width: 46ch; }
+
+      .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+      .reveal.in { opacity: 1; transform: none; }
+
+      /* ---------- proof ---------- */
+      .proof { background: var(--choc); color: var(--ivory); }
+      .proof__card {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px;
+        border: 1px solid rgba(246,231,210,0.16);
+        border-radius: var(--r-l);
+        padding: 28px;
+        background: linear-gradient(140deg, rgba(200,127,51,0.18), rgba(246,231,210,0.03));
+      }
+      .score { font-size: clamp(46px, 13vw, 68px); font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+      .stars { font-size: 20px; letter-spacing: 3px; color: var(--caramel); }
+      .proof p { color: rgba(246,231,210,0.82); font-size: 15px; }
+
+      /* ---------- carousel ---------- */
+      .stage {
+        position: relative;
+        height: 420px;
+        perspective: 1100px;
+        margin-top: 38px;
+        touch-action: pan-y;
+        cursor: grab;
+      }
+      .stage:active { cursor: grabbing; }
+      .ring { position: absolute; inset: 0; transform-style: preserve-3d; }
+      .card3d {
+        position: absolute; top: 50%; left: 50%;
+        width: 230px; height: 310px; margin: -155px 0 0 -115px;
+        border-radius: var(--r-m);
+        background: linear-gradient(165deg, var(--cream), #fff);
+        border: 1px solid rgba(42,22,13,0.1);
+        box-shadow: 0 22px 50px rgba(42,22,13,0.18);
+        padding: 22px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        user-select: none;
+      }
+      .card3d .ico { font-size: 44px; line-height: 1; }
+      .card3d h3 { font-size: 22px; }
+      .card3d .num { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--caramel-deep); }
+      #menu { overflow: hidden; }
+      .card3d.is-front { background-color: #8a5119; background-image: linear-gradient(165deg, #8a5119, #6b3d10); color: #fff; border-color: transparent; }
+      .card3d.is-front .num { color: #fff; }
+      .carousel-ui { display: flex; align-items: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+      .arrow {
+        width: 48px; height: 48px; border-radius: 50%;
+        border: 1px solid rgba(42,22,13,0.2); background: #fff; color: var(--choc);
+        font-size: 18px; cursor: pointer;
+      }
+      .arrow:active { transform: scale(0.94); }
+      .now { font-weight: 600; }
+      .note { color: var(--ink-2); font-size: 14px; }
+
+      /* ---------- cakes ---------- */
+      .split { display: grid; gap: 22px; grid-template-columns: 1fr; }
+      @media (min-width: 760px) { .split { grid-template-columns: 1.15fr 0.85fr; align-items: center; } }
+      .panel {
+        border-radius: var(--r-l); padding: 30px;
+        background: var(--cream);
+        border: 1px solid rgba(42,22,13,0.08);
+      }
+      .panel--hot { background-color: var(--tomato); background-image: linear-gradient(150deg, var(--tomato), #a82a16); color: #fff; }
+      .panel ul { margin: 18px 0 0; padding-left: 18px; }
+      .panel li { margin-bottom: 8px; }
+
+      /* ---------- find us ---------- */
+      .find { background: var(--choc); color: var(--ivory); }
+      .find .lede { color: rgba(246,231,210,0.8); }
+      .addr { font-size: clamp(22px, 5.5vw, 32px); line-height: 1.25; margin-top: 22px; max-width: 18ch; }
+      .rowlinks { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+      /* ---------- footer ---------- */
+      footer { background: var(--choc); color: rgba(246,231,210,0.6); padding: 0 0 46px; }
+      footer .line { border-top: 1px solid rgba(246,231,210,0.14); padding-top: 22px; font-size: 12.5px; }
+      footer a { color: rgba(246,231,210,0.85); display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none; transition: none; }
+        .btn { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <img class="hero__img" src="ivorybites_hero.jpg" alt="A warm spread of bakery and restaurant food from IvoryBites" />
+      <div class="hero__veil"></div>
+      <canvas id="physics" aria-hidden="true"></canvas>
+      <div class="hero__copy">
+        <p class="eyebrow">Ile-Ife · Osun</p>
+        <h1>Ivory<em>Bites</em><br />Restaurant &amp; Bakery</h1>
+        <p class="hero__sub">Fresh bakes and hearty meals in Ile-Ife.</p>
+        <div class="btns">
+          <a class="btn btn--hot magnet" href="tel:+2348062226066">📞 Call +234 806 222 6066</a>
+          <a class="btn btn--wa magnet" href="https://wa.me/2348062226066" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a class="btn btn--ghost" href="#menu">See the menu</a>
+        </div>
+        <p class="hero__hint">Tip: drag, flick or tilt your phone to play with the food.</p>
+        <button class="tilt" id="tilt" type="button" hidden>📱 Turn on tilt</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="block proof">
+        <div class="wrap">
+          <div class="proof__card reveal">
+            <div>
+              <p class="score">4.1</p>
+              <p class="stars" aria-hidden="true">★★★★☆</p>
+            </div>
+            <div>
+              <p class="tag" style="color: var(--caramel)">Rated by the neighbourhood</p>
+              <p style="font-size: 19px; margin-top: 8px; color: var(--ivory)">4.1 stars from 326 Google reviews.</p>
+              <p style="margin-top: 6px">Customers come back for the bakery counter and the hot kitchen alike.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="menu">
+        <div class="wrap">
+          <p class="tag reveal">What we make</p>
+          <h2 class="reveal">Six counters,<br />one kitchen.</h2>
+          <p class="lede reveal">Swipe the carousel to spin through what comes out of our ovens and pots.</p>
+
+          <div class="stage reveal" id="stage">
+            <div class="ring" id="ring"></div>
+          </div>
+
+          <div class="carousel-ui reveal">
+            <button class="arrow" id="prev" type="button" aria-label="Previous category">‹</button>
+            <button class="arrow" id="next" type="button" aria-label="Next category">›</button>
+            <p class="now" id="now" aria-live="polite">Pastries &amp; Meat Pies</p>
+          </div>
+          <p class="note reveal" style="margin-top: 14px">Full menu and prices coming soon.</p>
+        </div>
+      </section>
+
+      <section class="block" style="background: var(--cream)">
+        <div class="wrap">
+          <p class="tag reveal">Celebration orders</p>
+          <h2 class="reveal">Cakes made for the day.</h2>
+          <div class="split" style="margin-top: 30px">
+            <div class="panel reveal" style="background: #fff">
+              <h3 style="font-size: 24px">Birthdays and events</h3>
+              <p class="lede" style="margin-top: 12px">We bake cakes for birthdays and events. Order ahead by phone so we can plan your date.</p>
+              <ul>
+                <li>Birthday cakes</li>
+                <li>Event and celebration cakes</li>
+                <li>Order ahead by phone</li>
+              </ul>
+            </div>
+            <div class="panel panel--hot reveal">
+              <h3 style="font-size: 24px">Call to order</h3>
+              <p style="margin-top: 12px; color: rgba(255,255,255,0.9)">Talk to us about your date, size and design.</p>
+              <div class="btns">
+                <a class="btn btn--wa magnet" href="tel:+2348062226066">📞 +234 806 222 6066</a>
+                <a class="btn btn--dark magnet" href="https://wa.me/2348062226066" target="_blank" rel="noopener">WhatsApp us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block find" id="find">
+        <div class="wrap">
+          <p class="tag reveal" style="color: var(--caramel)">Find us</p>
+          <h2 class="reveal">Come in, or call ahead.</h2>
+          <p class="addr reveal">Ajebandele, Ibadan-Ife Road, Ile-Ife, Osun.</p>
+          <div class="rowlinks reveal">
+            <a class="btn btn--hot magnet" href="https://www.google.com/maps/search/?api=1&amp;query=IvoryBites%20Restaurant%20and%20Bakery%20Ile-Ife" target="_blank" rel="noopener">📍 Open in Maps</a>
+            <a class="btn btn--wa magnet" href="tel:+2348062226066">📞 Call +234 806 222 6066</a>
+            <a class="btn btn--ghost magnet" href="https://wa.me/2348062226066" target="_blank" rel="noopener">💬 WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="line">Sample website designed by Mayo · <a href="tel:+2349037499964">+234 903 749 9964</a></p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ---------- scroll reveals ---------- */
+        var els = document.querySelectorAll(".reveal");
+        if (reduce || !("IntersectionObserver" in window)) {
+          els.forEach(function (e) { e.classList.add("in"); });
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en, i) {
+              if (en.isIntersecting) {
+                var el = en.target;
+                setTimeout(function () { el.classList.add("in"); }, i * 70);
+                io.unobserve(el);
+              }
+            });
+          }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+          els.forEach(function (e) { io.observe(e); });
+        }
+
+        /* ---------- magnetic buttons ---------- */
+        if (!reduce && window.matchMedia("(pointer: fine)").matches) {
+          document.querySelectorAll(".magnet").forEach(function (b) {
+            b.addEventListener("pointermove", function (e) {
+              var r = b.getBoundingClientRect();
+              var x = (e.clientX - r.left - r.width / 2) * 0.28;
+              var y = (e.clientY - r.top - r.height / 2) * 0.4;
+              b.style.transform = "translate(" + x + "px," + y + "px)";
+            });
+            b.addEventListener("pointerleave", function () { b.style.transform = ""; });
+          });
+        }
+
+        /* ---------- 3D menu carousel ---------- */
+        var cats = [
+          { name: "Pastries & Meat Pies", ico: "🥟" },
+          { name: "Cakes & Celebration Orders", ico: "🎂" },
+          { name: "Bread", ico: "🍞" },
+          { name: "Jollof & Rice Dishes", ico: "🍚" },
+          { name: "Grills", ico: "🍗" },
+          { name: "Drinks", ico: "🥤" }
+        ];
+        var ring = document.getElementById("ring"),
+          stage = document.getElementById("stage"),
+          now = document.getElementById("now");
+        var n = cats.length, step = 360 / n, radius = 300, angle = 0, target = 0, index = 0;
+        var cards = cats.map(function (c, i) {
+          var d = document.createElement("article");
+          d.className = "card3d";
+          d.innerHTML =
+            '<p class="num">' + String(i + 1).padStart(2, "0") + " / " + n + "</p>" +
+            '<div><div class="ico">' + c.ico + "</div><h3 style=\"margin-top:14px\">" + c.name + "</h3></div>" +
+            '<p style="font-size:13px;opacity:.75">Menu &amp; prices coming soon</p>';
+          d.style.transform = "rotateY(" + i * step + "deg) translateZ(" + radius + "px)";
+          ring.appendChild(d);
+          return d;
+        });
+        function sizeRing() {
+          radius = Math.max(250, Math.min(360, window.innerWidth * 0.62));
+          cards.forEach(function (d, i) {
+            d.style.transform = "rotateY(" + i * step + "deg) translateZ(" + radius + "px)";
+          });
+        }
+        sizeRing();
+        window.addEventListener("resize", sizeRing);
+
+        var tiltX = 0, tiltY = 0;
+        function renderRing() {
+          ring.style.transform = "translateZ(-" + radius + "px) rotateX(" + tiltX + "deg) rotateY(" + (angle + tiltY) + "deg)";
+          var idx = ((Math.round(-angle / step) % n) + n) % n;
+          if (idx !== index) {
+            index = idx;
+            now.textContent = cats[index].name;
+          }
+          cards.forEach(function (d, i) { d.classList.toggle("is-front", i === index); });
+        }
+        function go(d) { target = Math.round(target / step) * step - d * step; }
+        document.getElementById("next").addEventListener("click", function () { go(1); });
+        document.getElementById("prev").addEventListener("click", function () { go(-1); });
+
+        var dragging = false, lastX = 0, startX = 0, vel = 0;
+        stage.addEventListener("pointerdown", function (e) {
+          dragging = true; lastX = startX = e.clientX; vel = 0;
+          stage.setPointerCapture(e.pointerId);
+        });
+        stage.addEventListener("pointermove", function (e) {
+          if (dragging) {
+            var dx = e.clientX - lastX; lastX = e.clientX;
+            vel = dx; target += dx * 0.35; angle += dx * 0.35;
+          } else if (!reduce) {
+            var r = stage.getBoundingClientRect();
+            tiltX = ((e.clientY - r.top) / r.height - 0.5) * -12;
+            tiltY = ((e.clientX - r.left) / r.width - 0.5) * 6;
+          }
+        });
+        function endDrag() {
+          if (!dragging) return;
+          dragging = false;
+          target = Math.round((target + vel * 2) / step) * step;
+        }
+        stage.addEventListener("pointerup", endDrag);
+        stage.addEventListener("pointercancel", endDrag);
+        stage.addEventListener("pointerleave", function () { tiltX = 0; tiltY = 0; endDrag(); });
+
+        (function loop() {
+          angle += (target - angle) * (reduce ? 1 : 0.12);
+          renderRing();
+          requestAnimationFrame(loop);
+        })();
+
+        /* ---------- hero physics ---------- */
+        var cv = document.getElementById("physics");
+        if (cv && cv.getContext) {
+          var ctx = cv.getContext("2d"), W = 0, H = 0, dpr = 1;
+          var glyphs = ["🥐", "🍞", "🌶️", "🥟", "🧁", "🍗", "🥖", "🎂", "🍚"];
+          var bodies = [], gx = 0, gy = 1400, run = true;
+
+          function resize() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            var r = cv.getBoundingClientRect();
+            W = r.width; H = r.height;
+            cv.width = W * dpr; cv.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          }
+          resize();
+          window.addEventListener("resize", resize);
+
+          var count = W < 520 ? 10 : 16;
+          for (var i = 0; i < count; i++) {
+            var rr = (W < 520 ? 17 : 22) + Math.random() * 8;
+            bodies.push({
+              x: rr + Math.random() * (W - 2 * rr),
+              y: -Math.random() * H,
+              vx: (Math.random() - 0.5) * 120,
+              vy: 0,
+              r: rr,
+              rot: Math.random() * 6.28,
+              vr: (Math.random() - 0.5) * 3,
+              g: glyphs[i % glyphs.length]
+            });
+          }
+
+          var held = null, px = 0, py = 0, ppx = 0, ppy = 0;
+          function point(e) {
+            var r = cv.getBoundingClientRect();
+            return { x: e.clientX - r.left, y: e.clientY - r.top };
+          }
+          cv.addEventListener("pointerdown", function (e) {
+            var p = point(e);
+            for (var i = bodies.length - 1; i >= 0; i--) {
+              var b = bodies[i], dx = p.x - b.x, dy = p.y - b.y;
+              if (dx * dx + dy * dy < (b.r + 12) * (b.r + 12)) {
+                held = b; px = ppx = p.x; py = ppy = p.y;
+                cv.setPointerCapture(e.pointerId);
+                e.preventDefault();
+                break;
+              }
+            }
+          });
+          cv.addEventListener("pointermove", function (e) {
+            if (!held) return;
+            var p = point(e); px = p.x; py = p.y;
+          });
+          function release() {
+            if (!held) return;
+            held.vx = (px - ppx) * 30; held.vy = (py - ppy) * 30;
+            held = null;
+          }
+          cv.addEventListener("pointerup", release);
+          cv.addEventListener("pointercancel", release);
+
+          cv.addEventListener("touchstart", function (e) {
+            var r = cv.getBoundingClientRect(), t = e.touches[0];
+            var x = t.clientX - r.left, y = t.clientY - r.top;
+            for (var i = 0; i < bodies.length; i++) {
+              var b = bodies[i], dx = x - b.x, dy = y - b.y;
+              if (dx * dx + dy * dy < (b.r + 12) * (b.r + 12)) { e.preventDefault(); return; }
+            }
+          }, { passive: false });
+
+          function onTilt(e) {
+            if (e.gamma == null) return;
+            var g = Math.max(-45, Math.min(45, e.gamma)), b = Math.max(-45, Math.min(45, e.beta == null ? 45 : e.beta));
+            gx = (g / 45) * 1200;
+            gy = 400 + (b / 45) * 1200;
+          }
+          var tiltBtn = document.getElementById("tilt");
+          if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
+            if (!reduce) tiltBtn.hidden = false;
+            tiltBtn.addEventListener("click", function () {
+              DeviceOrientationEvent.requestPermission().then(function (s) {
+                if (s === "granted") { window.addEventListener("deviceorientation", onTilt); tiltBtn.hidden = true; }
+              }).catch(function () {});
+            });
+          } else {
+            window.addEventListener("deviceorientation", onTilt);
+          }
+
+          var sprites = {};
+          function sprite(g, r) {
+            var key = g + r;
+            if (sprites[key]) return sprites[key];
+            var s = document.createElement("canvas"), size = Math.ceil(r * 2.4 * dpr);
+            s.width = s.height = size;
+            var c2 = s.getContext("2d");
+            c2.textAlign = "center"; c2.textBaseline = "middle";
+            c2.font = r * 1.9 * dpr + "px serif";
+            c2.fillText(g, size / 2, size / 2 + r * 0.1 * dpr);
+            return (sprites[key] = s);
+          }
+
+          var inView = true;
+          if ("IntersectionObserver" in window) {
+            new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }, { threshold: 0.02 }).observe(cv);
+          }
+          document.addEventListener("visibilitychange", function () { run = !document.hidden; });
+
+          var last = performance.now();
+          function tick(t) {
+            var dt = Math.min((t - last) / 1000, 0.033);
+            last = t;
+            requestAnimationFrame(tick);
+            if (!run || !inView) return;
+
+            if (held) {
+              held.vx = (px - held.x) / Math.max(dt, 0.001) * 0.5;
+              held.vy = (py - held.y) / Math.max(dt, 0.001) * 0.5;
+              held.x = px; held.y = py;
+              ppx = px; ppy = py;
+            }
+            for (var i = 0; i < bodies.length; i++) {
+              var b = bodies[i];
+              if (b === held) continue;
+              b.vx += gx * dt; b.vy += gy * dt;
+              b.vx *= 0.995; b.vy *= 0.995;
+              b.x += b.vx * dt; b.y += b.vy * dt;
+              b.rot += b.vr * dt;
+              if (b.x < b.r) { b.x = b.r; b.vx = -b.vx * 0.55; b.vr = -b.vr; }
+              if (b.x > W - b.r) { b.x = W - b.r; b.vx = -b.vx * 0.55; b.vr = -b.vr; }
+              if (b.y > H - b.r) { b.y = H - b.r; b.vy = -b.vy * 0.5; b.vx *= 0.9; b.vr *= 0.85; }
+              if (b.y < -H) { b.y = -b.r; b.vy = 0; }
+            }
+            for (var a = 0; a < bodies.length; a++) {
+              for (var c = a + 1; c < bodies.length; c++) {
+                var p1 = bodies[a], p2 = bodies[c];
+                var dx = p2.x - p1.x, dy = p2.y - p1.y, min = p1.r + p2.r;
+                var d2 = dx * dx + dy * dy;
+                if (d2 > 0 && d2 < min * min) {
+                  var d = Math.sqrt(d2), nx = dx / d, ny = dy / d, overlap = (min - d) / 2;
+                  if (p1 !== held) { p1.x -= nx * overlap; p1.y -= ny * overlap; }
+                  if (p2 !== held) { p2.x += nx * overlap; p2.y += ny * overlap; }
+                  var rvx = p2.vx - p1.vx, rvy = p2.vy - p1.vy, sep = rvx * nx + rvy * ny;
+                  if (sep < 0) {
+                    var imp = -(1.5) * sep / 2;
+                    if (p1 !== held) { p1.vx -= imp * nx; p1.vy -= imp * ny; }
+                    if (p2 !== held) { p2.vx += imp * nx; p2.vy += imp * ny; }
+                  }
+                }
+              }
+            }
+            ctx.clearRect(0, 0, W, H);
+            for (var k = 0; k < bodies.length; k++) {
+              var o = bodies[k], sp = sprite(o.g, o.r), hs = o.r * 1.2;
+              ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+              ctx.translate(o.x, o.y);
+              ctx.rotate(o.rot);
+              ctx.drawImage(sp, -hs, -hs, hs * 2, hs * 2);
+            }
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          }
+          if (reduce) {
+            bodies.forEach(function (b) { b.y = H - b.r - Math.random() * 20; b.vy = 0; b.vx = 0; });
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            bodies.forEach(function (o) { ctx.font = o.r * 1.9 + "px serif"; ctx.fillText(o.g, o.x, o.y); });
+          } else {
+            requestAnimationFrame(tick);
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
