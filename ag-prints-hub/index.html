@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A&amp;G Prints Hub · OAU Central Market, Zone E</title>
+    <meta name="description" content="Printing, photocopying, binding, flyers and banners for OAU students and staff, in Central Market, Zone E, Ile-Ife." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --x-accent: #2f3cff;
+        --x-paper: #fdfdfb;
+        --x-ink: #111114;
+        --x-ink-2: #55555c;
+        --x-paper-shadow: 0 1px 0 rgb(17 17 20 / 0.06), 0 12px 32px rgb(17 17 20 / 0.16);
+      }
+
+      /* Primary call to action, in the one accent colour */
+      .x-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: var(--tap);
+        padding: 10px 18px;
+        border-radius: var(--r-s);
+        background: var(--x-accent);
+        color: #fff;
+        font: var(--type-label);
+        text-decoration: none;
+        box-shadow: 0 6px 20px rgb(47 60 255 / 0.35);
+        transition: transform var(--dur-quick) var(--ease-out);
+      }
+      .x-cta:hover { transform: translateY(-1px); }
+      .x-cta:active { transform: translateY(1px); }
+      .x-cta svg { flex: none; }
+      .x-hero-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .x-hero-links .btn { min-height: var(--tap); padding-inline: 14px; }
+
+      /* Drifting paper behind the page */
+      .x-drift { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+      .x-drift i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 3px;
+        background: var(--x-paper);
+        border: 1px solid var(--stroke-primary);
+        box-shadow: 0 6px 16px rgb(17 17 20 / 0.06);
+        opacity: 0.75;
+        will-change: transform;
+      }
+      .x-drift i::before {
+        content: "";
+        position: absolute;
+        inset: 18% 16% auto;
+        height: 30%;
+        background: repeating-linear-gradient(to bottom, rgb(17 17 20 / 0.12) 0 2px, transparent 2px 7px);
+      }
+
+      /* The printer, feeding a sheet as you scroll */
+      .x-print { position: relative; height: 180vh; }
+      .x-print__stick {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100svh;
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        gap: 20px;
+        padding-top: 56px;
+        text-align: center;
+      }
+      .x-print__title { font: var(--type-title); max-width: 18ch; }
+      .x-print__title b { font-weight: var(--weight-medium); color: light-dark(var(--x-accent), #9ea5ff); }
+      .x-printer { --p: 0; width: min(300px, 78vw); }
+      .x-printer__in {
+        width: 70%;
+        height: 34px;
+        margin: 0 auto -6px;
+        background: var(--x-paper);
+        border: 1px solid var(--stroke-primary);
+        border-bottom: 0;
+        border-radius: 4px 4px 0 0;
+        transform: perspective(200px) rotateX(28deg);
+        transform-origin: bottom;
+      }
+      .x-printer__body {
+        position: relative;
+        z-index: 2;
+        height: 112px;
+        border-radius: var(--r-l) var(--r-l) var(--r-m) var(--r-m);
+        background: var(--x-ink);
+        box-shadow: var(--hark-shadow), inset 0 2px 0 rgb(255 255 255 / 0.08);
+      }
+      .x-printer__panel {
+        position: absolute;
+        top: 22px;
+        left: 22px;
+        right: 22px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .x-printer__screen {
+        flex: 1;
+        height: 22px;
+        border-radius: 6px;
+        background: #1f2230;
+        color: #c9ccff;
+        font: 400 var(--size-caption) / 22px "Geist Mono", monospace;
+        text-align: left;
+        padding-inline: 8px;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .x-printer__led {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #3a3a44;
+      }
+      .x-printer.is-printing .x-printer__led { background: var(--x-accent); box-shadow: 0 0 10px var(--x-accent); animation: x-blink 0.6s steps(2) infinite; }
+      .x-printer.is-done .x-printer__led { background: var(--fill-system-green); }
+      @keyframes x-blink { 50% { opacity: 0.25; } }
+      .x-printer__slot {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        bottom: 20px;
+        height: 6px;
+        border-radius: 3px;
+        background: #000;
+        box-shadow: 0 1px 0 rgb(255 255 255 / 0.12);
+      }
+      .x-printer__out {
+        position: relative;
+        z-index: 1;
+        width: 80%;
+        height: 250px;
+        margin: -23px auto 0;
+        overflow: hidden;
+      }
+      .x-printer__sheet {
+        height: 100%;
+        padding: 30px 20px 18px;
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        text-align: left;
+        background: var(--x-paper);
+        color: var(--x-ink);
+        border-radius: 0 0 4px 4px;
+        box-shadow: var(--x-paper-shadow);
+        transform: translate3d(0, calc((var(--p) - 1) * 100%), 0) rotate(calc((1 - var(--p)) * 0deg + var(--p) * -1.5deg));
+        will-change: transform;
+      }
+      .x-printer__sheet strong { font: var(--type-body-strong); }
+      .x-lines { display: grid; gap: 7px; }
+      .x-lines span { height: 5px; border-radius: 3px; background: rgb(17 17 20 / 0.14); }
+      .x-stamp {
+        justify-self: start;
+        margin-top: 6px;
+        padding: 4px 10px;
+        border: 1.5px solid var(--x-accent);
+        border-radius: 6px;
+        color: var(--x-accent);
+        font: var(--type-tag);
+        transform: rotate(-4deg);
+      }
+
+      /* The flickable stack of service sheets */
+      .x-deck { display: grid; justify-items: center; gap: 16px; padding-top: 8px; }
+      .x-stack {
+        position: relative;
+        width: min(320px, 82vw);
+        height: 400px;
+        perspective: 1100px;
+        touch-action: pan-y;
+        outline-offset: 12px;
+        border-radius: var(--r-s);
+      }
+      .x-stack__inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 300ms var(--ease-out); }
+      .x-card {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 12px;
+        padding: 24px 22px 20px;
+        border-radius: 6px;
+        background: var(--x-paper);
+        color: var(--x-ink);
+        box-shadow: var(--x-paper-shadow);
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        will-change: transform;
+        backface-visibility: hidden;
+      }
+      .x-card:active { cursor: grabbing; }
+      .x-card.is-settling { transition: transform 560ms var(--ease-out); }
+      .x-card__top { display: flex; justify-content: space-between; align-items: center; font: 400 var(--size-caption) / 1.3 "Geist Mono", monospace; color: var(--x-ink-2); }
+      .x-card__art { display: grid; place-items: center; }
+      .x-card__art svg { width: 116px; height: 116px; }
+      .x-card h3 { font: var(--type-heading); }
+      .x-card p { font: var(--type-small); color: var(--x-ink-2); margin-top: 6px; }
+      .x-card__foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px dashed rgb(17 17 20 / 0.2); font: var(--type-tag); color: var(--x-accent); }
+      .x-deck__ctrl { display: flex; align-items: center; gap: 12px; }
+      .x-deck__ctrl .btn { min-height: var(--tap); min-width: var(--tap); justify-content: center; cursor: pointer; }
+      .x-deck__count { font: 400 var(--size-small) / 1 "Geist Mono", monospace; color: var(--text-secondary); min-width: 5ch; text-align: center; }
+      .x-deck__note { text-align: center; display: grid; gap: 8px; justify-items: center; }
+      button.btn { cursor: pointer; }
+      .x-tilt[hidden] { display: none; }
+
+      @media (min-width: 761px) {
+        .x-stack { height: 420px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .x-print { height: auto; }
+        .x-print__stick { position: static; height: auto; padding-block: 40px; }
+        .x-printer { --p: 1 !important; }
+        .x-card.is-settling, .x-stack__inner, .x-cta { transition: none; }
+        .x-printer.is-printing .x-printer__led { animation: none; }
+        .x-tilt { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="x-drift" aria-hidden="true"></div>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <section class="hero">
+          <img class="hero__img" src="ag_hero.jpg" alt="Inside A&amp;G Prints Hub: copiers and a large-format printer" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">OAU Central Market · Zone E</p>
+            <h1>A&amp;G Prints Hub</h1>
+            <p class="hero__sub">Printing for OAU students and staff, in Central Market.</p>
+            <div class="x-hero-links">
+              <a class="x-cta" href="https://wa.me/2348067476731?text=Hi%20A%26G%20Prints%20Hub%2C%20I%20have%20a%20print%20job" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+                Send your job on WhatsApp
+              </a>
+              <a class="btn" href="tel:+2348067476731">Call +234 806 747 6731</a>
+            </div>
+          </div>
+          <p class="hero__credit">Sample website</p>
+        </section>
+
+        <section class="stats" aria-label="Google rating">
+          <div class="stat"><span class="stat__fig">4.3 ★</span><span class="stat__label">Google rating</span></div>
+          <div class="stat"><span class="stat__fig">32</span><span class="stat__label">Google reviews</span></div>
+        </section>
+
+        <section class="x-print" aria-label="Send ahead, pick up printed">
+          <div class="x-print__stick">
+            <h2 class="x-print__title">Send it ahead. <b>It’s printed</b> before you arrive.</h2>
+            <div class="x-printer" id="printer">
+              <div class="x-printer__in" aria-hidden="true"></div>
+              <div class="x-printer__body" aria-hidden="true">
+                <div class="x-printer__panel">
+                  <span class="x-printer__screen" id="printer-screen">Waiting for your file</span>
+                  <span class="x-printer__led"></span>
+                </div>
+                <span class="x-printer__slot"></span>
+              </div>
+              <div class="x-printer__out">
+                <div class="x-printer__sheet">
+                  <strong>Your print job</strong>
+                  <div class="x-lines" aria-hidden="true"><span style="width: 92%"></span><span style="width: 80%"></span><span style="width: 86%"></span><span style="width: 60%"></span></div>
+                  <div class="x-lines" aria-hidden="true"><span style="width: 88%"></span><span style="width: 74%"></span><span style="width: 40%"></span></div>
+                  <span class="x-stamp">Ready · pick up at Zone E</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="services" data-nav="Services">
+          <div class="head">
+            <p class="head__eyebrow">Five services</p>
+            <h2>Flick through what we print.</h2>
+            <p class="head__sub">Swipe or tap the top sheet.</p>
+          </div>
+          <div class="x-deck">
+            <div class="x-stack" id="stack" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Services. Use the left and right arrow keys to flick through.">
+              <div class="x-stack__inner" id="stack-inner">
+                <article class="x-card" aria-label="1 of 5">
+                  <div class="x-card__top"><span>01 / 05</span><span>A4 · A3</span></div>
+                  <div class="x-card__art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M34 14h38l18 18v74H34z" fill="#fff"/><path d="M72 14v18h18"/><path d="M44 48h36M44 60h36M44 72h28M44 84h20" stroke="#2f3cff"/></svg>
+                  </div>
+                  <div><h3>Document printing</h3><p>Assignments, notes, CVs and forms, printed and ready to collect.</p></div>
+                  <div class="x-card__foot"><span>Ask on WhatsApp</span><span aria-hidden="true">→</span></div>
+                </article>
+                <article class="x-card" aria-label="2 of 5">
+                  <div class="x-card__top"><span>02 / 05</span><span>Copies</span></div>
+                  <div class="x-card__art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M28 22h44v62H28z" fill="#fff"/><path d="M48 36h44v62H48z" fill="#fff"/><path d="M58 52h24M58 64h24M58 76h16" stroke="#2f3cff"/></svg>
+                  </div>
+                  <div><h3>Photocopying</h3><p>Handouts, past questions and course packs, one page or a full stack.</p></div>
+                  <div class="x-card__foot"><span>Ask on WhatsApp</span><span aria-hidden="true">→</span></div>
+                </article>
+                <article class="x-card" aria-label="3 of 5">
+                  <div class="x-card__top"><span>03 / 05</span><span>Bound</span></div>
+                  <div class="x-card__art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M32 16h56v88H32z" fill="#fff"/><path d="M32 16v88" stroke-width="8" stroke="#2f3cff"/><path d="M48 40h28M48 50h20"/></svg>
+                  </div>
+                  <div><h3>Binding</h3><p>Projects and assignments bound neatly, ready to submit.</p></div>
+                  <div class="x-card__foot"><span>Ask on WhatsApp</span><span aria-hidden="true">→</span></div>
+                </article>
+                <article class="x-card" aria-label="4 of 5">
+                  <div class="x-card__top"><span>04 / 05</span><span>Colour</span></div>
+                  <div class="x-card__art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M30 14h60v92H30z" fill="#fff"/><circle cx="60" cy="46" r="16" fill="#2f3cff" stroke="#2f3cff"/><path d="M42 76h36M42 88h24"/></svg>
+                  </div>
+                  <div><h3>Flyers and posters</h3><p>For events, fellowships, campaigns and anything you need seen around campus.</p></div>
+                  <div class="x-card__foot"><span>Ask on WhatsApp</span><span aria-hidden="true">→</span></div>
+                </article>
+                <article class="x-card" aria-label="5 of 5">
+                  <div class="x-card__top"><span>05 / 05</span><span>Large format</span></div>
+                  <div class="x-card__art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M10 34h100v42H10z" fill="#fff"/><path d="M22 48h46" stroke="#2f3cff" stroke-width="6"/><path d="M22 62h30"/><path d="M26 76v30M94 76v30"/></svg>
+                  </div>
+                  <div><h3>Large-format banners</h3><p>Big prints for stands, events, departments and shopfronts.</p></div>
+                  <div class="x-card__foot"><span>Ask on WhatsApp</span><span aria-hidden="true">→</span></div>
+                </article>
+              </div>
+            </div>
+            <div class="x-deck__ctrl">
+              <button class="btn" type="button" id="prev" aria-label="Previous service">←</button>
+              <span class="x-deck__count" id="count" aria-live="polite">1 / 5</span>
+              <button class="btn" type="button" id="next" aria-label="Next service">→</button>
+            </div>
+            <div class="x-deck__note">
+              <p class="fineprint">Prices on request. <a class="link" href="https://wa.me/2348067476731?text=Hi%20A%26G%20Prints%20Hub%2C%20I%20have%20a%20print%20job" target="_blank" rel="noopener">Ask on WhatsApp</a>.</p>
+              <button class="btn x-tilt" type="button" id="tilt" hidden>Turn on tilt</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="how" data-nav="Skip the queue">
+          <div class="head">
+            <p class="head__eyebrow">Skip the queue</p>
+            <h2>Send it, we print it, you pick it up.</h2>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <div class="step__intro"><p class="step__num">01</p><p class="step__eyebrow">From anywhere</p></div>
+              <div>
+                <h3>Send your file on WhatsApp</h3>
+                <p>Attach the document and say how many copies you need.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">02</p><p class="step__eyebrow">At the shop</p></div>
+              <div>
+                <h3>We print it</h3>
+                <p>Your job is printed while you are in class.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">03</p><p class="step__eyebrow">Central Market</p></div>
+              <div>
+                <h3>Pick up at Zone E</h3>
+                <p>Walk in, collect and go.</p>
+              </div>
+            </article>
+          </div>
+          <div class="links">
+            <a class="x-cta" href="https://wa.me/2348067476731?text=Hi%20A%26G%20Prints%20Hub%2C%20I%20have%20a%20print%20job" target="_blank" rel="noopener">Send your job on WhatsApp</a>
+          </div>
+        </section>
+
+        <section class="section" id="find" data-nav="Find us">
+          <div class="head">
+            <p class="head__eyebrow">Find us</p>
+            <h2>OAU Central Market, Zone E, Ile-Ife.</h2>
+            <p class="head__sub">Obafemi Awolowo University campus.</p>
+          </div>
+          <aside class="callout" aria-label="Directions and contact">
+            <p class="callout__head">A&amp;G Prints Hub</p>
+            <p class="callout__lead"><strong>Zone E, Central Market.</strong> Message first and your job is ready when you arrive.</p>
+            <div class="links">
+              <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=A%26G%20Prints%20Hub%20OAU%20Central%20Market%20Ile-Ife" target="_blank" rel="noopener">Open in Google Maps</a>
+              <a class="btn" href="tel:+2348067476731">Call +234 806 747 6731</a>
+              <a class="btn" href="https://wa.me/2348067476731?text=Hi%20A%26G%20Prints%20Hub%2C%20I%20have%20a%20print%20job" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </aside>
+        </section>
+      </main>
+      <footer class="foot">
+        <div>
+          <p><strong>A&amp;G Prints Hub</strong> · OAU Central Market, Zone E</p>
+          <p>Sample website designed by Mayo · <a class="link" href="tel:+2349037499964">+234 903 749 9964</a></p>
+        </div>
+        <nav aria-label="Back to sections" data-auto></nav>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var tilt = { x: 0, y: 0, on: false };
+        var pointer = { x: -9999, y: -9999, t: 0 };
+
+        /* ---------- Printer feeding on scroll ---------- */
+        var printSec = document.querySelector(".x-print");
+        var printer = document.getElementById("printer");
+        var screen = document.getElementById("printer-screen");
+        var lastMsg = "";
+        function setMsg(m) { if (m !== lastMsg) { screen.textContent = m; lastMsg = m; } }
+        function updatePrinter() {
+          if (reduce.matches) { printer.style.setProperty("--p", 1); printer.classList.add("is-done"); setMsg("Ready for pickup"); return; }
+          var r = printSec.getBoundingClientRect();
+          var span = r.height - window.innerHeight;
+          var raw = span > 0 ? -r.top / span : 1;
+          var p = Math.min(1, Math.max(0, (raw - 0.12) / 0.7));
+          printer.style.setProperty("--p", p.toFixed(4));
+          printer.classList.toggle("is-printing", p > 0 && p < 1);
+          printer.classList.toggle("is-done", p >= 1);
+          setMsg(p <= 0 ? "Waiting for your file" : p < 1 ? "Printing… " + Math.round(p * 100) + "%" : "Ready for pickup");
+        }
+        var ticking = false;
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; updatePrinter(); }); } }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        updatePrinter();
+
+        /* ---------- Drifting paper ---------- */
+        var layer = document.querySelector(".x-drift");
+        var sheets = [];
+        var specs = [[0.06, 0.12, 46], [0.88, 0.2, 56], [0.18, 0.46, 38], [0.8, 0.55, 50], [0.04, 0.78, 54], [0.92, 0.86, 40], [0.5, 0.95, 44]];
+        specs.forEach(function (s, i) {
+          var el = document.createElement("i");
+          el.style.width = s[2] + "px";
+          el.style.height = Math.round(s[2] * 1.38) + "px";
+          layer.appendChild(el);
+          sheets.push({ el: el, bx: s[0], by: s[1], w: s[2], ox: 0, oy: 0, vx: 0, vy: 0, ph: i * 1.7, r0: (i % 2 ? 1 : -1) * (8 + i * 3) });
+        });
+        function placeStatic() {
+          var W = window.innerWidth, H = window.innerHeight;
+          sheets.forEach(function (s) { s.el.style.transform = "translate3d(" + (s.bx * W - s.w / 2) + "px," + (s.by * H) + "px,0) rotate(" + s.r0 + "deg)"; });
+        }
+        function trackPointer(x, y) { pointer.x = x; pointer.y = y; pointer.t = performance.now(); wake(); }
+        window.addEventListener("pointermove", function (e) { trackPointer(e.clientX, e.clientY); }, { passive: true });
+        window.addEventListener("pointerdown", function (e) { trackPointer(e.clientX, e.clientY); }, { passive: true });
+        window.addEventListener("touchmove", function (e) { var t = e.touches[0]; if (t) trackPointer(t.clientX, t.clientY); }, { passive: true });
+
+        var running = false, last = 0;
+        function wake() { if (!running && !reduce.matches && !document.hidden) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+        function frame(now) {
+          if (reduce.matches || document.hidden) { running = false; return; }
+          var dt = Math.min(48, now - last) / 16.67; last = now;
+          var W = window.innerWidth, H = window.innerHeight, t = now / 1000;
+          var active = now - pointer.t < 600;
+          sheets.forEach(function (s) {
+            var x = s.bx * W - s.w / 2 + s.ox, y = s.by * H + s.oy;
+            if (active) {
+              var dx = x + s.w / 2 - pointer.x, dy = y + s.w * 0.7 - pointer.y, d2 = dx * dx + dy * dy;
+              if (d2 < 22500 && d2 > 1) { var d = Math.sqrt(d2), f = (150 - d) / 150 * 1.6; s.vx += dx / d * f * dt; s.vy += dy / d * f * dt; }
+            }
+            var tx = tilt.x * 2.2, ty = tilt.y * 1.6;
+            s.vx += ((tx - s.ox) * 0.012) * dt;
+            s.vy += ((ty - s.oy) * 0.012) * dt;
+            s.vx *= Math.pow(0.9, dt); s.vy *= Math.pow(0.9, dt);
+            s.ox += s.vx * dt; s.oy += s.vy * dt;
+            var bob = Math.sin(t * 0.6 + s.ph) * 10, sway = Math.cos(t * 0.45 + s.ph) * 6;
+            var rot = s.r0 + Math.sin(t * 0.5 + s.ph) * 4 + s.vx * 1.5;
+            s.el.style.transform = "translate3d(" + (x + sway).toFixed(1) + "px," + (y + bob).toFixed(1) + "px,0) rotate(" + rot.toFixed(2) + "deg)";
+          });
+          requestAnimationFrame(frame);
+        }
+        document.addEventListener("visibilitychange", wake);
+        function applyMotionPref() { if (reduce.matches) placeStatic(); else wake(); }
+        reduce.addEventListener ? reduce.addEventListener("change", applyMotionPref) : reduce.addListener(applyMotionPref);
+        applyMotionPref();
+
+        /* ---------- Flickable service stack ---------- */
+        var stack = document.getElementById("stack");
+        var inner = document.getElementById("stack-inner");
+        var count = document.getElementById("count");
+        var cards = [].slice.call(stack.querySelectorAll(".x-card"));
+        var order = cards.slice();
+        var flying = [];
+        var rots = [0, -3.5, 2.5, -1.5, 1.2];
+        function rest(i) { return "translate3d(" + i * 3 + "px," + i * 11 + "px," + -i * 28 + "px) rotate(" + rots[i] + "deg)"; }
+        function layout() {
+          order.forEach(function (c, i) {
+            var idx = cards.indexOf(c);
+            c.setAttribute("aria-hidden", i ? "true" : "false");
+            if (flying.indexOf(c) > -1) return;
+            c.style.zIndex = String(order.length - i);
+            c.classList.add("is-settling");
+            c.style.transform = rest(i);
+          });
+          count.textContent = cards.indexOf(order[0]) + 1 + " / " + cards.length;
+        }
+        layout();
+
+        function fling(card, x, y, vx, vy) {
+          order.push(order.shift());
+          if (reduce.matches) { layout(); return; }
+          flying.push(card);
+          card.classList.remove("is-settling");
+          card.style.zIndex = "50";
+          layout();
+          var dir = vx < 0 ? -1 : 1;
+          if (Math.abs(vx) < 1.1) vx = dir * 1.4;
+          var r = x * 0.06, vr = vx * 0.35, t0 = performance.now(), prev = t0;
+          var limit = window.innerWidth * 0.75 + stack.offsetWidth;
+          function step(now) {
+            var dt = Math.min(40, now - prev); prev = now;
+            x += vx * dt; y += vy * dt; vy += 0.0022 * dt; r += vr * dt * 0.06;
+            card.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,60px) rotate(" + r.toFixed(2) + "deg)";
+            if (Math.abs(x) < limit && now - t0 < 1400) { requestAnimationFrame(step); return; }
+            flying.splice(flying.indexOf(card), 1);
+            card.style.zIndex = "0";
+            card.style.transform = "translate3d(" + dir * 30 + "px," + (y > 300 ? 300 : y) * 0.2 + "px,-200px) rotate(" + dir * 14 + "deg)";
+            void card.offsetWidth;
+            layout();
+          }
+          requestAnimationFrame(step);
+        }
+        function next() { fling(order[0], 0, 0, -1.5, -0.35); }
+        function prevCard() {
+          var c = order.pop(); order.unshift(c);
+          if (!reduce.matches) {
+            c.classList.remove("is-settling");
+            c.style.zIndex = "50";
+            c.style.transform = "translate3d(" + -(window.innerWidth * 0.6 + 200) + "px,-60px,60px) rotate(-24deg)";
+            void c.offsetWidth;
+          }
+          layout();
+        }
+        document.getElementById("next").addEventListener("click", next);
+        document.getElementById("prev").addEventListener("click", prevCard);
+        stack.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+          else if (e.key === "ArrowLeft") { e.preventDefault(); prevCard(); }
+        });
+
+        var drag = null;
+        stack.addEventListener("pointerdown", function (e) {
+          var top = order[0];
+          if (!top.contains(e.target) || flying.indexOf(top) > -1 || (e.pointerType === "mouse" && e.button !== 0)) return;
+          drag = { id: e.pointerId, card: top, sx: e.clientX, sy: e.clientY, x: 0, y: 0, hist: [{ x: e.clientX, y: e.clientY, t: performance.now() }], moved: false };
+          top.classList.remove("is-settling");
+          try { stack.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        stack.addEventListener("pointermove", function (e) {
+          if (!drag || e.pointerId !== drag.id) return;
+          drag.x = e.clientX - drag.sx; drag.y = e.clientY - drag.sy;
+          if (Math.abs(drag.x) + Math.abs(drag.y) > 6) drag.moved = true;
+          var now = performance.now();
+          drag.hist.push({ x: e.clientX, y: e.clientY, t: now });
+          if (drag.hist.length > 6) drag.hist.shift();
+          drag.card.style.transform = "translate3d(" + drag.x + "px," + drag.y * 0.6 + "px,40px) rotate(" + drag.x * 0.07 + "deg) rotateY(" + drag.x * 0.04 + "deg)";
+        });
+        function endDrag(e) {
+          if (!drag || e.pointerId !== drag.id) return;
+          var d = drag; drag = null;
+          if (!d.moved) { if (e.type === "pointerup") next(); else layout(); return; }
+          var a = d.hist[0], b = d.hist[d.hist.length - 1], dt = Math.max(1, b.t - a.t);
+          var vx = (b.x - a.x) / dt, vy = (b.y - a.y) / dt;
+          if (Math.abs(d.x) > stack.offsetWidth * 0.28 || Math.abs(vx) > 0.45) fling(d.card, d.x, d.y * 0.6, vx, Math.min(vy, 0.2) - 0.3);
+          else layout();
+        }
+        stack.addEventListener("pointerup", endDrag);
+        stack.addEventListener("pointercancel", endDrag);
+
+        /* ---------- Tilt (opt-in) ---------- */
+        var tiltBtn = document.getElementById("tilt");
+        if ("DeviceOrientationEvent" in window && window.matchMedia("(pointer: coarse)").matches) tiltBtn.hidden = false;
+        function onOrient(e) {
+          if (e.gamma == null) return;
+          tilt.x = Math.max(-30, Math.min(30, e.gamma));
+          tilt.y = Math.max(-30, Math.min(30, (e.beta || 0) - 40));
+          if (!reduce.matches) inner.style.transform = "rotateY(" + (tilt.x * 0.5).toFixed(1) + "deg) rotateX(" + (-tilt.y * 0.3).toFixed(1) + "deg)";
+          tilt.seen = true;
+          wake();
+        }
+        function startTilt() {
+          window.addEventListener("deviceorientation", onOrient);
+          tilt.on = true;
+          tiltBtn.textContent = "Turn off tilt";
+          setTimeout(function () { if (tilt.on && !tilt.seen) { stopTilt(); tiltBtn.textContent = "Tilt not available"; tiltBtn.disabled = true; } }, 2500);
+        }
+        function stopTilt() {
+          window.removeEventListener("deviceorientation", onOrient);
+          tilt.on = false; tilt.x = 0; tilt.y = 0;
+          inner.style.transform = "";
+          tiltBtn.textContent = "Turn on tilt";
+          wake();
+        }
+        tiltBtn.addEventListener("click", function () {
+          if (tilt.on) { stopTilt(); return; }
+          var D = window.DeviceOrientationEvent;
+          if (D && typeof D.requestPermission === "function") {
+            D.requestPermission().then(function (s) { if (s === "granted") startTilt(); else tiltBtn.textContent = "Tilt not allowed"; }).catch(function () { tiltBtn.textContent = "Tilt not allowed"; });
+          } else startTilt();
+        });
+      })();
+    </script>
+  </body>
+</html>
