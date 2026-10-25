@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#07061a" />
+    <title>Indeego Restaurant &amp; Lounge · Ile-Ife</title>
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <script>document.documentElement.classList.add("x-js");</script>
+    <style>
+      :root {
+        --x-ink: #07061a;
+        --x-ink-2: #0e0c2b;
+        --x-indigo: #241c6b;
+        --x-blue: #3d7bff;
+        --x-violet: #8b5cf6;
+        --x-gold: #e9c46a;
+        --x-text: #f5f5f7;
+        --x-muted: #c3c1dd;
+        --x-line: rgb(245 245 247 / 0.14);
+        --x-glass: rgb(20 16 58 / 0.55);
+        color-scheme: dark;
+      }
+      html, body { background: var(--x-ink); color: var(--x-text); }
+      body {
+        background:
+          radial-gradient(60vw 50vh at 85% 40%, rgb(139 92 246 / 0.12), transparent 70%),
+          radial-gradient(60vw 50vh at 10% 75%, rgb(61 123 255 / 0.10), transparent 70%),
+          var(--x-ink);
+      }
+      .page { gap: 0; padding-block: 0 32px; }
+      .main { gap: 0; }
+
+      /* full-bleed helper */
+      .x-bleed { width: 100vw; margin-inline: calc(50% - 50vw); position: relative; }
+
+      /* ---------- hero ---------- */
+      .x-hero {
+        min-height: 100vh; min-height: 100svh;
+        display: grid; align-items: end;
+        overflow: hidden; isolation: isolate;
+        background: var(--x-ink);
+      }
+      .x-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; opacity: 0.55; }
+      .x-hero::before {
+        content: ""; position: absolute; inset: 0; z-index: -2;
+        background:
+          linear-gradient(180deg, rgb(7 6 26 / 0.55) 0%, rgb(20 14 70 / 0.45) 40%, rgb(7 6 26 / 0.96) 100%),
+          radial-gradient(80% 60% at 50% 38%, rgb(61 123 255 / 0.18), transparent 70%);
+      }
+      .x-galaxy { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; touch-action: pan-y; cursor: grab; }
+      .x-galaxy:active { cursor: grabbing; }
+      .x-hero__copy {
+        position: relative; pointer-events: none;
+        width: 100%; max-width: var(--page-max); margin: 0 auto;
+        padding: 0 var(--gutter) calc(48px + env(safe-area-inset-bottom, 0px));
+        display: grid; gap: 14px;
+      }
+      .x-hero__copy a, .x-hero__copy button { pointer-events: auto; }
+      .x-eyebrow {
+        font: var(--type-tag); letter-spacing: 0.22em; text-transform: uppercase; color: var(--x-gold);
+        display: flex; align-items: center; gap: 10px;
+      }
+      .x-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--x-gold); box-shadow: 0 0 8px var(--x-gold); }
+      .x-hero h1 {
+        font-weight: var(--weight-medium);
+        font-size: clamp(40px, 11vw, 92px); line-height: 0.98; letter-spacing: -0.03em;
+        color: #fff;
+        text-shadow: 0 0 28px rgb(139 92 246 / 0.6), 0 0 60px rgb(61 123 255 / 0.35);
+      }
+      .x-hero h1 span { display: block; font-size: 0.42em; letter-spacing: 0.02em; margin-top: 8px; color: var(--x-gold); text-shadow: 0 0 18px rgb(233 196 106 / 0.45); }
+      .x-tag { font: var(--type-lede); color: var(--x-muted); }
+      .x-hint { font: var(--type-caption); color: var(--x-muted); opacity: 0.8; }
+      .x-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+
+      /* ---------- buttons ---------- */
+      .x-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: 48px; padding: 0 20px; border-radius: var(--r-pill);
+        font: var(--type-label); color: var(--x-text); text-decoration: none;
+        border: 1px solid var(--x-line); background: var(--x-glass);
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+        transition: border-color var(--dur-quick) var(--ease-out), background var(--dur-quick) var(--ease-out);
+      }
+      .x-btn:hover { border-color: rgb(233 196 106 / 0.6); }
+      .x-btn svg { width: 18px; height: 18px; flex: none; }
+      .x-btn--gold { background-color: var(--x-gold); background-image: linear-gradient(135deg, #f3d98b, var(--x-gold) 50%, #c99a3a); -webkit-backdrop-filter: none; backdrop-filter: none; color: #1a1405; border-color: transparent; font-weight: var(--weight-bold); }
+      .x-magnet {
+        position: relative;
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 56px; padding: 0 30px; border-radius: var(--r-pill);
+        font: var(--type-body-strong); font-size: var(--size-prose); letter-spacing: 0.02em;
+        color: #fff; text-decoration: none;
+        background: linear-gradient(120deg, var(--x-blue), var(--x-violet));
+        box-shadow: 0 0 0 1px rgb(255 255 255 / 0.18) inset, 0 0 24px rgb(61 123 255 / 0.55), 0 0 60px rgb(139 92 246 / 0.45);
+        transition: transform 300ms var(--ease-out);
+        will-change: transform;
+      }
+      .x-magnet::after {
+        content: ""; position: absolute; inset: -6px; border-radius: inherit; z-index: -1;
+        background: linear-gradient(120deg, var(--x-blue), var(--x-violet), var(--x-gold), var(--x-blue));
+        background-size: 300% 100%; filter: blur(14px); opacity: 0.7;
+        animation: x-glow 6s linear infinite;
+      }
+      .x-magnet span { display: inline-block; transition: transform 300ms var(--ease-out); pointer-events: none; }
+      @keyframes x-glow { to { background-position: 300% 0; } }
+
+      /* ---------- sections ---------- */
+      .x-sec { padding-block: clamp(64px, 12vw, 120px) 0; display: grid; gap: 28px; }
+      .x-sec__head { display: grid; gap: 10px; max-width: 640px; }
+      .x-sec h2 { font-weight: var(--weight-medium); font-size: clamp(30px, 6vw, 52px); line-height: 1.05; letter-spacing: -0.02em; }
+      .x-sec h2 em { font-style: normal; color: var(--x-gold); text-shadow: 0 0 18px rgb(233 196 106 / 0.45); }
+      .x-sub { font: var(--type-body); font-size: var(--size-prose); color: var(--x-muted); }
+
+      /* ---------- rating ---------- */
+      .x-proof {
+        display: grid; gap: 18px; justify-items: center; text-align: center;
+        padding: 36px 24px; border-radius: var(--r-xl);
+        border: 1px solid var(--x-line);
+        background: linear-gradient(160deg, rgb(36 28 107 / 0.55), rgb(14 12 43 / 0.7));
+        box-shadow: 0 0 80px rgb(61 123 255 / 0.12) inset;
+      }
+      .x-score { font-weight: var(--weight-medium); font-size: clamp(64px, 16vw, 112px); line-height: 1; letter-spacing: -0.04em; color: var(--x-gold); text-shadow: 0 0 30px rgb(233 196 106 / 0.5); }
+      .x-stars { display: flex; gap: 6px; }
+      .x-stars svg { width: 28px; height: 28px; }
+      .x-stars .on { fill: var(--x-gold); filter: drop-shadow(0 0 6px rgb(233 196 106 / 0.7)); }
+      .x-stars .off { fill: none; stroke: rgb(233 196 106 / 0.55); stroke-width: 1.5; }
+      .x-proof p { font: var(--type-body); font-size: var(--size-prose); color: var(--x-muted); }
+      .x-proof strong { color: var(--x-text); }
+
+      /* ---------- flip cards ---------- */
+      .x-flips { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+      .x-flip {
+        all: unset; box-sizing: border-box; display: block; cursor: pointer;
+        perspective: 1100px; height: 340px; border-radius: var(--r-l);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .x-flip:focus-visible { outline: 2px solid var(--x-gold); outline-offset: 4px; }
+      .x-flip__inner {
+        position: relative; height: 100%; transform-style: preserve-3d;
+        transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .x-flip[aria-pressed="true"] .x-flip__inner { transform: rotateY(180deg); }
+      .x-face {
+        position: absolute; inset: 0; border-radius: var(--r-l); overflow: hidden;
+        -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;
+        border: 1px solid var(--x-line);
+      }
+      .x-face--front { background: var(--x-ink-2); }
+      .x-face--front::before {
+        content: ""; position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(70% 55% at 70% 25%, var(--x-c1), transparent 70%), radial-gradient(60% 50% at 20% 60%, var(--x-c2), transparent 70%);
+        opacity: 0.75;
+      }
+      .x-face > * { position: relative; }
+      .x-face__num { position: absolute; top: 22px; left: 24px; font: var(--type-tag); letter-spacing: 0.2em; color: var(--x-gold); }
+      .x-face__icon { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; color: var(--x-text); opacity: 0.9; }
+      .x-face h3 { font-weight: var(--weight-medium); font-size: 28px; line-height: 1.1; letter-spacing: -0.01em; }
+      .x-face p { font: var(--type-body); color: var(--x-muted); }
+      .x-face__tap { font: var(--type-caption); color: var(--x-gold); letter-spacing: 0.08em; text-transform: uppercase; }
+      .x-face--back {
+        transform: rotateY(180deg); justify-content: center; align-items: center; text-align: center; gap: 14px;
+        background: linear-gradient(150deg, var(--x-indigo), var(--x-ink-2));
+        box-shadow: 0 0 60px rgb(139 92 246 / 0.25) inset;
+      }
+      .x-face--back strong { font-weight: var(--weight-medium); font-size: 26px; color: var(--x-gold); text-shadow: 0 0 16px rgb(233 196 106 / 0.45); }
+      .x-face--back .x-btn { pointer-events: auto; }
+
+      /* ---------- parallax ---------- */
+      .x-depth { height: 120vh; height: 120svh; overflow: hidden; margin-top: clamp(64px, 12vw, 120px); display: grid; place-items: center; }
+      .x-layer { position: absolute; inset: 0; pointer-events: none; will-change: transform; }
+      .x-orb { position: absolute; border-radius: 50%; filter: blur(2px); }
+      .x-ring { position: absolute; border-radius: 50%; border: 1px solid; }
+      .x-depth__copy { position: relative; text-align: center; padding: 0 var(--gutter); display: grid; gap: 14px; justify-items: center; will-change: transform; }
+      .x-depth__copy p:first-child { font-weight: var(--weight-medium); font-size: clamp(44px, 13vw, 120px); line-height: 0.95; letter-spacing: -0.04em;
+        color: #fff; text-shadow: 0 0 30px rgb(139 92 246 / 0.7), 0 0 70px rgb(61 123 255 / 0.4); }
+
+      /* ---------- events / visit ---------- */
+      .x-panel {
+        border-radius: var(--r-xl); border: 1px solid var(--x-line); padding: clamp(28px, 5vw, 48px);
+        background: linear-gradient(140deg, rgb(36 28 107 / 0.6), rgb(7 6 26 / 0.6));
+        display: grid; gap: 22px; position: relative; overflow: hidden;
+      }
+      .x-panel::after { content: ""; position: absolute; width: 320px; height: 320px; right: -120px; top: -120px; border-radius: 50%; background: radial-gradient(circle, rgb(233 196 106 / 0.22), transparent 70%); pointer-events: none; }
+      .x-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+      .x-list li { display: flex; gap: 12px; align-items: baseline; font: var(--type-body); font-size: var(--size-prose); color: var(--x-muted); }
+      .x-list li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--x-gold); box-shadow: 0 0 10px var(--x-gold); transform: translateY(-2px); }
+      .x-addr { font-weight: var(--weight-regular); font-size: clamp(22px, 4.5vw, 32px); line-height: 1.25; }
+      .x-addr small { display: block; margin-top: 6px; font: var(--type-body); color: var(--x-muted); }
+      .x-mapart { height: 160px; border-radius: var(--r-l); border: 1px solid var(--x-line); position: relative; overflow: hidden;
+        background:
+          repeating-linear-gradient(90deg, transparent 0 38px, rgb(245 245 247 / 0.05) 38px 39px),
+          repeating-linear-gradient(0deg, transparent 0 38px, rgb(245 245 247 / 0.05) 38px 39px),
+          linear-gradient(160deg, var(--x-ink-2), var(--x-indigo)); }
+      .x-pin { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--x-gold); box-shadow: 0 0 0 6px rgb(233 196 106 / 0.2), 0 0 30px var(--x-gold); }
+      .x-pin::after { content: ""; position: absolute; inset: -20px; border-radius: 50%; border: 1px solid var(--x-gold); animation: x-ping 2.4s var(--ease-out) infinite; }
+      @keyframes x-ping { from { transform: scale(0.3); opacity: 1; } to { transform: scale(2.4); opacity: 0; } }
+
+      .x-foot { margin-top: clamp(64px, 12vw, 120px); padding-top: 24px; border-top: 1px solid var(--x-line); display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; font: var(--type-small); color: var(--x-muted); }
+      .x-foot a { color: var(--x-text); display: inline-flex; align-items: center; min-height: var(--tap); }
+
+      /* ---------- reveals ---------- */
+      .x-js .x-reveal { opacity: 0; transform: translateY(28px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+      .x-js .x-reveal.is-in { opacity: 1; transform: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-js .x-reveal { opacity: 1; transform: none; transition: none; }
+        .x-magnet::after, .x-pin::after { animation: none; }
+        .x-flip__inner { transition: none; }
+        .x-depth { height: auto; padding-block: 120px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <main class="main">
+        <!-- HERO -->
+        <section class="x-hero x-bleed" aria-label="Indeego Restaurant &amp; Lounge">
+          <img class="x-hero__img" src="indeego_hero.jpg" alt="" />
+          <canvas class="x-galaxy" id="galaxy" role="img" aria-label="A glowing galaxy of particles orbiting a bright core; drag to spin it"></canvas>
+          <div class="x-hero__copy">
+            <p class="x-eyebrow">Ile-Ife · Osun</p>
+            <h1>Indeego<span>Restaurant &amp; Lounge</span></h1>
+            <p class="x-tag">Dine. Unwind. Ife after dark.</p>
+            <div class="x-actions">
+              <a class="x-btn x-btn--gold" href="tel:+2349021045671">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+                Call +234 902 104 5671
+              </a>
+              <a class="x-btn" href="https://wa.me/2349021045671" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.6a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+            <p class="x-hint" aria-hidden="true">Drag the galaxy · it follows your finger</p>
+          </div>
+        </section>
+
+        <!-- RATING -->
+        <section class="x-sec" id="reviews" data-nav="Reviews" aria-label="Google rating">
+          <div class="x-proof x-reveal">
+            <p class="x-eyebrow">Loved on Google</p>
+            <p class="x-score">4.0</p>
+            <div class="x-stars" role="img" aria-label="4.0 out of 5 stars">
+              <svg viewBox="0 0 24 24" class="on"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+              <svg viewBox="0 0 24 24" class="on"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+              <svg viewBox="0 0 24 24" class="on"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+              <svg viewBox="0 0 24 24" class="on"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+              <svg viewBox="0 0 24 24" class="off"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+            </div>
+            <p>From <strong>89 Google reviews</strong></p>
+          </div>
+        </section>
+
+        <!-- EXPERIENCES -->
+        <section class="x-sec" id="experiences" data-nav="Experiences">
+          <div class="x-sec__head x-reveal">
+            <p class="x-eyebrow">Experiences</p>
+            <h2>Four ways to spend a night at <em>Indeego</em>.</h2>
+            <p class="x-sub">Tap a card to turn it over.</p>
+          </div>
+          <div class="x-flips">
+            <div class="x-flip x-reveal" role="button" tabindex="0" aria-pressed="false" style="--x-c1: rgb(233 196 106 / 0.45); --x-c2: rgb(139 92 246 / 0.35)">
+              <span class="x-flip__inner">
+                <span class="x-face x-face--front">
+                  <span class="x-face__num">01</span>
+                  <svg class="x-face__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 3v8a2 2 0 0 1-2 2v8M3 3v6a2 2 0 0 0 4 0M17 21V3c-2 0-4 2.5-4 7a3 3 0 0 0 3 3h1"/></svg>
+                  <h3>Dining</h3>
+                  <p>Sit down to a meal before the night begins.</p>
+                  <span class="x-face__tap">Tap to flip</span>
+                </span>
+                <span class="x-face x-face--back">
+                  <strong>Menu coming soon</strong>
+                  <p>Call to reserve a table.</p>
+                </span>
+              </span>
+            </div>
+            <div class="x-flip x-reveal" role="button" tabindex="0" aria-pressed="false" style="--x-c1: rgb(139 92 246 / 0.55); --x-c2: rgb(61 123 255 / 0.4)">
+              <span class="x-flip__inner">
+                <span class="x-face x-face--front">
+                  <span class="x-face__num">02</span>
+                  <svg class="x-face__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 4h16l-8 9zM12 13v7M8 20h8"/></svg>
+                  <h3>Lounge &amp; Drinks</h3>
+                  <p>Settle into the indigo light and unwind.</p>
+                  <span class="x-face__tap">Tap to flip</span>
+                </span>
+                <span class="x-face x-face--back">
+                  <strong>Menu coming soon</strong>
+                  <p>Drinks list on its way.</p>
+                </span>
+              </span>
+            </div>
+            <div class="x-flip x-reveal" role="button" tabindex="0" aria-pressed="false" style="--x-c1: rgb(61 123 255 / 0.5); --x-c2: rgb(233 196 106 / 0.3)">
+              <span class="x-flip__inner">
+                <span class="x-face x-face--front">
+                  <span class="x-face__num">03</span>
+                  <svg class="x-face__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 11h16v9H4zM2 7h20v4H2zM12 7v13M12 7c-2-4-6-4-6-1s6 1 6 1 6 2 6-1-4-3-6 1"/></svg>
+                  <h3>Private Events</h3>
+                  <p>Birthdays and celebrations in the lounge.</p>
+                  <span class="x-face__tap">Tap to flip</span>
+                </span>
+                <span class="x-face x-face--back">
+                  <strong>Call to reserve</strong>
+                  <p>+234 902 104 5671</p>
+                </span>
+              </span>
+            </div>
+            <div class="x-flip x-reveal" role="button" tabindex="0" aria-pressed="false" style="--x-c1: rgb(139 92 246 / 0.5); --x-c2: rgb(233 196 106 / 0.4)">
+              <span class="x-flip__inner">
+                <span class="x-face x-face--front">
+                  <span class="x-face__num">04</span>
+                  <svg class="x-face__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+                  <h3>Weekend Nights</h3>
+                  <p>Ife after dark, at the end of the week.</p>
+                  <span class="x-face__tap">Tap to flip</span>
+                </span>
+                <span class="x-face x-face--back">
+                  <strong>Call to reserve</strong>
+                  <p>+234 902 104 5671</p>
+                </span>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- PARALLAX -->
+        <section class="x-depth x-bleed" id="depth" aria-label="Ife after dark">
+          <div class="x-layer" data-speed="-0.35" aria-hidden="true">
+            <span class="x-orb" style="width:46vmax;height:46vmax;left:-14vmax;top:4%;background:radial-gradient(circle,rgb(61 123 255 / 0.35),transparent 65%)"></span>
+            <span class="x-orb" style="width:40vmax;height:40vmax;right:-12vmax;top:48%;background:radial-gradient(circle,rgb(139 92 246 / 0.38),transparent 65%)"></span>
+          </div>
+          <div class="x-layer" data-speed="0.18" aria-hidden="true">
+            <span class="x-ring" style="width:70vmin;height:70vmin;left:50%;top:50%;margin:-35vmin 0 0 -35vmin;border-color:rgb(139 92 246 / 0.35);box-shadow:0 0 40px rgb(139 92 246 / 0.25),inset 0 0 40px rgb(139 92 246 / 0.2)"></span>
+            <span class="x-ring" style="width:110vmin;height:110vmin;left:50%;top:50%;margin:-55vmin 0 0 -55vmin;border-color:rgb(61 123 255 / 0.2)"></span>
+          </div>
+          <div class="x-layer" data-speed="0.55" aria-hidden="true">
+            <span class="x-orb" style="width:14px;height:14px;left:18%;top:30%;background:var(--x-gold);box-shadow:0 0 24px 6px rgb(233 196 106 / 0.6)"></span>
+            <span class="x-orb" style="width:10px;height:10px;right:20%;top:62%;background:var(--x-blue);box-shadow:0 0 22px 6px rgb(61 123 255 / 0.7)"></span>
+            <span class="x-orb" style="width:8px;height:8px;left:70%;top:22%;background:var(--x-violet);box-shadow:0 0 18px 5px rgb(139 92 246 / 0.7)"></span>
+            <span class="x-orb" style="width:6px;height:6px;left:30%;top:78%;background:#fff;box-shadow:0 0 16px 4px rgb(255 255 255 / 0.5)"></span>
+          </div>
+          <div class="x-layer" data-speed="0.9" aria-hidden="true">
+            <span class="x-orb" style="width:120px;height:120px;left:8%;top:68%;background:radial-gradient(circle,rgb(233 196 106 / 0.3),transparent 70%)"></span>
+            <span class="x-orb" style="width:180px;height:180px;right:6%;top:14%;background:radial-gradient(circle,rgb(61 123 255 / 0.35),transparent 70%)"></span>
+          </div>
+          <div class="x-depth__copy" data-speed="0.08">
+            <p>Ife after dark.</p>
+            <p class="x-sub">Good food, low light, and a lounge that stays awake.</p>
+          </div>
+        </section>
+
+        <!-- PRIVATE EVENTS -->
+        <section class="x-sec" id="events" data-nav="Events">
+          <div class="x-panel x-reveal">
+            <div class="x-sec__head">
+              <p class="x-eyebrow">Private events</p>
+              <h2>Book the lounge for your <em>celebration</em>.</h2>
+            </div>
+            <ul class="x-list">
+              <li>Birthdays and celebrations</li>
+              <li>The whole lounge, booked for your night</li>
+              <li>Reserve by phone: +234 902 104 5671</li>
+            </ul>
+            <div class="x-actions">
+              <a class="x-magnet" href="tel:+2349021045671"><span>Reserve a table</span></a>
+              <a class="x-btn" href="https://wa.me/2349021045671" target="_blank" rel="noopener">Message on WhatsApp</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- FIND US -->
+        <section class="x-sec" id="visit" data-nav="Find us">
+          <div class="x-sec__head x-reveal">
+            <p class="x-eyebrow">Find us</p>
+            <h2>In the heart of <em>Ile-Ife</em>.</h2>
+          </div>
+          <div class="x-panel x-reveal">
+            <p class="x-addr">Falaju Street, Ife 220282, Osun<small>At Ife Central Local Government Secretariat</small></p>
+            <div class="x-mapart" aria-hidden="true"><span class="x-pin"></span></div>
+            <div class="x-actions">
+              <a class="x-btn x-btn--gold" href="https://www.google.com/maps/search/?api=1&amp;query=Indeego%20Restaurant%20%26%20Lounge%20Ife" target="_blank" rel="noopener">Open in Google Maps</a>
+              <a class="x-btn" href="tel:+2349021045671">Call +234 902 104 5671</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="x-foot">
+        <p>Indeego Restaurant &amp; Lounge · Ile-Ife</p>
+        <p>Sample website designed by Mayo · <a href="tel:+2349037499964">+234 903 749 9964</a></p>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ---------- 3D particle galaxy ---------- */
+        var cv = document.getElementById("galaxy");
+        var ctx = cv.getContext("2d");
+        var W = 0, H = 0, dpr = 1, scale = 1;
+        var small = Math.min(screen.width, screen.height) < 700;
+        var N = small ? 1100 : 2200;
+        var COLORS = ["#7aa2ff", "#a78bfa", "#e9c46a", "#ffffff", "#5b6cff"];
+        var buckets = COLORS.map(function () { return []; });
+        var R_MAX = 1.0, R_MIN = 0.06;
+
+        function spawn(p, fresh) {
+          var arm = (Math.random() * 3) | 0;
+          var r = fresh ? R_MIN + Math.pow(Math.random(), 0.7) * (R_MAX - R_MIN) : R_MAX * (0.85 + Math.random() * 0.15);
+          p.r = r;
+          p.a = arm * (Math.PI * 2 / 3) + r * 5.2 + (Math.random() - 0.5) * 0.9 * (1 - r * 0.4);
+          p.y = (Math.random() - 0.5) * 0.14 * (1.2 - r) + (Math.random() - 0.5) * 0.03;
+          p.fall = 0.012 + Math.random() * 0.02;
+          p.size = 0.6 + Math.random() * 1.5;
+          p.ox = p.ox || 0; p.oy = p.oy || 0;
+        }
+        for (var i = 0; i < N; i++) {
+          var p = {}; spawn(p, true);
+          var c = Math.random();
+          var ci = c < 0.36 ? 0 : c < 0.66 ? 1 : c < 0.78 ? 2 : c < 0.9 ? 3 : 4;
+          buckets[ci].push(p);
+        }
+
+        function resize() {
+          var rect = cv.getBoundingClientRect();
+          dpr = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2);
+          W = rect.width; H = rect.height;
+          cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          scale = Math.min(W, H) * (W < 700 ? 0.62 : 0.5);
+        }
+
+        var rotY = 0, rotX = 0.62, velY = reduce ? 0 : 0.0016, velX = 0;
+        var baseVel = reduce ? 0 : 0.0016;
+        var pointer = { x: 0, y: 0, active: false, down: false, lx: 0, ly: 0 };
+        var t = 0;
+
+        function frame(dt) {
+          t += dt;
+          ctx.globalCompositeOperation = "source-over";
+          ctx.clearRect(0, 0, W, H);
+          var cx = W / 2, cy = H * (W < 700 ? 0.36 : 0.42);
+
+          if (!pointer.down) {
+            velY += (baseVel - velY) * 0.02;
+            velX *= 0.94;
+            rotX += (0.62 - rotX) * 0.01;
+          }
+          rotY += velY * dt; rotX += velX * dt;
+          rotX = Math.max(-0.2, Math.min(1.4, rotX));
+
+          var cyR = Math.cos(rotY), syR = Math.sin(rotY), cxR = Math.cos(rotX), sxR = Math.sin(rotX);
+          var camD = 2.6, fov = scale * 2.2;
+          var pulse = 1 + Math.sin(t * 0.0012) * 0.08;
+
+          // core glow
+          var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, scale * 0.5 * pulse);
+          g.addColorStop(0, "rgba(255,244,214,0.95)");
+          g.addColorStop(0.08, "rgba(233,196,106,0.7)");
+          g.addColorStop(0.3, "rgba(139,92,246,0.28)");
+          g.addColorStop(1, "rgba(61,123,255,0)");
+          ctx.fillStyle = g;
+          ctx.fillRect(cx - scale, cy - scale, scale * 2, scale * 2);
+
+          ctx.globalCompositeOperation = "lighter";
+          var pr2 = Math.pow(scale * 0.55, 2);
+          var spin = reduce ? 0 : dt * 0.0011;
+          for (var b = 0; b < buckets.length; b++) {
+            ctx.fillStyle = COLORS[b];
+            var arr = buckets[b];
+            for (var k = 0; k < arr.length; k++) {
+              var p = arr[k];
+              if (!reduce) {
+                p.a += spin / Math.pow(p.r + 0.08, 1.5) * 0.35;
+                p.r -= p.fall * dt * 0.001 * (1.1 - p.r);
+                if (p.r < R_MIN) spawn(p, false);
+              }
+              var lr = p.r * (1 + (p.r < 0.2 ? Math.sin(t * 0.002 + p.a) * 0.1 : 0));
+              var x = Math.cos(p.a) * lr, z = Math.sin(p.a) * lr, y = p.y;
+              var x1 = x * cyR - z * syR, z1 = x * syR + z * cyR;
+              var y2 = y * cxR - z1 * sxR, z2 = y * sxR + z1 * cxR;
+              var d = camD + z2;
+              if (d < 0.3) continue;
+              var s = fov / d;
+              var sx = cx + x1 * s, sy = cy + y2 * s;
+              // gravity well
+              if (pointer.active) {
+                var dx = pointer.x - sx, dy = pointer.y - sy, dd = dx * dx + dy * dy;
+                var f = pr2 / (dd + pr2);
+                p.ox += (dx * f * 0.85 - p.ox) * 0.08;
+                p.oy += (dy * f * 0.85 - p.oy) * 0.08;
+              } else if (p.ox || p.oy) {
+                p.ox *= 0.93; p.oy *= 0.93;
+                if (Math.abs(p.ox) < 0.05 && Math.abs(p.oy) < 0.05) p.ox = p.oy = 0;
+              }
+              var sz = p.size * s / fov * 2.4;
+              ctx.globalAlpha = Math.max(0.15, Math.min(1, 1.6 - d * 0.42));
+              ctx.fillRect(sx + p.ox - sz / 2, sy + p.oy - sz / 2, sz, sz);
+            }
+          }
+          ctx.globalAlpha = 1;
+
+          if (pointer.active) {
+            var pg = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 70);
+            pg.addColorStop(0, "rgba(167,139,250,0.35)");
+            pg.addColorStop(1, "rgba(167,139,250,0)");
+            ctx.fillStyle = pg;
+            ctx.fillRect(pointer.x - 70, pointer.y - 70, 140, 140);
+          }
+        }
+
+        var running = false, last = 0, visible = true;
+        function loop(now) {
+          if (!running) return;
+          var dt = Math.min(48, now - (last || now)); last = now;
+          frame(dt || 16);
+          requestAnimationFrame(loop);
+        }
+        function start() { if (running || reduce) return; running = true; last = 0; requestAnimationFrame(loop); }
+        function stop() { running = false; }
+        function drawOnce() { if (reduce) frame(16); }
+
+        resize(); frame(16);
+        window.addEventListener("resize", function () { resize(); drawOnce(); });
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (e) { visible = e[0].isIntersecting; visible && !document.hidden ? start() : stop(); }).observe(cv);
+        } else start();
+        document.addEventListener("visibilitychange", function () { document.hidden ? stop() : visible && start(); });
+
+        function local(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+        cv.addEventListener("pointerdown", function (e) {
+          var q = local(e);
+          pointer.down = true; pointer.active = true; pointer.x = pointer.lx = q.x; pointer.y = pointer.ly = q.y;
+          velY = 0; velX = 0;
+          drawOnce();
+        });
+        cv.addEventListener("pointermove", function (e) {
+          var q = local(e);
+          if (pointer.down) {
+            var dx = q.x - pointer.lx, dy = q.y - pointer.ly;
+            rotY += dx * 0.006; rotX += dy * 0.004;
+            velY = dx * 0.0004; velX = dy * 0.0002;
+          }
+          if (e.pointerType === "mouse" || pointer.down) pointer.active = true;
+          pointer.x = q.x; pointer.y = q.y; pointer.lx = q.x; pointer.ly = q.y;
+          drawOnce();
+        });
+        function release(e) {
+          pointer.down = false;
+          if (!e || e.pointerType !== "mouse" || e.type === "pointerleave") pointer.active = false;
+          drawOnce();
+        }
+        cv.addEventListener("pointerup", release);
+        cv.addEventListener("pointercancel", release);
+        cv.addEventListener("pointerleave", release);
+
+        /* ---------- flip cards ---------- */
+        document.querySelectorAll(".x-flip").forEach(function (b) {
+          function flip() { b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); }
+          b.addEventListener("click", flip);
+          b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+        });
+
+        /* ---------- reveals ---------- */
+        var rev = document.querySelectorAll(".x-reveal");
+        if (reduce || !("IntersectionObserver" in window)) {
+          rev.forEach(function (el) { el.classList.add("is-in"); });
+        } else {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (en) {
+              if (en.isIntersecting) {
+                var sib = Array.prototype.indexOf.call(en.target.parentNode.children, en.target);
+                en.target.style.transitionDelay = (en.target.classList.contains("x-flip") ? sib * 90 : 0) + "ms";
+                en.target.classList.add("is-in"); io.unobserve(en.target);
+              }
+            });
+          }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+          rev.forEach(function (el) { io.observe(el); });
+        }
+
+        /* ---------- parallax depth ---------- */
+        var depth = document.getElementById("depth");
+        var layers = depth.querySelectorAll("[data-speed]");
+        if (!reduce) {
+          var ticking = false;
+          function para() {
+            ticking = false;
+            var r = depth.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > innerHeight) return;
+            var off = (r.top + r.height / 2) - innerHeight / 2;
+            layers.forEach(function (l) {
+              l.style.transform = "translate3d(0," + (off * parseFloat(l.dataset.speed)).toFixed(1) + "px,0)";
+            });
+          }
+          window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(para); } }, { passive: true });
+          para();
+        }
+
+        /* ---------- magnetic button ---------- */
+        if (!reduce && window.matchMedia("(hover: hover)").matches) {
+          document.querySelectorAll(".x-magnet").forEach(function (m) {
+            var label = m.querySelector("span");
+            var zone = m.parentNode;
+            zone.addEventListener("pointermove", function (e) {
+              var r = m.getBoundingClientRect();
+              var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+              if (Math.hypot(dx, dy) > 140) { m.style.transform = ""; label.style.transform = ""; return; }
+              m.style.transform = "translate(" + dx * 0.3 + "px," + dy * 0.4 + "px)";
+              label.style.transform = "translate(" + dx * 0.12 + "px," + dy * 0.15 + "px)";
+            });
+            zone.addEventListener("pointerleave", function () { m.style.transform = ""; label.style.transform = ""; });
+          });
+        } else if (!reduce) {
+          // touch: a gentle breathing pull so the glow still feels alive
+          document.querySelectorAll(".x-magnet").forEach(function (m) {
+            m.animate([{ transform: "scale(1)" }, { transform: "scale(1.04)" }, { transform: "scale(1)" }], { duration: 2400, iterations: Infinity, easing: "ease-in-out" });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
