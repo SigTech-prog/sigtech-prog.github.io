@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fabulous Prints and T-shirt Factory · Ile-Ife</title>
+    <meta name="description" content="Custom T-shirts and prints on Ede Road, Ile-Ife. Order on WhatsApp." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --x-c: #00aeef;
+        --x-m: #ec008c;
+        --x-y: #fff200;
+        --x-k: #0e0e12;
+      }
+      /* Floating ink droplets behind the page */
+      .x-drops { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+      /* Primary ink button */
+      .x-cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        min-height: var(--tap); padding: 10px 18px;
+        border-radius: var(--r-s);
+        background: var(--x-y); color: var(--x-k);
+        font: var(--type-body-strong); text-decoration: none;
+        box-shadow: 4px 4px 0 var(--x-m);
+        transition: transform var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out);
+      }
+      .x-cta:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--x-m); }
+      .x-cta:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--x-m); }
+      .x-cta svg { flex: none; }
+
+      /* Marker highlight that reads in both themes */
+      .x-mark { background: var(--x-y); color: var(--x-k); padding: 0 6px; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+      .x-cmyk { display: flex; gap: 6px; }
+      .x-cmyk i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+      .x-cmyk i:nth-child(1) { background: var(--x-c); }
+      .x-cmyk i:nth-child(2) { background: var(--x-m); }
+      .x-cmyk i:nth-child(3) { background: var(--x-y); }
+      .x-cmyk i:nth-child(4) { background: var(--hero-text); }
+      .x-stars { color: light-dark(var(--x-m), var(--x-y)); letter-spacing: 2px; font-size: var(--size-heading); }
+
+      /* Playground */
+      .x-play { display: grid; gap: 16px; }
+      @media (min-width: 900px) { .x-play { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 28px; } }
+      .x-stage {
+        position: relative;
+        aspect-ratio: 1 / 1; max-height: 520px; width: 100%;
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 22%, rgb(0 174 239 / 0.28), transparent 42%),
+          radial-gradient(circle at 84% 30%, rgb(236 0 140 / 0.26), transparent 45%),
+          radial-gradient(circle at 50% 92%, rgb(255 242 0 / 0.18), transparent 45%),
+          var(--x-k);
+        perspective: 900px;
+        display: grid; place-items: center;
+        touch-action: pan-y;
+        cursor: grab;
+        user-select: none; -webkit-user-select: none;
+        box-shadow: var(--hark-shadow);
+      }
+      .x-stage.is-drag { cursor: grabbing; }
+      .x-stage:focus-visible { outline: 2px solid var(--x-y); outline-offset: 3px; }
+      .x-shirt { position: relative; width: min(66%, 320px); aspect-ratio: 300 / 340; transform-style: preserve-3d; will-change: transform; }
+      .x-shirt svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      .x-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+      .x-shadow {
+        position: absolute; left: 50%; bottom: 7%; width: 46%; height: 6%;
+        transform: translateX(-50%); border-radius: 50%;
+        background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), transparent);
+        pointer-events: none;
+      }
+      .x-hint {
+        position: absolute; left: 14px; top: 14px;
+        padding: 6px 12px; border-radius: var(--r-pill);
+        background: var(--x-k); color: #f5f5f7; border: 1px solid rgb(245 245 247 / 0.28);
+        font: var(--type-tag); pointer-events: none;
+        transition: opacity 400ms ease;
+      }
+      .x-stage.is-used .x-hint { opacity: 0; }
+      .x-print { transform-box: fill-box; transform-origin: center; }
+      .x-print.is-in { animation: x-print-in 520ms var(--ease-out); }
+      @keyframes x-print-in { 0% { transform: scale(1.35); opacity: 0; } 45% { opacity: 1; } 70% { transform: scale(0.94); } 100% { transform: scale(1); } }
+      .x-splash circle { opacity: 0; transform-box: fill-box; transform-origin: center; }
+      .x-splash.is-on circle { animation: x-splat 620ms var(--ease-out) forwards; }
+      @keyframes x-splat {
+        0% { opacity: 0.95; transform: translate(0, 0) scale(0.3); }
+        100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.2); }
+      }
+
+      .x-panel { display: grid; gap: 18px; }
+      .x-label { font: var(--type-label); color: var(--text-secondary); margin-bottom: 8px; }
+      .x-swatches, .x-designs { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-swatch {
+        width: var(--tap); height: var(--tap); border-radius: 50%;
+        border: 2px solid var(--stroke-primary); background: var(--sw);
+        cursor: pointer; padding: 0;
+        transition: transform var(--dur-quick) var(--ease-out);
+      }
+      .x-swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--fill-primary-on), 0 0 0 5px var(--text-primary); transform: scale(1.08); }
+      .x-design {
+        display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+        min-width: 64px; min-height: var(--tap); padding: 8px 10px;
+        border-radius: var(--r-s);
+        background: var(--fill-tertiary); color: var(--text-primary);
+        border: 1px solid var(--stroke-primary);
+        font: var(--type-tag); cursor: pointer;
+        transition: transform var(--dur-quick) var(--ease-out);
+      }
+      .x-design svg { width: 30px; height: 30px; }
+      .x-design:active { transform: scale(0.94); }
+      .x-design[aria-pressed="true"] { border-color: var(--text-primary); box-shadow: inset 0 0 0 1px var(--text-primary); }
+      .x-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-tools button { font: inherit; cursor: pointer; }
+      .x-tools .btn[aria-pressed="true"]::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--fill-system-green); }
+
+      /* Service cards get a CMYK top edge */
+      .x-cards > div { border-top: 6px solid var(--x-c); }
+      .x-cards > div:nth-child(2) { border-top-color: var(--x-m); }
+      .x-cards > div:nth-child(3) { border-top-color: var(--x-y); }
+      .x-cards > div:nth-child(4) { border-top-color: var(--text-primary); }
+
+      .x-step-ink .step__num { color: light-dark(var(--x-m), var(--x-c)); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-print.is-in, .x-splash.is-on circle { animation: none; }
+        .x-cta, .x-swatch, .x-design { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="x-drops" id="drops" aria-hidden="true"></canvas>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <section class="hero">
+          <img class="hero__img" src="fabulous_hero.jpg" alt="A print shop with a screen press and colourful custom T-shirts" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">Ede Road · Ile-Ife, Osun</p>
+            <div class="x-cmyk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <h1>Fabulous Prints and T-shirt Factory</h1>
+            <p class="hero__sub">Custom T-shirts and prints in Ile-Ife.</p>
+            <div class="links">
+              <a class="x-cta" href="https://wa.me/2349151639803?text=Hi%20Fabulous%20Prints%2C%20I%27d%20like%20to%20order%20custom%20prints" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
+                Order on WhatsApp
+              </a>
+              <a class="btn" href="tel:+2349151639803">Call +234 915 163 9803</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats" aria-label="Google rating">
+          <div class="stat">
+            <span class="stat__fig">4.9 <span class="x-stars" aria-hidden="true">★★★★★</span></span>
+            <span class="stat__label">Stars on Google</span>
+          </div>
+          <div class="stat">
+            <span class="stat__fig">42</span>
+            <span class="stat__label">Google reviews</span>
+          </div>
+        </section>
+
+        <section class="section" id="design" data-nav="Design">
+          <div class="head">
+            <p class="head__eyebrow">Design-your-shirt playground</p>
+            <h2>Spin it, <span class="x-mark">colour it</span>, print on it.</h2>
+            <p class="head__sub">Play with colours here, then send us your own design.</p>
+          </div>
+          <div class="x-play">
+            <div class="x-stage" id="stage" tabindex="0" role="application" aria-label="3D T-shirt. Drag, or use the left and right arrow keys, to rotate.">
+              <span class="x-hint" aria-hidden="true">← Drag to spin →</span>
+              <div class="x-shadow" aria-hidden="true"></div>
+              <div class="x-shirt" id="shirt" style="--shirt: #f5f5f7"></div>
+            </div>
+            <div class="x-panel">
+              <div>
+                <p class="x-label" id="sw-label">Shirt colour</p>
+                <div class="x-swatches" id="swatches" role="group" aria-labelledby="sw-label"></div>
+              </div>
+              <div>
+                <p class="x-label" id="ds-label">Tap a design to print it</p>
+                <div class="x-designs" id="designs" role="group" aria-labelledby="ds-label"></div>
+              </div>
+              <div class="x-tools">
+                <button class="btn" type="button" id="spin">Show the back</button>
+                <button class="btn" type="button" id="tilt" aria-pressed="false">Turn on tilt</button>
+              </div>
+              <p class="fineprint">Tilt lets the ink drops on this page roll as you tip your phone.</p>
+              <div class="links">
+                <a class="x-cta" href="https://wa.me/2349151639803?text=Hi%20Fabulous%20Prints%2C%20I%27d%20like%20to%20order%20custom%20prints" target="_blank" rel="noopener">Send us your design</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="prints" data-nav="Prints">
+          <div class="head">
+            <h2>From one shirt to a whole association.</h2>
+            <p class="head__sub">Every job is printed here on Ede Road.</p>
+          </div>
+          <div class="cards x-cards">
+            <div>
+              <h3>Custom T-shirts</h3>
+              <p>Your name, your photo, your idea, on a shirt in the colour you want.</p>
+            </div>
+            <div>
+              <h3>Branded shirts</h3>
+              <p>Matching shirts for events, churches and departments.</p>
+            </div>
+            <div>
+              <h3>Bulk orders</h3>
+              <p>Shirts in quantity for groups and associations.</p>
+            </div>
+            <div>
+              <h3>Flyers and prints</h3>
+              <p>Flyers and general printing for your business or programme.</p>
+            </div>
+          </div>
+          <aside class="callout" aria-label="Prices">
+            <p class="callout__head">Prices</p>
+            <p class="callout__lead"><strong>Price list coming soon.</strong> Ask on WhatsApp for a quote.</p>
+            <a class="btn" href="https://wa.me/2349151639803?text=Hi%20Fabulous%20Prints%2C%20I%27d%20like%20to%20order%20custom%20prints" target="_blank" rel="noopener">Ask for a quote</a>
+          </aside>
+        </section>
+
+        <section class="section" id="order" data-nav="Order">
+          <div class="head">
+            <h2>Four steps from idea to shirt.</h2>
+          </div>
+          <div class="steps x-step-ink">
+            <article class="step">
+              <div class="step__intro"><p class="step__num">01</p><p class="step__eyebrow">Send</p></div>
+              <div>
+                <h3>Send your design or idea on WhatsApp</h3>
+                <p>A photo, a logo, or just a description is enough to start.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">02</p><p class="step__eyebrow">Quote</p></div>
+              <div><h3>Get a quote</h3></div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">03</p><p class="step__eyebrow">Print</p></div>
+              <div><h3>We print</h3></div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">04</p><p class="step__eyebrow">Collect</p></div>
+              <div><h3>Pick up on Ede Road</h3></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="find" data-nav="Find us">
+          <div class="head">
+            <h2>Find us on Ede Road, Ile-Ife.</h2>
+          </div>
+          <aside class="callout" aria-label="Address">
+            <p class="callout__head">Fabulous Prints and T-shirt Factory</p>
+            <p class="callout__lead"><strong>Ede Road, Ile-Ife, Osun</strong></p>
+            <div class="links">
+              <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Fabulous%20Prints%20and%20T-shirt%20factory%20Ede%20Road%20Ile-Ife" target="_blank" rel="noopener">Open in Maps</a>
+              <a class="btn" href="tel:+2349151639803">Call +234 915 163 9803</a>
+              <a class="btn" href="https://wa.me/2349151639803?text=Hi%20Fabulous%20Prints%2C%20I%27d%20like%20to%20order%20custom%20prints" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </aside>
+        </section>
+      </main>
+      <footer class="foot">
+        <p>
+          <strong>Fabulous Prints and T-shirt Factory</strong> · Ede Road, Ile-Ife<br />
+          Sample website designed by Mayo · <a class="link" href="tel:+2349037499964">+234 903 749 9964</a>
+        </p>
+        <nav aria-label="Back to sections" data-auto></nav>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var C = "#00aeef", M = "#ec008c", Y = "#fff200", K = "#0e0e12";
+
+        /* ---------- 3D shirt ---------- */
+        var BODY = "M100,20 C118,40 182,40 200,20 L262,48 L298,118 L252,140 L240,120 L240,325 Q150,334 60,325 L60,120 L48,140 L2,118 L38,48 Z";
+        var shirt = document.getElementById("shirt");
+        var stage = document.getElementById("stage");
+        var layers = "";
+        var depth = [-8, -4, 0, 4, 8];
+        depth.forEach(function (z) {
+          layers += '<svg viewBox="0 0 300 340" style="transform:translateZ(' + z + 'px)" aria-hidden="true"><path d="' + BODY + '" style="fill:color-mix(in srgb, var(--shirt) 68%, #000)"/></svg>';
+        });
+        var shade =
+          '<defs><linearGradient id="SH" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset=".3" stop-color="#fff" stop-opacity=".08"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient></defs>';
+        var front =
+          '<svg class="x-face" viewBox="0 0 300 340" style="transform:translateZ(12px)" aria-hidden="true">' + shade +
+          '<path d="' + BODY + '" style="fill:var(--shirt)"/>' +
+          '<g id="print-wrap" transform="translate(150 180)"><g class="x-print" id="print"></g><g class="x-splash" id="splash"></g></g>' +
+          '<path d="' + BODY + '" fill="url(#SH)"/>' +
+          '<path d="M100,20 C116,56 184,56 200,20" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="7"/>' +
+          '<path d="M60,120 L48,140 M240,120 L252,140" stroke="#000" stroke-opacity=".18" stroke-width="2"/></svg>';
+        var back =
+          '<svg class="x-face" viewBox="0 0 300 340" style="transform:rotateY(180deg) translateZ(12px)" aria-hidden="true">' +
+          '<path d="' + BODY + '" style="fill:var(--shirt)"/>' +
+          '<path d="M100,20 C118,32 182,32 200,20" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="6"/>' +
+          '<g font-family="Geist, sans-serif" font-weight="600" text-anchor="middle" fill="' + M + '"><text x="150" y="130" font-size="30">FABULOUS</text><text x="150" y="160" font-size="16" fill="' + C + '" letter-spacing="3">PRINTS · ILE-IFE</text></g>' +
+          '<path d="' + BODY + '" fill="url(#SH)" transform="scale(-1 1) translate(-300 0)"/></svg>';
+        shirt.innerHTML = layers + back + front;
+
+        /* Designs, drawn around 0,0 in a ~130px square */
+        function star(r1, r2) {
+          var p = [];
+          for (var i = 0; i < 10; i++) {
+            var a = (Math.PI / 5) * i - Math.PI / 2, r = i % 2 ? r2 : r1;
+            p.push((Math.cos(a) * r).toFixed(1) + "," + (Math.sin(a) * r).toFixed(1));
+          }
+          return p.join(" ");
+        }
+        function dots() {
+          var s = "", cols = [C, M, Y];
+          for (var x = -3; x <= 3; x++) for (var y = -3; y <= 3; y++) {
+            var d = Math.sqrt(x * x + y * y); if (d > 3.4) continue;
+            s += '<circle cx="' + x * 18 + '" cy="' + y * 18 + '" r="' + (8.5 - d * 1.9).toFixed(1) + '" fill="' + cols[(x + y + 9) % 3] + '"/>';
+          }
+          return s;
+        }
+        var designs = [
+          { name: "Star", svg: '<polygon points="' + star(62, 26) + '" fill="' + C + '" transform="translate(5 5)"/><polygon points="' + star(62, 26) + '" fill="' + M + '"/>' },
+          { name: "Halftone", svg: dots() },
+          { name: "Waves", svg: [C, M, Y].map(function (c, i) { var y = -36 + i * 30; return '<path d="M-66,' + y + ' q16.5,-16 33,0 t33,0 t33,0 t33,0" fill="none" stroke="' + c + '" stroke-width="14" stroke-linecap="round"/>'; }).join("") },
+          { name: "Heart", svg: '<path d="M0,52 C-70,8 -58,-50 -24,-50 C-10,-50 0,-38 0,-28 C0,-38 10,-50 24,-50 C58,-50 70,8 0,52 Z" fill="' + Y + '" transform="translate(6 6)"/><path d="M0,52 C-70,8 -58,-50 -24,-50 C-10,-50 0,-38 0,-28 C0,-38 10,-50 24,-50 C58,-50 70,8 0,52 Z" fill="' + M + '"/>' },
+          { name: "IFE", svg: '<g font-family="Geist, sans-serif" font-weight="600" font-size="64" text-anchor="middle"><text x="5" y="27" fill="' + C + '">IFE</text><text x="0" y="22" fill="' + M + '">IFE</text></g>' },
+          { name: "Clear", svg: "" }
+        ];
+        var printEl = document.getElementById("print");
+        var splashEl = document.getElementById("splash");
+        var designBox = document.getElementById("designs");
+        designs.forEach(function (d, i) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "x-design"; b.setAttribute("aria-pressed", "false");
+          b.innerHTML = '<svg viewBox="-70 -70 140 140" aria-hidden="true">' + (d.svg || '<path d="M-40,-40 L40,40 M40,-40 L-40,40" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>') + "</svg>" + d.name;
+          b.addEventListener("click", function () { applyDesign(i, b); });
+          designBox.appendChild(b);
+        });
+        function applyDesign(i, btn) {
+          designBox.querySelectorAll(".x-design").forEach(function (x) { x.setAttribute("aria-pressed", x === btn && designs[i].svg ? "true" : "false"); });
+          printEl.innerHTML = designs[i].svg;
+          if (!designs[i].svg) return;
+          turnTo(0);
+          if (reduce) return;
+          printEl.classList.remove("is-in"); void printEl.getBBox; printEl.getBoundingClientRect();
+          printEl.classList.add("is-in");
+          var s = "", cols = [C, M, Y, C, M, Y, M, C];
+          for (var k = 0; k < 10; k++) {
+            var a = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 50;
+            s += '<circle r="' + (5 + Math.random() * 9).toFixed(1) + '" fill="' + cols[k % 8] + '" style="--dx:' + (Math.cos(a) * dist).toFixed(0) + "px;--dy:" + (Math.sin(a) * dist).toFixed(0) + 'px;animation-delay:' + (k * 18) + 'ms"/>';
+          }
+          splashEl.classList.remove("is-on");
+          splashEl.innerHTML = s;
+          splashEl.getBoundingClientRect();
+          splashEl.classList.add("is-on");
+          splashBurst();
+        }
+
+        /* Swatches */
+        var swatches = [
+          ["White", "#f5f5f7"], ["Black", "#1b1b20"], ["Cyan", C], ["Magenta", M],
+          ["Yellow", Y], ["Green", "#008751"], ["Red", "#d62828"], ["Navy", "#1d2c5e"]
+        ];
+        var swBox = document.getElementById("swatches");
+        swatches.forEach(function (s, i) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "x-swatch";
+          b.style.setProperty("--sw", s[1]);
+          b.setAttribute("aria-label", s[0]);
+          b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+          b.addEventListener("click", function () {
+            shirt.style.setProperty("--shirt", s[1]);
+            swBox.querySelectorAll(".x-swatch").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+          });
+          swBox.appendChild(b);
+        });
+
+        /* Rotation: drag, inertia, and tweening to a target */
+        var rotY = -24, rotX = -6, vel = 0, target = null, dragging = false, lastX = 0, lastY = 0, raf = 0;
+        function render() { shirt.style.transform = "rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg)"; }
+        function loop() {
+          raf = 0;
+          if (dragging) return;
+          if (target !== null) {
+            var d = target - rotY;
+            rotY += d * 0.16; rotX += (-6 - rotX) * 0.16;
+            if (Math.abs(d) < 0.3) { rotY = target; target = null; }
+          } else if (Math.abs(vel) > 0.05) {
+            rotY += vel; vel *= 0.94; rotX += (-6 - rotX) * 0.08;
+          } else { vel = 0; rotX += (-6 - rotX) * 0.1; if (Math.abs(rotX + 6) < 0.1) { render(); return; } }
+          render();
+          raf = requestAnimationFrame(loop);
+        }
+        function kick() { if (!raf) raf = requestAnimationFrame(loop); }
+        function turnTo(deg) {
+          var t = Math.round((rotY - deg) / 360) * 360 + deg;
+          vel = 0;
+          if (reduce) { rotY = t; rotX = -6; render(); return; }
+          target = t; kick();
+        }
+        render();
+        stage.addEventListener("pointerdown", function (e) {
+          dragging = true; target = null; vel = 0; lastX = e.clientX; lastY = e.clientY;
+          stage.classList.add("is-drag", "is-used");
+          try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        stage.addEventListener("pointermove", function (e) {
+          if (!dragging) return;
+          var dx = e.clientX - lastX, dy = e.clientY - lastY;
+          lastX = e.clientX; lastY = e.clientY;
+          vel = dx * 0.55; rotY += vel;
+          rotX = Math.max(-24, Math.min(18, rotX - dy * 0.25));
+          render();
+        });
+        function end() {
+          if (!dragging) return;
+          dragging = false; stage.classList.remove("is-drag");
+          if (reduce) vel = 0;
+          kick();
+        }
+        stage.addEventListener("pointerup", end);
+        stage.addEventListener("pointercancel", end);
+        stage.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+            e.preventDefault(); stage.classList.add("is-used");
+            target = null; rotY += e.key === "ArrowLeft" ? -15 : 15; render();
+          }
+        });
+        var spinBtn = document.getElementById("spin");
+        spinBtn.addEventListener("click", function () {
+          var n = (((rotY % 360) + 360) % 360);
+          var showingBack = n > 90 && n < 270;
+          turnTo(showingBack ? 0 : 180);
+          spinBtn.textContent = showingBack ? "Show the back" : "Show the front";
+        });
+
+        /* ---------- Ink droplets ---------- */
+        var cv = document.getElementById("drops"), ctx = cv.getContext("2d");
+        var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var drops = [], gx = 0, gy = 0, tiltOn = false, running = false, last = 0;
+        var inks = ["0,174,239", "236,0,140", "255,242,0"];
+        function size() {
+          W = window.innerWidth; H = window.innerHeight;
+          cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        function seed() {
+          drops = [];
+          var n = W < 600 ? 11 : 16;
+          for (var i = 0; i < n; i++) {
+            drops.push({
+              x: Math.random() * W, y: Math.random() * H,
+              vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+              r: 7 + Math.random() * (W < 600 ? 14 : 20),
+              c: inks[i % 3], ph: Math.random() * 6.28
+            });
+          }
+        }
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          for (var i = 0; i < drops.length; i++) {
+            var d = drops[i], sp = Math.min(Math.hypot(d.vx, d.vy) * 0.06, 0.45);
+            ctx.save();
+            ctx.translate(d.x, d.y);
+            ctx.rotate(Math.atan2(d.vy, d.vx));
+            ctx.scale(1 + sp, 1 - sp * 0.5);
+            ctx.fillStyle = "rgba(" + d.c + ",0.42)";
+            ctx.beginPath(); ctx.arc(0, 0, d.r, 0, 6.2832); ctx.fill();
+            ctx.fillStyle = "rgba(255,255,255,0.35)";
+            ctx.beginPath(); ctx.arc(-d.r * 0.3, -d.r * 0.35, d.r * 0.22, 0, 6.2832); ctx.fill();
+            ctx.restore();
+          }
+        }
+        function step(t) {
+          if (!running) return;
+          var dt = Math.min((t - last) / 16.7 || 1, 3); last = t;
+          for (var i = 0; i < drops.length; i++) {
+            var d = drops[i];
+            if (tiltOn) { d.vx += gx * dt; d.vy += gy * dt; }
+            else { d.ph += 0.01 * dt; d.vx += Math.cos(d.ph) * 0.006 * dt; d.vy += Math.sin(d.ph * 1.3) * 0.006 * dt; }
+            d.vx *= Math.pow(tiltOn ? 0.985 : 0.97, dt); d.vy *= Math.pow(tiltOn ? 0.985 : 0.97, dt);
+            d.x += d.vx * dt; d.y += d.vy * dt;
+            if (d.x < d.r) { d.x = d.r; d.vx = Math.abs(d.vx) * 0.6; }
+            if (d.x > W - d.r) { d.x = W - d.r; d.vx = -Math.abs(d.vx) * 0.6; }
+            if (d.y < d.r) { d.y = d.r; d.vy = Math.abs(d.vy) * 0.6; }
+            if (d.y > H - d.r) { d.y = H - d.r; d.vy = -Math.abs(d.vy) * 0.6; }
+          }
+          /* soft push between drops */
+          for (var a = 0; a < drops.length; a++) for (var b = a + 1; b < drops.length; b++) {
+            var p = drops[a], q = drops[b], dx = q.x - p.x, dy = q.y - p.y, min = p.r + q.r, dd = dx * dx + dy * dy;
+            if (dd < min * min && dd > 0.01) {
+              var dist = Math.sqrt(dd), push = (min - dist) / dist * 0.04;
+              p.vx -= dx * push; p.vy -= dy * push; q.vx += dx * push; q.vy += dy * push;
+            }
+          }
+          draw();
+          requestAnimationFrame(step);
+        }
+        function start() { if (reduce || running || document.hidden) return; running = true; last = performance.now(); requestAnimationFrame(step); }
+        function stop() { running = false; }
+        size(); seed(); draw(); start();
+        var rt;
+        window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { size(); drops.forEach(function (d) { d.x = Math.min(d.x, W - d.r); d.y = Math.min(d.y, H - d.r); }); draw(); }, 150); });
+        document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+
+        /* touch and drag push the drops */
+        var px = null, py = null;
+        function shove(x, y, mx, my, radius, power) {
+          for (var i = 0; i < drops.length; i++) {
+            var d = drops[i], dx = d.x - x, dy = d.y - y, dist = Math.hypot(dx, dy);
+            if (dist < radius + d.r) {
+              var f = (1 - dist / (radius + d.r)) * power;
+              d.vx += mx * f + (dx / (dist || 1)) * f * 2;
+              d.vy += my * f + (dy / (dist || 1)) * f * 2;
+            }
+          }
+        }
+        if (!reduce) {
+          window.addEventListener("pointermove", function (e) {
+            if (px !== null) {
+              var mx = Math.max(-30, Math.min(30, e.clientX - px)), my = Math.max(-30, Math.min(30, e.clientY - py));
+              shove(e.clientX, e.clientY, mx * 0.12, my * 0.12, 90, 1);
+            }
+            px = e.clientX; py = e.clientY;
+          }, { passive: true });
+          window.addEventListener("pointerdown", function (e) { px = e.clientX; py = e.clientY; shove(px, py, 0, 0, 80, 1.2); }, { passive: true });
+          window.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") px = py = null; }, { passive: true });
+          var lastScroll = window.scrollY;
+          window.addEventListener("scroll", function () {
+            var ds = Math.max(-40, Math.min(40, window.scrollY - lastScroll)); lastScroll = window.scrollY;
+            for (var i = 0; i < drops.length; i++) drops[i].vy -= ds * 0.02 * (12 / drops[i].r);
+          }, { passive: true });
+        }
+        function splashBurst() {
+          if (reduce) return;
+          var r = stage.getBoundingClientRect();
+          shove(r.left + r.width / 2, r.top + r.height / 2, 0, 0, Math.max(r.width, 200), 3);
+        }
+
+        /* Tilt, only after a tap (iOS needs permission) */
+        var tiltBtn = document.getElementById("tilt");
+        function onOrient(e) {
+          if (e.gamma == null) return;
+          var g = Math.max(-45, Math.min(45, e.gamma)), bt = Math.max(-45, Math.min(45, (e.beta || 0) - 35));
+          gx = g / 45 * 0.12; gy = bt / 45 * 0.12;
+        }
+        function enableTilt() {
+          window.addEventListener("deviceorientation", onOrient);
+          tiltOn = true; tiltBtn.setAttribute("aria-pressed", "true"); tiltBtn.textContent = "Tilt is on";
+          start();
+        }
+        if (reduce || !("DeviceOrientationEvent" in window)) {
+          tiltBtn.disabled = true; tiltBtn.hidden = true;
+          tiltBtn.parentNode.nextElementSibling.hidden = true;
+        }
+        tiltBtn.addEventListener("click", function () {
+          if (tiltOn) {
+            window.removeEventListener("deviceorientation", onOrient);
+            tiltOn = false; gx = gy = 0; tiltBtn.setAttribute("aria-pressed", "false"); tiltBtn.textContent = "Turn on tilt";
+            return;
+          }
+          var D = window.DeviceOrientationEvent;
+          if (D && typeof D.requestPermission === "function") {
+            D.requestPermission().then(function (s) {
+              if (s === "granted") enableTilt(); else tiltBtn.textContent = "Tilt not allowed";
+            }).catch(function () { tiltBtn.textContent = "Tilt not available"; });
+          } else enableTilt();
+        });
+      })();
+    </script>
+  </body>
+</html>
