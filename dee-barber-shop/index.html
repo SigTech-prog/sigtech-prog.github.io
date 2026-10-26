@@ -60,6 +60,7 @@
           linear-gradient(180deg, rgb(5 7 10 / 0.72) 0%, rgb(5 7 10 / 0.45) 35%, rgb(5 7 10 / 0.93) 85%, var(--x-ink) 100%);
       }
       .x-fx { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
+      .x-pole { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
       .x-hero__copy { position: relative; padding-block: 24px 44px; display: grid; gap: 14px; }
       .x-eyebrow { font: var(--type-tag); letter-spacing: 0.26em; text-transform: uppercase; color: var(--x-neon); }
       .x-hero h1 { font-size: clamp(46px, 15vw, 116px); }
@@ -186,6 +187,7 @@
       <section class="x-hero" id="top">
         <img class="x-hero__bg" src="dee_hero.jpg" alt="Inside Dee Barber Shop, lit in teal neon" />
         <div class="x-hero__scrim"></div>
+        <canvas class="x-pole" id="pole" aria-hidden="true"></canvas>
         <canvas class="x-fx" id="fx" aria-hidden="true"></canvas>
         <div class="x-wrap x-hero__copy">
           <p class="x-eyebrow">OAU Staff Quarters · Ile-Ife</p>
@@ -397,11 +399,161 @@
         deck.addEventListener("pointerleave", function () { tilt = 0; layout(); });
         layout();
 
-        /* ---- hero: 3D barber pole + clipping particles ---- */
+        /* ---- hero: WebGL barber pole + clipping particles ---- */
+        var hero = document.querySelector(".x-hero");
         var cv = document.getElementById("fx"), ctx = cv.getContext("2d");
-        var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
-        var pole = { x: 0, y: 0, w: 0, h: 0, phase: 0, spin: 1 };
+        var pc = document.getElementById("pole");
+        var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var pole = { x: 0, y: 0, w: 0, h: 0, phase: 0 };
+        var REST_TILT = 0.07;
+        var spin = { ang: 0.6, vel: 1.3, base: 1.3, tx: REST_TILT, tz: 0, ttx: REST_TILT, ttz: 0 };
         var parts = [], pointer = { x: -999, y: -999, on: false };
+        var grab = null, lastX = null;
+        function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+
+        /* WebGL pole: ray-traced glass cylinder, striped core, chrome caps, teal rim + glow */
+        var EXT = 2.4, TOP = 1.9, BOT = 1.0, geo = { hh: 5 };
+        var gl = null, U = {};
+        var VS = "attribute vec2 aPos;void main(){gl_Position=vec4(aPos,0.,1.);}";
+        var FS = [
+          "#ifdef GL_FRAGMENT_PRECISION_HIGH",
+          "precision highp float;",
+          "#else",
+          "precision mediump float;",
+          "#endif",
+          "uniform vec2 uRes;uniform float uHh;uniform vec4 uBox;uniform float uSpin;uniform vec2 uTilt;uniform float uTime;",
+          "const vec3 TEAL=vec3(0.10,0.96,0.91);",
+          "mat3 rotX(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}",
+          "mat3 rotZ(float a){float c=cos(a),s=sin(a);return mat3(c,s,0.,-s,c,0.,0.,0.,1.);}",
+          "vec4 cyl(vec3 ro,vec3 rd,float y0,float y1,float r){",
+          "  vec3 a=vec3(0.,y0,0.);vec3 ba=vec3(0.,y1-y0,0.);vec3 oc=ro-a;",
+          "  float baba=dot(ba,ba),bard=dot(ba,rd),baoc=dot(ba,oc);",
+          "  float k2=baba-bard*bard,k1=baba*dot(oc,rd)-baoc*bard,k0=baba*dot(oc,oc)-baoc*baoc-r*r*baba;",
+          "  if(abs(k2)<1e-6)return vec4(-1.);",
+          "  float h=k1*k1-k2*k0;if(h<0.)return vec4(-1.);",
+          "  h=sqrt(h);float t=(-k1-h)/k2;float y=baoc+t*bard;",
+          "  if(y>0.&&y<baba)return vec4(t,(oc+t*rd-ba*y/baba)/r);",
+          "  if(abs(bard)<1e-5)return vec4(-1.);",
+          "  t=(((y<0.)?0.:baba)-baoc)/bard;",
+          "  if(abs(k1+k2*t)<h)return vec4(t,ba*sign(y)/sqrt(baba));",
+          "  return vec4(-1.);",
+          "}",
+          "vec4 sph(vec3 ro,vec3 rd,vec3 c,float r){",
+          "  vec3 oc=ro-c;float b=dot(oc,rd);float h=b*b-dot(oc,oc)+r*r;",
+          "  if(h<0.)return vec4(-1.);float t=-b-sqrt(h);return vec4(t,(oc+t*rd)/r);",
+          "}",
+          "vec3 env(vec3 r,vec3 ln){",
+          "  vec3 c=mix(vec3(0.03,0.05,0.07),vec3(0.78,0.84,0.9),smoothstep(-0.35,0.75,r.y));",
+          "  c+=vec3(1.)*exp(-abs(r.y-0.08)*22.)*0.55;",
+          "  c+=TEAL*smoothstep(0.2,0.95,-r.x)*0.75;",
+          "  c+=vec3(1.)*pow(max(dot(r,ln),0.),48.)*2.2;",
+          "  return c;",
+          "}",
+          "void main(){",
+          "  vec2 f=gl_FragCoord.xy/uRes;",
+          "  vec3 pw=vec3(mix(uBox.x,uBox.y,f.x),mix(uBox.z,uBox.w,f.y),8.);",
+          "  mat3 R=rotZ(uTilt.y)*rotX(uTilt.x);",
+          "  mat3 Ri=rotX(-uTilt.x)*rotZ(-uTilt.y);",
+          "  vec3 ro=Ri*pw;vec3 rd=Ri*vec3(0.,0.,-1.);",
+          "  vec3 ln=normalize(vec3(0.45,0.55,0.7));",
+          "  float H1=uHh+0.32;",
+          "  float tb=1e9;int kind=0;vec3 n=vec3(0.,0.,1.);vec4 h;",
+          "  h=cyl(ro,rd,-uHh,uHh,1.);if(h.x>0.&&h.x<tb){tb=h.x;kind=1;n=h.yzw;}",
+          "  h=cyl(ro,rd,uHh,H1,1.16);if(h.x>0.&&h.x<tb){tb=h.x;kind=2;n=h.yzw;}",
+          "  h=cyl(ro,rd,-H1,-uHh,1.16);if(h.x>0.&&h.x<tb){tb=h.x;kind=2;n=h.yzw;}",
+          "  h=cyl(ro,rd,H1,H1+0.12,0.7);if(h.x>0.&&h.x<tb){tb=h.x;kind=2;n=h.yzw;}",
+          "  h=sph(ro,rd,vec3(0.,H1+0.6,0.),0.55);if(h.x>0.&&h.x<tb){tb=h.x;kind=2;n=h.yzw;}",
+          "  h=cyl(ro,rd,-H1-0.14,-H1,0.8);if(h.x>0.&&h.x<tb){tb=h.x;kind=2;n=h.yzw;}",
+          "  if(kind==0){",
+          "    vec3 A=vec3(0.,-H1,0.);float len=2.*H1+1.;vec3 w=ro-A;float b=rd.y;",
+          "    float den=max(1.-b*b,1e-4);float dd=dot(rd,w);",
+          "    float tc=clamp((w.y-b*dd)/den,0.,len);vec3 C=A+vec3(0.,tc,0.);",
+          "    float sc=dot(C-ro,rd);float dist=length(ro+rd*sc-C);",
+          "    float g=exp(-max(dist-1.05,0.)*2.4)*(0.42+0.06*sin(uTime*2.));",
+          "    gl_FragColor=vec4(TEAL*g,g);return;",
+          "  }",
+          "  vec3 nw=normalize(R*n);",
+          "  vec3 rw=reflect(vec3(0.,0.,-1.),nw);",
+          "  float ndv=clamp(nw.z,0.,1.);",
+          "  if(kind==2){",
+          "    vec3 c=env(rw,ln)*vec3(0.86,0.9,0.95);",
+          "    c+=TEAL*pow(1.-ndv,3.)*0.8;",
+          "    c+=vec3(1.)*pow(max(dot(rw,ln),0.),120.)*2.5;",
+          "    c+=vec3(1.)*(1.-smoothstep(0.,0.05,abs(nw.x+0.35)))*0.35*step(0.5,ndv);",
+          "    gl_FragColor=vec4(c,1.);return;",
+          "  }",
+          "  vec3 p=ro+rd*tb;",
+          "  float F=0.04+0.96*pow(1.-ndv,5.);",
+          "  vec3 rd2=refract(rd,n,1./1.3);vec3 p2=p+rd2*0.002;",
+          "  vec4 hc=cyl(p2,rd2,-uHh,uHh,0.84);",
+          "  vec3 core=vec3(0.02,0.05,0.06);",
+          "  if(hc.x>0.){",
+          "    vec3 q=p2+rd2*hc.x;",
+          "    float s=fract((atan(q.z,q.x)+uSpin)/6.2831853*2.+q.y*0.2);",
+          "    float aa=0.012;",
+          "    vec3 red=vec3(0.84,0.09,0.11),wht=vec3(0.95,0.95,0.93),blu=vec3(0.1,0.24,0.78);",
+          "    vec3 c=mix(red,wht,smoothstep(0.25-aa,0.25+aa,s));",
+          "    c=mix(c,blu,smoothstep(0.5-aa,0.5+aa,s));",
+          "    c=mix(c,wht,smoothstep(0.75-aa,0.75+aa,s));",
+          "    c=mix(c,red,smoothstep(1.-aa,1.,s));",
+          "    vec3 cn=normalize(R*hc.yzw);",
+          "    float dif=max(dot(cn,ln),0.);",
+          "    core=c*(0.28+0.85*dif)+TEAL*max(-cn.x,0.)*0.22*c;",
+          "    core*=mix(0.45,1.,1.-smoothstep(uHh-0.6,uHh,abs(q.y)));",
+          "  }",
+          "  vec3 col=core*(1.-F)*0.92+env(rw,ln)*F;",
+          "  col+=TEAL*pow(1.-ndv,2.6)*0.75;",
+          "  col+=vec3(1.)*pow(max(dot(rw,ln),0.),70.)*1.6;",
+          "  col+=vec3(1.)*(1.-smoothstep(0.,0.06,abs(nw.x+0.45)))*0.22;",
+          "  gl_FragColor=vec4(col,1.);",
+          "}"
+        ].join("\n");
+        function initGL() {
+          if (!pc) return false;
+          try {
+            var g = pc.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: true }) || pc.getContext("experimental-webgl");
+            if (!g) return false;
+            var mk = function (type, src) {
+              var s = g.createShader(type); g.shaderSource(s, src); g.compileShader(s);
+              if (!g.getShaderParameter(s, g.COMPILE_STATUS)) throw new Error(g.getShaderInfoLog(s) || "shader");
+              return s;
+            };
+            var prog = g.createProgram();
+            g.attachShader(prog, mk(g.VERTEX_SHADER, VS));
+            g.attachShader(prog, mk(g.FRAGMENT_SHADER, FS));
+            g.linkProgram(prog);
+            if (!g.getProgramParameter(prog, g.LINK_STATUS)) throw new Error(g.getProgramInfoLog(prog) || "link");
+            g.useProgram(prog);
+            g.bindBuffer(g.ARRAY_BUFFER, g.createBuffer());
+            g.bufferData(g.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), g.STATIC_DRAW);
+            var loc = g.getAttribLocation(prog, "aPos");
+            g.enableVertexAttribArray(loc);
+            g.vertexAttribPointer(loc, 2, g.FLOAT, false, 0, 0);
+            ["uRes", "uHh", "uBox", "uSpin", "uTilt", "uTime"].forEach(function (k) { U[k] = g.getUniformLocation(prog, k); });
+            g.clearColor(0, 0, 0, 0);
+            gl = g;
+            return true;
+          } catch (err) {
+            gl = null;
+            return false;
+          }
+        }
+        function drawGL(t) {
+          gl.viewport(0, 0, pc.width, pc.height);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.uniform2f(U.uRes, pc.width, pc.height);
+          gl.uniform1f(U.uHh, geo.hh);
+          gl.uniform4f(U.uBox, -EXT, EXT, -(geo.hh + BOT), geo.hh + TOP);
+          gl.uniform1f(U.uSpin, spin.ang);
+          gl.uniform2f(U.uTilt, spin.tx, spin.tz);
+          gl.uniform1f(U.uTime, t);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+        function useFallback() {
+          gl = null;
+          if (pc) pc.style.display = "none";
+        }
+
         function size() {
           var r = cv.getBoundingClientRect();
           W = r.width; H = r.height;
@@ -411,7 +563,17 @@
           pole.h = Math.min(H * 0.34, 300);
           pole.x = W - pole.w - Math.max(16, W * 0.06);
           pole.y = H * 0.17;
+          if (gl) {
+            var s = pole.w / 2;
+            geo.hh = pole.h / 2 / s;
+            var cw = EXT * 2 * s, ch = (2 * geo.hh + TOP + BOT) * s;
+            pc.style.width = cw + "px"; pc.style.height = ch + "px";
+            pc.style.left = (pole.x + pole.w / 2 - EXT * s) + "px";
+            pc.style.top = (pole.y - TOP * s) + "px";
+            pc.width = Math.max(1, Math.round(cw * dpr)); pc.height = Math.max(1, Math.round(ch * dpr));
+          }
           seed();
+          if (reduce) renderStatic();
         }
         function seed() {
           parts = [];
@@ -461,15 +623,15 @@
           if (ctx.roundRect) ctx.roundRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5, r); else ctx.rect(x, y, w, h);
           ctx.stroke();
           /* chrome caps */
-          ctx.fillStyle = "rgba(215,222,230,0.9)";
+          var cg = ctx.createLinearGradient(x - 4, 0, x + w + 4, 0);
+          cg.addColorStop(0, "#5d6a74"); cg.addColorStop(0.28, "#ffffff"); cg.addColorStop(0.5, "#b9c4cd");
+          cg.addColorStop(0.8, "#6f7c86"); cg.addColorStop(1, "#19f6e8");
+          ctx.fillStyle = cg;
           ctx.fillRect(x - 4, y - 12, w + 8, 10);
           ctx.fillRect(x - 4, y + h + 2, w + 8, 10);
+          ctx.beginPath(); ctx.arc(x + w / 2, y - 20, Math.max(6, w * 0.22), 0, Math.PI * 2); ctx.fill();
         }
-        function step() {
-          ctx.clearRect(0, 0, W, H);
-          pole.phase = (pole.phase + 0.012 * pole.spin) % 2;
-          pole.spin += (1 - pole.spin) * 0.02;
-          drawPole();
+        function drawParts() {
           for (var i = 0; i < parts.length; i++) {
             var p = parts[i];
             p.vy += 0.01;                       /* gravity */
@@ -487,36 +649,97 @@
             ctx.beginPath(); ctx.moveTo(-p.l / 2, 0); ctx.quadraticCurveTo(0, p.l * 0.22, p.l / 2, 0); ctx.stroke();
             ctx.restore();
           }
-          raf = requestAnimationFrame(step);
         }
-        var raf = null, lastX = 0;
-        function pmove(e) {
-          var r = cv.getBoundingClientRect();
-          var p = e.touches ? e.touches[0] : e;
-          pointer.x = p.clientX - r.left; pointer.y = p.clientY - r.top; pointer.on = true;
-          var vx = Math.abs(pointer.x - lastX); lastX = pointer.x;
-          if (pointer.x > pole.x - 90 && pointer.y > pole.y - 60 && pointer.y < pole.y + pole.h + 60)
-            pole.spin = Math.min(9, pole.spin + vx * 0.12);
-          else pole.spin = Math.min(5, pole.spin + vx * 0.02);
+        function renderStatic() {
+          ctx.clearRect(0, 0, W, H);
+          if (gl) drawGL(0);
+          else { pole.phase = ((spin.ang / Math.PI) % 2 + 2) % 2; drawPole(); }
         }
-        cv.addEventListener("pointermove", pmove);
-        cv.addEventListener("pointerdown", pmove);
-        cv.addEventListener("pointerleave", function () { pointer.on = false; });
-        cv.addEventListener("touchmove", function (e) { pmove(e); }, { passive: true });
-        cv.addEventListener("touchend", function () { pointer.on = false; });
+        /* spin with inertia + slight tilt */
+        function update(dt) {
+          if (grab) {
+            spin.vel *= Math.exp(-dt * 8);
+          } else {
+            spin.vel += (spin.base - spin.vel) * (1 - Math.exp(-dt * 0.9));
+            spin.ang += spin.vel * dt;
+            spin.ttx = REST_TILT;
+            spin.ttz = clamp(-(spin.vel - spin.base) * 0.006, -0.18, 0.18);
+          }
+          var k = 1 - Math.exp(-dt * 6);
+          spin.tx += (spin.ttx - spin.tx) * k;
+          spin.tz += (spin.ttz - spin.tz) * k;
+          spin.ang %= Math.PI * 200;
+        }
+        var raf = null, last = 0, inView = true, t0 = performance.now();
+        function frame(now) {
+          var dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
+          last = now;
+          update(dt);
+          ctx.clearRect(0, 0, W, H);
+          if (gl) drawGL((now - t0) / 1000);
+          else { pole.phase = ((spin.ang / Math.PI) % 2 + 2) % 2; drawPole(); }
+          drawParts();
+          raf = requestAnimationFrame(frame);
+        }
+        function sync() {
+          var go = !reduce && inView && !document.hidden;
+          if (go && !raf) { last = 0; raf = requestAnimationFrame(frame); }
+          else if (!go && raf) { cancelAnimationFrame(raf); raf = null; }
+        }
+
+        function local(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+        function onPole(p) { return p.x > pole.x - 50 && p.x < pole.x + pole.w + 50 && p.y > pole.y - 60 && p.y < pole.y + pole.h + 60; }
+        cv.addEventListener("pointerdown", function (e) {
+          var p = local(e);
+          pointer.x = p.x; pointer.y = p.y; pointer.on = true; lastX = p.x;
+          if (reduce || !onPole(p)) return;
+          grab = { x: p.x, y: p.y, t: performance.now() };
+          spin.vel = 0;
+          try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        cv.addEventListener("pointermove", function (e) {
+          var p = local(e);
+          pointer.x = p.x; pointer.y = p.y; pointer.on = true;
+          if (reduce) return;
+          if (grab) {
+            var now = performance.now(), dt = Math.max(8, now - grab.t) / 1000;
+            var da = ((p.x - grab.x) / (pole.w / 2)) * 0.9;
+            spin.ang += da;
+            spin.vel = clamp(spin.vel * 0.4 + (da / dt) * 0.6, -40, 40);
+            spin.ttz = clamp(-(da / dt) * 0.01, -0.2, 0.2);
+            spin.ttx = REST_TILT + clamp((p.y - (pole.y + pole.h / 2)) / pole.h * 0.25, -0.12, 0.12);
+            grab.x = p.x; grab.y = p.y; grab.t = now;
+          } else if (lastX !== null) {
+            var vx = p.x - lastX;
+            spin.vel = clamp(spin.vel + vx * 0.02, -12, 12);
+          }
+          lastX = p.x;
+        });
+        function release() { grab = null; }
+        cv.addEventListener("pointerup", release);
+        cv.addEventListener("pointercancel", function () { release(); pointer.on = false; lastX = null; });
+        cv.addEventListener("pointerleave", function () { if (!grab) { pointer.on = false; lastX = null; } });
+
+        if (pc) {
+          pc.addEventListener("webglcontextlost", function (e) {
+            e.preventDefault();
+            useFallback();
+            if (reduce) renderStatic();
+          });
+        }
+        if (!initGL()) useFallback();
         addEventListener("resize", function () { clearTimeout(size.t); size.t = setTimeout(size, 150); }, { passive: true });
         size();
-        if (reduce) { pole.spin = 0; ctx.clearRect(0, 0, W, H); drawPole(); }
+        if (reduce) { spin.vel = 0; renderStatic(); }
         else {
-          var hero = document.querySelector(".x-hero");
           if ("IntersectionObserver" in window) {
             new IntersectionObserver(function (es) {
-              es.forEach(function (e) {
-                if (e.isIntersecting && !raf) raf = requestAnimationFrame(step);
-                else if (!e.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
-              });
+              es.forEach(function (e) { inView = e.isIntersecting; });
+              sync();
             }).observe(hero);
-          } else raf = requestAnimationFrame(step);
+          }
+          document.addEventListener("visibilitychange", sync);
+          sync();
         }
       })();
     </script>
