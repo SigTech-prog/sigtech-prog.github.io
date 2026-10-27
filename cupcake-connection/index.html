@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Cupcake Connection Bakery &amp; Decor · Homemade Cupcakes &amp; Custom Cakes · Jacksonville, FL</title>
+<meta name="description" content="Cupcake Connection Bakery: homemade cupcakes, custom wedding and birthday cakes, special treats and party decor, baked to order and never frozen. 5876 Norwood Ave, Jacksonville, FL. Call (904) 527-8488." />
+<meta name="theme-color" content="#3b1747" />
+<style>
+:root{--plum:#3b1747;--plum2:#5b2a72;--berry:#c2366f;--pink:#ff9ec0;--blush:#ffd9e6;--cream:#fff7f1;--mint:#a8e6c8;--green:#1f8f3e;--butter:#ffe08a;--lilac:#cdb8ff;--choc:#3a2027;--ink:#2a1630;--round:ui-rounded,"SF Pro Rounded","Nunito","Varela Round",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--script:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--round);font-weight:800;line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(34px,8.5vw,60px);margin:.25em 0 .45em}
+h2 em{font-family:var(--script);font-style:italic;font-weight:700;color:var(--berry)}
+.eyebrow{font:800 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--berry)}
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(#3b1747e6,#3b174700)}
+.chip{display:inline-flex;background:#fff;border-radius:14px;padding:5px 9px;box-shadow:0 6px 20px #0003}
+.chip img{width:96px;height:auto}
+.nav a.cta{font:700 14px var(--sans);text-decoration:none;padding:9px 16px;border-radius:999px;background:#ffffff1f;border:1px solid #ffffff55;color:#fff;backdrop-filter:blur(6px)}
+/* hero */
+.x-hero{position:relative;min-height:100svh;display:grid;align-items:end;overflow:hidden;color:#fff;background:radial-gradient(90% 60% at 50% 22%,#d94f8f 0%,#8a2a6e 38%,#4a1a55 70%,#2a0f33 100%)}
+.x-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,#ff9ec033,transparent 40%),radial-gradient(circle at 85% 70%,#a8e6c822,transparent 35%);pointer-events:none}
+.x-fx{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y}
+.x-cup{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none}
+.cup-fallback{display:none;position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 0 0 8px #ffffff22,0 0 80px #ff9ec099,0 30px 60px #0006;pointer-events:none}
+.cup-fallback img{width:100%;height:100%;object-fit:cover}
+.nogl .cup-fallback{display:block}
+.hero-copy{position:relative;padding:calc(min(78vw,50svh,520px) + 84px) 0 44px;display:grid;gap:14px;pointer-events:none}
+.hero-copy a{pointer-events:auto}
+.x-hero h1{font-size:clamp(46px,12.5vw,104px);max-width:10ch;text-shadow:0 6px 30px #2a0f3399}
+.x-hero h1 span{display:block;font-family:var(--script);font-style:italic;font-weight:700;color:var(--blush);font-size:.42em;margin-top:.18em;letter-spacing:0}
+.sub{max-width:32ch;color:#ffe9f1;font-size:clamp(16px,4.2vw,20px)}
+.stars{display:inline-flex;align-items:center;gap:8px;width:max-content;font:700 13px var(--sans);padding:7px 12px;border-radius:999px;background:#ffffff1a;border:1px solid #ffffff40}
+.stars b{color:var(--butter);letter-spacing:.05em}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font:800 15px var(--sans);text-decoration:none;border:1px solid #ffffff55;background:#ffffff14;color:inherit;backdrop-filter:blur(6px);transition:transform .25s,box-shadow .25s;cursor:pointer}
+.btn--pink{background:linear-gradient(180deg,#ffc2d7,#ff7fab);color:#4a0f2c;border:0;box-shadow:0 12px 30px #ff7fab55}
+.btn--mint{background:linear-gradient(180deg,#d4f7e6,#8fdcb8);color:#0f3b25;border:0}
+.btn--dark{background:var(--plum);color:#fff;border:0}
+.btn--line{border:1.5px solid var(--plum2);color:var(--plum2);background:#fff}
+.hint{font-size:13px;color:#ffd9e6aa}
+@media(min-width:900px){.hero-copy{padding:140px 0 80px;max-width:52%}.x-hero{align-items:center}}
+/* sections */
+section.sec{padding:84px 0;position:relative}
+.rev{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rev.in{opacity:1;transform:none}
+.lede{max-width:60ch;color:#5a4560;font-size:17px}
+.scallop{height:26px;background:radial-gradient(circle at 13px -2px,transparent 14px,var(--cream) 15px) 0 0/26px 26px repeat-x;margin-top:-25px;position:relative;z-index:2}
+/* flip cards */
+.flips{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:30px}
+.flip{perspective:1000px;height:400px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.flip:hover .flip-in,.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:22px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 20px 40px #5b2a7222}
+.front img{width:100%;height:100%;object-fit:cover}
+.front .lab{position:absolute;left:12px;right:12px;bottom:12px;padding:14px 16px;border-radius:16px;background:#fff;display:flex;justify-content:space-between;align-items:center}
+.front .lab h3{font-size:22px}
+.front .lab span{font:800 12px var(--sans);color:var(--berry);letter-spacing:.1em;text-transform:uppercase}
+.back{transform:rotateY(180deg);padding:26px 22px;display:flex;flex-direction:column;gap:10px;color:#fff}
+.back h3{font-size:26px}
+.back p,.back li{font-size:15px;line-height:1.5}
+.back ul{padding-left:18px;display:grid;gap:4px}
+.b1{background:linear-gradient(160deg,#ff8fb5,#c2366f)}.b2{background:linear-gradient(160deg,#8f5bb0,#3b1747)}.b3{background:linear-gradient(160deg,#3fbf86,#16683a)}.b4{background:linear-gradient(160deg,#f6a35b,#b8476b)}
+.minis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:22px;perspective:900px}
+.mini{background:#fff;border-radius:18px;padding:20px;border:1px solid #c2366f1f;box-shadow:0 10px 24px #5b2a7212;transform-style:preserve-3d;transition:transform .15s ease-out}
+.mini h3{font-size:19px;margin-bottom:6px}
+.mini p{font-size:14.5px;color:#5a4560}
+.mini i{display:inline-block;width:34px;height:8px;border-radius:8px;margin-bottom:12px}
+/* flavors */
+.flav-bg{background:linear-gradient(180deg,var(--blush),#fff0f5)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.chips span{padding:10px 16px;border-radius:999px;font:700 15px var(--sans);background:#fff;border:1.5px solid var(--c,#ff9ec0);box-shadow:0 4px 0 var(--c,#ff9ec0)}
+.note{margin-top:22px;font-size:15px;color:#5a4560}
+.note b{color:var(--plum2)}
+.two{display:grid;gap:18px;margin-top:40px}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr}}
+.panel{border-radius:22px;padding:26px;background:#fff;box-shadow:0 14px 30px #5b2a7214}
+.panel h3{font-size:26px;margin:8px 0 10px}
+.panel ul{padding-left:18px;display:grid;gap:5px;color:#4a3550}
+.panel.dark{background:var(--plum);color:#fff}
+.panel.dark ul{color:#f3e6f7}
+.panel.dark .eyebrow{color:var(--pink)}
+.panel .small{font-size:13.5px;margin-top:12px;opacity:.85}
+.panel .pimg{border-radius:14px;margin-top:16px;aspect-ratio:4/3;object-fit:cover;width:100%}
+/* gallery */
+.gal{columns:2 160px;column-gap:12px;margin-top:26px}
+.gal button{display:block;width:100%;margin:0 0 12px;border:0;padding:0;background:none;border-radius:16px;overflow:hidden;cursor:zoom-in;break-inside:avoid;box-shadow:0 10px 24px #5b2a7218}
+.gal img{width:100%;height:auto;transition:transform .5s}
+.gal button:hover img{transform:scale(1.04)}
+@media(min-width:820px){.gal{columns:4 200px}}
+.lb{position:fixed;inset:0;z-index:90;background:#1a0b20ee;display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-height:88vh;border-radius:14px;box-shadow:0 30px 80px #000a}
+/* reviews */
+.revs{background:var(--plum);color:#fff;overflow:hidden}
+.revs .eyebrow{color:var(--pink)}
+.score{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:8px}
+.score strong{font:800 clamp(56px,14vw,96px)/1 var(--round);color:var(--butter)}
+.score span{color:#e9d8ef}
+.quotes{position:relative;min-height:240px;margin-top:26px}
+.quote{position:absolute;inset:0;opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.quote.on{opacity:1;transform:none}
+.quote p{font:italic 700 clamp(22px,5.6vw,36px)/1.28 var(--script)}
+.quote span{display:block;margin-top:14px;color:var(--pink);font:700 13px var(--sans);letter-spacing:.14em;text-transform:uppercase}
+/* form */
+.order-bg{background:linear-gradient(180deg,#fff7f1,#e9fbf2)}
+.form{display:grid;gap:14px;margin-top:24px;background:#fff;border-radius:24px;padding:22px;box-shadow:0 20px 40px #1f8f3e18}
+.form label{display:grid;gap:6px;font:700 14px var(--sans);color:var(--plum2)}
+.form input,.form select,.form textarea{font:16px var(--sans);padding:13px 14px;border-radius:12px;border:1.5px solid #5b2a7233;background:#fffafc;color:var(--ink);width:100%}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--berry);box-shadow:0 0 0 4px #ff9ec044}
+.form .row{display:grid;gap:14px}
+@media(min-width:700px){.form .row{grid-template-columns:1fr 1fr}}
+.form .fine{font-size:13px;color:#6a5570}
+/* visit */
+.visit{background:linear-gradient(180deg,#2a0f33,#4a1a55);color:#fff}
+.visit .eyebrow{color:var(--pink)}
+.vgrid{display:grid;gap:30px}
+@media(min-width:860px){.vgrid{grid-template-columns:1.1fr .9fr;align-items:start}}
+.addr{font:800 clamp(28px,7vw,46px)/1.08 var(--round);margin:10px 0 14px}
+.visit p{color:#ecdcf1;max-width:56ch}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.hours{width:100%;border-collapse:collapse;font-size:17px;margin-top:6px}
+.hours td{padding:13px 4px;border-bottom:1px dashed #ff9ec055}
+.hours td:last-child{text-align:right;font-weight:800;color:var(--butter)}
+.hours tr.closed td:last-child{color:#ffffff77}
+.hours tr.today td:first-child:after{content:" · today";color:var(--pink);font-size:13px}
+.hours tr.today td{color:#fff}
+.hcard{background:#ffffff0f;border:1px solid #ffffff22;border-radius:22px;padding:24px}
+.hcard small{display:block;margin-top:12px;color:#e7d3ee}
+footer{padding:36px 0 110px;text-align:center;color:#7a6580;font-size:13px;background:var(--cream)}
+footer .credit{margin-top:8px;color:var(--berry);font-weight:700}
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;gap:10px;padding:8px;border-radius:999px;background:#3b1747e6;backdrop-filter:blur(10px);border:1px solid #ff9ec055;color:#fff}
+.dock a{flex:1}
+@media(min-width:820px){.dock{display:none}footer{padding-bottom:40px}}
+@media(prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}.quote{transition:none}.flip-in{transition:none}}
+</style>
+<noscript><style>.rev{opacity:1;transform:none}.quote{position:static;opacity:1;transform:none;margin-bottom:20px}.quotes{min-height:0}</style></noscript>
+</head>
+<body>
+<nav class="nav"><a class="chip" href="#top" aria-label="Cupcake Connection home"><img src="logo.jpg" alt="Cupcake Connection Bakery and Desserts logo"></a><a class="cta" href="tel:9045278488">(904) 527-8488</a></nav>
+<main>
+<section class="x-hero" id="top">
+  <canvas class="x-cup" id="cup" aria-hidden="true"></canvas>
+  <div class="cup-fallback" id="cupfb" aria-hidden="true"><img src="cupcakes.jpg" alt=""></div>
+  <canvas class="x-fx" id="fx" aria-hidden="true"></canvas>
+  <div class="wrap hero-copy">
+    <p class="eyebrow" style="color:#ffc2d7">Homemade in Jacksonville · Since 1993</p>
+    <h1>Cupcake Connection<span>Bakery &amp; Decor</span></h1>
+    <p class="sub">Everything is baked to order, fresh and never frozen, so your dessert is made especially for you.</p>
+    <span class="stars"><b>★★★★★</b> 4.6 on Google · 218 reviews</span>
+    <div class="btns">
+      <a class="btn btn--pink" data-magnet href="tel:9045278488">Call (904) 527-8488</a>
+      <a class="btn" data-magnet href="https://www.grubhub.com/restaurant/cupcake-connection-bakery-and-decor-5876-norwood-ave-jacksonville/3314863" target="_blank" rel="noopener">Order on Grubhub</a>
+      <a class="btn" data-magnet href="#order">Request a custom cake</a>
+    </div>
+    <p class="hint">Drag the cupcake to spin it.</p>
+  </div>
+</section>
+<div class="scallop"></div>
+
+<section class="sec" id="make"><div class="wrap">
+  <div class="rev"><p class="eyebrow">What we make</p><h2>Out of the ordinary, <em>made from scratch.</em></h2>
+  <p class="lede">You are not limited to traditional cakes. We offer over 15 different cakes and you can create your own, with old-fashioned traditional love in everything we bake.</p></div>
+  <div class="flips">
+    <div class="flip rev" tabindex="0"><div class="flip-in">
+      <div class="face front"><img src="cupcakes.jpg" alt="Box of pink and mint frosted cupcakes" loading="lazy"><div class="lab"><h3>Cupcakes</h3><span>Tap</span></div></div>
+      <div class="face back b1"><p class="eyebrow" style="color:#fff">Our namesake</p><h3>Cupcakes</h3><p>Nineteen flavors and counting, from red velvet and key lime to sweet potato, banana pudding and peanut butter &amp; jelly. Special requests welcome.</p><p>Cupcake favors and cupcake wedding cake trees too.</p></div>
+    </div></div>
+    <div class="flip rev" tabindex="0"><div class="flip-in">
+      <div class="face front"><img src="wedding-red.jpg" alt="Tiered white wedding cake with red lace piping" loading="lazy"><div class="lab"><h3>Wedding Cakes</h3><span>Tap</span></div></div>
+      <div class="face back b2"><p class="eyebrow" style="color:#ffc2d7">Your big day</p><h3>Wedding Cakes</h3><p>Choose from your selection, ours, or customize from several creations. Each tier can even be a different flavor.</p><ul><li>Free wedding consultation</li><li>Cake testing</li><li>Grooms' cakes &amp; cupcake trees</li></ul></div>
+    </div></div>
+    <div class="flip rev" tabindex="0"><div class="flip-in">
+      <div class="face front"><img src="birthday.jpg" alt="Round birthday cake with lilac roses" loading="lazy"><div class="lab"><h3>Birthday &amp; Custom</h3><span>Tap</span></div></div>
+      <div class="face back b3"><p class="eyebrow" style="color:#d4f7e6">Any theme</p><h3>Birthday &amp; Custom Cakes</h3><p>Fresh, never frozen, in any size from an 8&nbsp;inch round to a full sheet cake. Fruit and cream filled cakes available.</p><p>Baby showers, retirements, graduations, colleges, sports and themed cakes for any event.</p></div>
+    </div></div>
+    <div class="flip rev" tabindex="0"><div class="flip-in">
+      <div class="face front"><img src="decor.jpg" alt="Decorated event table with cake stands" loading="lazy"><div class="lab"><h3>Party Decor</h3><span>Tap</span></div></div>
+      <div class="face back b4"><p class="eyebrow" style="color:#fff">&amp; Decor</p><h3>Wedding &amp; Party Rentals</h3><ul><li>Tablecloths: round or rectangle, polyester or spandex</li><li>Chair covers &amp; sashes</li><li>Table runners &amp; custom centerpieces</li><li>Charger plates</li><li>Glass &amp; mirrored cake stands*</li></ul><p style="font-size:13px;opacity:.9">*Stands rent only with our cakes.</p></div>
+    </div></div>
+  </div>
+  <div class="minis">
+    <div class="mini rev" data-tilt><i style="background:var(--butter)"></i><h3>Special Treats</h3><p>Banana pudding, cobblers, brownies, cheesecakes, cookies, pies, cinnamon rolls, muffins and chocolate covered strawberries.</p></div>
+    <div class="mini rev" data-tilt><i style="background:var(--lilac)"></i><h3>Balloons</h3><p>Latex in many colors or themed mylar. Local delivery and setup, or bring your own and we'll inflate them.</p></div>
+    <div class="mini rev" data-tilt><i style="background:var(--mint)"></i><h3>Wholesale &amp; Fundraising</h3><p>Restaurants and grocery stores get wholesale pricing, whole or pre-sliced in airtight containers.</p></div>
+    <div class="mini rev" data-tilt><i style="background:var(--pink)"></i><h3>Local Delivery</h3><p>We deliver locally. Please allow 48 hours for delivery orders.</p></div>
+  </div>
+</div></section>
+
+<section class="sec flav-bg" id="flavors"><div class="wrap">
+  <div class="rev"><p class="eyebrow">The flavor list</p><h2>Pick a flavor, <em>any flavor.</em></h2></div>
+  <div class="chips rev">
+    <span style="--c:#ffe08a">Yellow</span><span style="--c:#ff9ec0">Strawberry</span><span style="--c:#fff07a">Lemon</span><span style="--c:#b07a5c">Chocolate</span><span style="--c:#8a8a8a">Oreo</span><span style="--c:#d6304f">Red Velvet</span><span style="--c:#a8e6a0">Key Lime</span><span style="--c:#e8e3d9">Coconut</span><span style="--c:#9b6a4a">German Chocolate</span><span style="--c:#ffc861">Pineapple Upside Down</span><span style="--c:#ffb3c7">Pink Lemonade</span><span style="--c:#f2995a">Sweet Potato</span><span style="--c:#ff6f8f">Cherry Limeade</span><span style="--c:#f3e2c0">Cheesecake</span><span style="--c:#6f8cff">Blue Velvet</span><span style="--c:#f7d77a">Banana Pudding</span><span style="--c:#c9a26b">Boston Cream Pie</span><span style="--c:#9ee08a">Strawberry Kiwi</span><span style="--c:#c98fd8">Peanut Butter &amp; Jelly</span><span style="--c:#cdb8ff">Special request</span>
+  </div>
+  <p class="note rev">Birthday cakes come in yellow, strawberry, chocolate, lemon, red velvet, pound, key lime, coconut, German chocolate, pineapple upside down and more. <b>Pricing:</b> call for a quote. We keep costs down so we can offer reasonable prices.</p>
+  <div class="two">
+    <div class="panel rev"><p class="eyebrow">Fresh, never frozen</p><h3>Special treats</h3><ul><li>Banana pudding (plus strawberry banana &amp; chocolate banana)</li><li>Cobblers in any flavor</li><li>Brownies</li><li>8 assorted cheesecakes</li><li>5 assorted cookies &amp; 5 assorted pies</li><li>Cinnamon rolls &amp; 10 assorted muffins</li><li>Chocolate covered strawberries</li></ul><img class="pimg" src="first-birthday.jpg" alt="First birthday cake surrounded by matching cupcakes" loading="lazy"></div>
+    <div class="panel dark rev"><p class="eyebrow">21+ only</p><h3>Cocktail cupcakes</h3><p style="color:#f3e6f7;margin-bottom:10px">Buttercream laced with the liquor of your choice, for birthdays, bridal and bachelorette parties and showers.</p><ul><li>Key lime cake with tequila</li><li>Vanilla with sweet champagne or grape vodka</li><li>Amaretto pound cake with amaretto liqueur</li><li>Pineapple cake with Parrot Bay rum &amp; coconut</li><li>Chocolate with Bailey's Irish Cream</li><li>German chocolate with Kahlúa coconut frosting</li><li>…and more pairings</li></ul><p class="small">Minimum 1 dozen per flavor, prepaid in full. Jello shots also available (2 dozen minimum per flavor). Proof of age required.</p><img class="pimg" src="cocktail.jpg" alt="Mint frosted cocktail cupcake with a lime slice" loading="lazy"></div>
+  </div>
+</div></section>
+
+<section class="sec" id="gallery"><div class="wrap">
+  <div class="rev"><p class="eyebrow">From our kitchen</p><h2>Cakes for <em>any event.</em></h2><p class="lede">Real cakes, cupcakes and setups made by the Cupcake Connection team. Tap a photo to see it bigger.</p></div>
+  <div class="gal" id="gal">
+    <button class="rev"><img src="tower.jpg" alt="Five-tier cupcake tower" loading="lazy" width="675" height="900"></button>
+    <button class="rev"><img src="wedding-roses.jpg" alt="Three-tier wedding cake with red roses" loading="lazy" width="900" height="675"></button>
+    <button class="rev"><img src="seashell.jpg" alt="Tiered beach-themed cake with seashells" loading="lazy" width="675" height="900"></button>
+    <button class="rev"><img src="gift-cake.jpg" alt="White cake wrapped like a gift with a blue bow" loading="lazy" width="900" height="675"></button>
+    <button class="rev"><img src="stand.jpg" alt="Glass stand loaded with blue and white cupcakes" loading="lazy" width="800" height="600"></button>
+    <button class="rev"><img src="wedding-lilac.jpg" alt="White wedding cake with lilac flowers on stands" loading="lazy" width="675" height="900"></button>
+    <button class="rev"><img src="basketball.jpg" alt="Basketball birthday sheet cake" loading="lazy" width="900" height="675"></button>
+    <button class="rev"><img src="blue-stands.jpg" alt="Cupcake stands decorated in blue and silver" loading="lazy" width="900" height="675"></button>
+    <button class="rev"><img src="ronnie.jpg" alt="Round birthday cake with red script" loading="lazy" width="900" height="675"></button>
+  </div>
+</div></section>
+<div class="lb" id="lb" role="dialog" aria-label="Photo viewer"><img id="lbimg" src="" alt=""></div>
+
+<section class="sec revs" id="reviews"><div class="wrap">
+  <p class="eyebrow rev">What Jacksonville says</p>
+  <div class="score rev"><strong>4.6★</strong><span>from 218 Google reviews</span></div>
+  <div class="quotes rev" id="quotes">
+    <div class="quote on"><p>“These were the moistest cupcakes I have ever had. And the banana pudding was A+.”</p><span>Ron · Google review</span></div>
+    <div class="quote"><p>“The cake she made for me was the best birthday cake I have EVER tasted!!”</p><span>Anisa · Google review</span></div>
+    <div class="quote"><p>“I have no words to describe how beautiful and clean this looks! They absolutely nailed it!”</p><span>Jose · Google review</span></div>
+    <div class="quote"><p>“Sweet potato cupcakes that literally made me get back out of my car and purchase more!!!”</p><span>Tina · Google review</span></div>
+    <div class="quote"><p>“One of the BEST cakes I had ever tasted in my life.”</p><span>Delta · Google review</span></div>
+  </div>
+</div></section>
+
+<section class="sec order-bg" id="order"><div class="wrap">
+  <div class="rev"><p class="eyebrow" style="color:var(--green)">Custom orders</p><h2>Request a <em>custom cake.</em></h2><p class="lede">Tell us about your event and we'll get back to you with ideas and a price. Wedding cake consultations are free.</p></div>
+  <form class="form rev" id="cakeform" novalidate>
+    <div class="row">
+      <label>Your name<input name="name" autocomplete="name" required></label>
+      <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+    </div>
+    <div class="row">
+      <label>Email<input name="email" type="email" autocomplete="email"></label>
+      <label>Event date<input name="date" type="date"></label>
+    </div>
+    <div class="row">
+      <label>Occasion<select name="occasion"><option>Birthday</option><option>Wedding</option><option>Baby shower</option><option>Bridal / bachelorette</option><option>Graduation</option><option>Retirement</option><option>Corporate / meeting</option><option>Other</option></select></label>
+      <label>What do you need?<select name="item"><option>Custom cake</option><option>Cupcakes</option><option>Wedding cake</option><option>Cocktail cupcakes (21+)</option><option>Special treats</option><option>Decor / rentals</option><option>Balloons</option></select></label>
+    </div>
+    <div class="row">
+      <label>Size or servings<input name="size" placeholder="e.g. 8 inch, half sheet, 3 dozen"></label>
+      <label>Flavor(s)<input name="flavor" placeholder="e.g. red velvet &amp; banana pudding"></label>
+    </div>
+    <label>Design ideas &amp; details<textarea name="details" rows="4" placeholder="Theme, colors, message on the cake, pickup or delivery…"></textarea></label>
+    <button class="btn btn--dark" data-magnet type="submit">Send my request</button>
+    <p class="fine">This opens your email app with your request addressed to info@yourcupcakelady.com. Prefer to talk? Call (904) 527-8488. Delivery orders need 48 hours.</p>
+  </form>
+</div></section>
+
+<section class="sec visit" id="visit"><div class="wrap vgrid">
+  <div class="rev">
+    <p class="eyebrow">Visit the bakery</p>
+    <p class="addr">5876 Norwood Ave<br>Jacksonville, FL 32208</p>
+    <p>Conveniently located north of downtown Jacksonville, just 10 minutes south of Jacksonville International Airport and 3 minutes from Gateway Town Center.</p>
+    <div class="links">
+      <a class="btn btn--pink" data-magnet href="tel:9045278488">Shop (904) 527-8488</a>
+      <a class="btn" data-magnet href="tel:9048745101">Cell (904) 874-5101</a>
+      <a class="btn" data-magnet href="https://www.google.com/maps/search/?api=1&amp;query=Cupcake%20Connection%20Bakery%2C%205876%20Norwood%20Ave%2C%20Jacksonville%2C%20FL%2032208" target="_blank" rel="noopener">Google Maps</a>
+      <a class="btn" href="mailto:info@yourcupcakelady.com">info@yourcupcakelady.com</a>
+    </div>
+    <div class="links" style="margin-top:12px">
+      <a class="btn" href="https://www.grubhub.com/restaurant/cupcake-connection-bakery-and-decor-5876-norwood-ave-jacksonville/3314863" target="_blank" rel="noopener">Grubhub</a>
+      <a class="btn" href="https://www.ubereats.com/store/cupcake-connection-bakery/Cb46jkbBTwCr_4VYTCHLqw" target="_blank" rel="noopener">Uber Eats</a>
+      <a class="btn" href="https://www.instagram.com/cupcakelady1/" target="_blank" rel="noopener">Instagram</a>
+      <a class="btn" href="https://www.facebook.com/1cupcakelady" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+  <div class="hcard rev">
+    <p class="eyebrow">Hours</p>
+    <table class="hours" id="htable">
+      <tr data-d="0" class="closed"><td>Sunday</td><td>Closed</td></tr>
+      <tr data-d="1" class="closed"><td>Monday</td><td>Closed</td></tr>
+      <tr data-d="2"><td>Tuesday</td><td>1 – 7 pm</td></tr>
+      <tr data-d="3"><td>Wednesday</td><td>1 – 7 pm</td></tr>
+      <tr data-d="4"><td>Thursday</td><td>1 – 7 pm</td></tr>
+      <tr data-d="5"><td>Friday</td><td>1 – 7 pm</td></tr>
+      <tr data-d="6"><td>Saturday</td><td>1 – 7 pm</td></tr>
+    </table>
+    <small>Need an earlier pickup? Just let us know when you order.</small>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap">© Cupcake Connection Bakery · 5876 Norwood Ave, Jacksonville, FL 32208<div class="credit">Sample website designed by Mayo · +234 903 749 9964</div></div></footer>
+<div class="dock"><a class="btn btn--pink" href="tel:9045278488">Call</a><a class="btn" href="https://www.grubhub.com/restaurant/cupcake-connection-bakery-and-decor-5876-norwood-ave-jacksonville/3314863" target="_blank" rel="noopener">Order</a></div>
+<script>
+(function(){
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function $$(s){return [].slice.call(document.querySelectorAll(s));}
+/* scroll reveals */
+var revs=$$(".rev");
+if(!("IntersectionObserver" in window)||reduce)revs.forEach(function(r){r.classList.add("in")});
+else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px"});revs.forEach(function(r){io.observe(r)})}
+/* today's hours (Jacksonville time) */
+try{var d=new Date(new Date().toLocaleString("en-US",{timeZone:"America/New_York"})).getDay();var tr=document.querySelector('#htable tr[data-d="'+d+'"]');if(tr)tr.classList.add("today")}catch(e){}
+/* magnetic buttons */
+if(!reduce)$$("[data-magnet]").forEach(function(b){function m(e){var r=b.getBoundingClientRect();b.style.transform="translate("+((e.clientX-r.left-r.width/2)/r.width*12).toFixed(1)+"px,"+((e.clientY-r.top-r.height/2)/r.height*8).toFixed(1)+"px)"}function z(){b.style.transform=""}b.addEventListener("pointermove",m);b.addEventListener("pointerleave",z);b.addEventListener("pointerup",z)});
+/* tilt cards */
+if(!reduce)$$("[data-tilt]").forEach(function(c){c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect();var x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform="rotateY("+(x*12).toFixed(2)+"deg) rotateX("+(-y*12).toFixed(2)+"deg) translateZ(6px)"});c.addEventListener("pointerleave",function(){c.style.transform=""})});
+/* flip cards: tap / keyboard */
+$$(".flip").forEach(function(f){f.addEventListener("click",function(){f.classList.toggle("on")});f.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();f.classList.toggle("on")}})});
+/* quotes */
+var qs=$$(".quote"),qi=0;if(!reduce&&qs.length>1)setInterval(function(){qs[qi].classList.remove("on");qi=(qi+1)%qs.length;qs[qi].classList.add("on")},4800);
+/* lightbox */
+var lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg");
+$$("#gal button").forEach(function(b){b.addEventListener("click",function(){var im=b.querySelector("img");lbimg.src=im.getAttribute("src");lbimg.alt=im.alt;lb.classList.add("on")})});
+lb.addEventListener("click",function(){lb.classList.remove("on")});
+addEventListener("keydown",function(e){if(e.key==="Escape")lb.classList.remove("on")});
+/* custom cake form -> mailto */
+var form=document.getElementById("cakeform");
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  var f=form.elements;
+  if(!f.name.value.trim()||!f.phone.value.trim()){(f.name.value.trim()?f.phone:f.name).focus();return;}
+  var lines=["Hi Cupcake Connection,","","I'd like to request a custom order.","",
+    "Name: "+f.name.value,"Phone: "+f.phone.value,"Email: "+f.email.value,"Event date: "+f.date.value,
+    "Occasion: "+f.occasion.value,"Order: "+f.item.value,"Size / servings: "+f.size.value,"Flavor(s): "+f.flavor.value,"","Details:",f.details.value,"","Thank you!"];
+  location.href="mailto:info@yourcupcakelady.com?subject="+encodeURIComponent("Custom cake request: "+f.occasion.value+(f.date.value?" on "+f.date.value:""))+"&body="+encodeURIComponent(lines.join("\n"));
+});
+
+/* ================= HERO: hand-written WebGL cupcake (ray-marched SDF) ================= */
+var hero=document.querySelector(".x-hero");
+var cv=document.getElementById("fx"),ctx=cv.getContext("2d");
+var pc=document.getElementById("cup"),fb=document.getElementById("cupfb");
+var W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,1.5);
+var box={x:0,y:0,s:0};
+var REST_TILT=0.16;
+var spin={ang:0.5,vel:0.7,base:0.7,tx:REST_TILT,tz:0,ttx:REST_TILT,ttz:0};
+var parts=[],pointer={x:-999,y:-999,on:false};
+var grab=null,lastX=null;
+function clamp(v,a,b){return v<a?a:v>b?b:v;}
+var gl=null,U={};
+var VS="attribute vec2 aPos;void main(){gl_Position=vec4(aPos,0.,1.);}";
+var FS=[
+"#ifdef GL_FRAGMENT_PRECISION_HIGH",
+"precision highp float;",
+"#else",
+"precision mediump float;",
+"#endif",
+"uniform vec2 uRes;uniform float uSpin;uniform vec2 uTilt;uniform float uTime;",
+"const float FB=-0.02;const float FT=1.22;const float TAU=6.2831853;",
+"mat3 rotY(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}",
+"mat3 rotX(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}",
+"mat3 rotZ(float a){float c=cos(a),s=sin(a);return mat3(c,s,0.,-s,c,0.,0.,0.,1.);}",
+"float hash(float n){return fract(sin(n)*43758.5453);}",
+"float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}",
+"float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h)-r;}",
+/* frosting radius: tapering cone + spiral piping ridge */
+"float swirl(float y,float a){return 0.5+0.5*cos(TAU*y/0.29-a);}",
+"float frostR(float y,float a){float t=clamp((y-FB)/(FT-FB),0.,1.);float c=swirl(y,a);return 1.02*pow(1.-t,0.78)+0.15*c*c*(1.-0.5*t);}",
+"float wrapR(float y,float a){float t=clamp((y+1.25)/1.27,0.,1.);return mix(0.74,1.0,t)+0.022*abs(sin(15.*a));}",
+"const vec3 CH=vec3(0.03,FT+0.13,0.0);",
+"vec2 map(vec3 p){",
+"  float q=length(p.xz);float a=atan(p.z,p.x);",
+/* wrapper */
+"  float dw=max((q-wrapR(p.y,a))*0.78,abs(p.y+0.615)-0.635);",
+"  vec2 r=vec2(dw,1.);",
+/* frosting */
+"  float df=(q-frostR(p.y,a))*0.55;",
+"  df=max(df,FB-p.y);df=max(df,p.y-FT-0.02);",
+"  float tor=length(vec2(q-0.93,p.y-0.06))-0.17;",
+"  df=smin(df,tor,0.12);",
+"  df=smin(df,length(p-vec3(0.,FT-0.12,0.))-0.13,0.1);",
+"  if(df<r.x)r=vec2(df,2.);",
+/* cherry + stem */
+"  vec3 cp=p-CH;float dc=length(cp)-0.25;",
+"  dc+=0.035*exp(-dot(cp.xz,cp.xz)*60.)*step(0.,cp.y);",
+"  if(dc*0.9<r.x)r=vec2(dc*0.9,3.);",
+"  float ds=sdCap(p,CH+vec3(0.,0.2,0.),CH+vec3(0.15,0.56,0.05),0.022);",
+"  if(ds<r.x)r=vec2(ds,4.);",
+/* sprinkles (only near frosting) */
+"  if(df<0.3){",
+"    for(int i=0;i<26;i++){",
+"      float fi=float(i);float sa=fi*2.39996+0.3;float sy=0.14+hash(fi*7.13)*0.9;",
+"      float sr=frostR(sy,sa)+0.004;",
+"      vec3 c=vec3(cos(sa)*sr,sy,sin(sa)*sr);",
+"      vec3 n0=normalize(vec3(cos(sa),0.45,sin(sa)));",
+"      vec3 dir=vec3(hash(fi*3.31)-.5,hash(fi*5.77)-.5,hash(fi*9.17)-.5);",
+"      dir=normalize(dir-n0*dot(dir,n0)+vec3(1e-4));",
+"      float dd=sdCap(p,c-dir*0.085,c+dir*0.085,0.034);",
+"      if(dd<r.x)r=vec2(dd,5.+fi);",
+"    }",
+"  }",
+"  return r;",
+"}",
+"vec3 nrm(vec3 p){vec2 e=vec2(0.0015,-0.0015);return normalize(e.xyy*map(p+e.xyy).x+e.yyx*map(p+e.yyx).x+e.yxy*map(p+e.yxy).x+e.xxx*map(p+e.xxx).x);}",
+"vec3 env(vec3 r){vec3 c=mix(vec3(0.25,0.08,0.22),vec3(1.,0.86,0.93),smoothstep(-0.3,0.8,r.y));c+=vec3(1.)*exp(-abs(r.y-0.25)*14.)*0.35;c+=vec3(0.66,0.9,0.8)*smoothstep(0.3,1.,-r.x)*0.35;return c;}",
+"vec3 sprCol(float k){float h=hash(k*13.7);",
+"  if(h<0.2)return vec3(1.,0.45,0.66);if(h<0.4)return vec3(0.55,0.88,0.72);if(h<0.6)return vec3(0.76,0.66,1.);",
+"  if(h<0.8)return vec3(1.,0.86,0.42);return vec3(0.5,0.75,1.);}",
+"void main(){",
+"  vec2 uv=(gl_FragCoord.xy-0.5*uRes)/uRes.y;",
+"  vec3 ro=vec3(0.,0.32,6.2);vec3 rd=normalize(vec3(uv*0.68,-1.));",
+"  mat3 R=rotX(uTilt.x)*rotZ(uTilt.y)*rotY(uSpin);",
+"  mat3 Ri=rotY(-uSpin)*rotZ(-uTilt.y)*rotX(-uTilt.x);",
+"  vec3 o=Ri*(ro-vec3(0.,0.32,0.))+vec3(0.,0.32,0.);vec3 d=Ri*rd;",
+/* bounding sphere */
+"  vec3 oc=o-vec3(0.,0.32,0.);float b=dot(oc,d);float h=b*b-dot(oc,oc)+4.2;",
+"  float glowD=10.;",
+"  if(h<0.){gl_FragColor=vec4(0.);return;}",
+"  h=sqrt(h);float t=max(-b-h,0.);float tE=-b+h;",
+"  float id=-1.;",
+"  for(int i=0;i<84;i++){",
+"    vec3 p=o+d*t;vec2 m=map(p);",
+"    glowD=min(glowD,m.x);",
+"    if(m.x<0.0012*t){id=m.y;break;}",
+"    t+=m.x;if(t>tE)break;",
+"  }",
+"  vec3 rim=vec3(1.,0.62,0.82);",
+"  if(id<0.){float g=exp(-max(glowD,0.)*5.)*(0.5+0.06*sin(uTime*2.));gl_FragColor=vec4(rim*g,g);return;}",
+"  vec3 p=o+d*t;vec3 nl=nrm(p);vec3 n=normalize(R*nl);vec3 v=-rd;",
+"  vec3 L=normalize(vec3(0.55,0.75,0.6));vec3 F2=normalize(vec3(-0.7,0.2,0.4));",
+"  float ndl=max(dot(n,L),0.);float ndv=clamp(dot(n,v),0.,1.);",
+"  float ao=clamp(0.45+map(p+nl*0.08).x*7.,0.,1.);",
+"  vec3 hv=normalize(L+v);float nh=max(dot(n,hv),0.);",
+"  vec3 rf=reflect(-v,n);float fr=0.04+0.96*pow(1.-ndv,5.);",
+"  vec3 col;float q=length(p.xz);float a=atan(p.z,p.x);",
+"  if(id<1.5){",
+"    float rg=abs(sin(15.*a));vec3 base=mix(vec3(0.93,0.42,0.6),vec3(1.,0.72,0.82),rg);",
+"    base=mix(base,vec3(1.,0.95,0.97),(1.-smoothstep(0.,0.012,abs(fract(p.y*2.2+0.1)-0.5)-0.47))*0.6);",
+"    col=base*(0.25+0.8*ndl)*ao+vec3(0.8,0.7,1.)*max(dot(n,F2),0.)*0.18*base;",
+"    col+=vec3(1.)*pow(nh,30.)*0.35*rg;col+=env(rf)*fr*0.25;",
+"  }else if(id<2.5){",
+"    float c=swirl(p.y,a);vec3 base=mix(vec3(1.,0.68,0.8),vec3(1.,0.9,0.94),c);",
+"    float wrap=max((dot(n,L)+0.35)/1.35,0.);",
+"    col=base*(0.22+0.85*wrap)*ao;",
+"    col+=vec3(1.,0.45,0.6)*(1.-wrap)*0.12;",
+"    col+=vec3(0.8,0.7,1.)*max(dot(n,F2),0.)*0.2*base;",
+"    col+=vec3(1.)*pow(nh,90.)*1.3;col+=vec3(1.)*pow(nh,14.)*0.12;",
+"    col+=env(rf)*fr*0.75;",
+"  }else if(id<3.5){",
+"    vec3 base=vec3(0.78,0.04,0.12);",
+"    col=base*(0.18+0.9*ndl)+vec3(1.)*pow(nh,160.)*2.4+env(rf)*(0.08+fr)*0.9;",
+"  }else if(id<4.5){",
+"    col=vec3(0.33,0.5,0.15)*(0.3+0.8*ndl)+vec3(1.)*pow(nh,40.)*0.3;",
+"  }else{",
+"    vec3 base=sprCol(id-5.);col=base*(0.3+0.8*ndl)*ao+vec3(1.)*pow(nh,60.)*0.8+env(rf)*fr*0.4;",
+"  }",
+"  col+=rim*pow(1.-ndv,3.)*0.85;",
+"  col=col/(1.+0.22*col);",
+"  gl_FragColor=vec4(col,1.);",
+"}"
+].join("\n");
+function initGL(){
+  if(!pc)return false;
+  try{
+    var g=pc.getContext("webgl",{alpha:true,premultipliedAlpha:true,antialias:true})||pc.getContext("experimental-webgl");
+    if(!g)return false;
+    var mk=function(type,src){var s=g.createShader(type);g.shaderSource(s,src);g.compileShader(s);if(!g.getShaderParameter(s,g.COMPILE_STATUS))throw new Error(g.getShaderInfoLog(s)||"shader");return s;};
+    var prog=g.createProgram();
+    g.attachShader(prog,mk(g.VERTEX_SHADER,VS));
+    g.attachShader(prog,mk(g.FRAGMENT_SHADER,FS));
+    g.linkProgram(prog);
+    if(!g.getProgramParameter(prog,g.LINK_STATUS))throw new Error(g.getProgramInfoLog(prog)||"link");
+    g.useProgram(prog);
+    g.bindBuffer(g.ARRAY_BUFFER,g.createBuffer());
+    g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),g.STATIC_DRAW);
+    var loc=g.getAttribLocation(prog,"aPos");
+    g.enableVertexAttribArray(loc);
+    g.vertexAttribPointer(loc,2,g.FLOAT,false,0,0);
+    ["uRes","uSpin","uTilt","uTime"].forEach(function(k){U[k]=g.getUniformLocation(prog,k);});
+    g.clearColor(0,0,0,0);
+    gl=g;return true;
+  }catch(err){gl=null;if(window.console)console.warn("WebGL cupcake fallback:",err);return false;}
+}
+function drawGL(t){
+  gl.viewport(0,0,pc.width,pc.height);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.uniform2f(U.uRes,pc.width,pc.height);
+  gl.uniform1f(U.uSpin,spin.ang);
+  gl.uniform2f(U.uTilt,spin.tx,spin.tz);
+  gl.uniform1f(U.uTime,t);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+}
+function useFallback(){gl=null;if(pc)pc.style.display="none";hero.classList.add("nogl");place();}
+function place(){
+  var s=box.s;
+  if(gl){
+    pc.style.width=s+"px";pc.style.height=s+"px";pc.style.left=box.x+"px";pc.style.top=box.y+"px";
+    pc.width=Math.max(1,Math.round(s*dpr));pc.height=Math.max(1,Math.round(s*dpr));
+  }else{
+    var f=s*0.72;fb.style.width=f+"px";fb.style.height=f+"px";fb.style.left=(box.x+(s-f)/2)+"px";fb.style.top=(box.y+(s-f)/2)+"px";
+  }
+}
+function size(){
+  var r=cv.getBoundingClientRect();
+  W=r.width;H=r.height;
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  if(W>=900){box.s=Math.min(H*0.8,W*0.44,640);box.x=W*0.74-box.s/2;box.y=H*0.5-box.s/2;}
+  else{box.s=Math.min(W*0.78,H*0.5,520);box.x=W/2-box.s/2;box.y=70;}
+  place();
+  seed();
+  if(reduce)renderStatic();
+}
+/* falling sprinkles */
+var SPR=["#ff8fb5","#a8e6c8","#cdb8ff","#ffe08a","#8fc0ff","#ffffff"];
+function seed(){parts=[];var n=W<520?24:44;for(var i=0;i<n;i++)parts.push(mkP(Math.random()*H));}
+function mkP(y){return{x:Math.random()*W,y:y,vx:(Math.random()-.5)*.25,vy:.15+Math.random()*.45,l:6+Math.random()*7,a:Math.random()*Math.PI,va:(Math.random()-.5)*.05,c:SPR[(Math.random()*SPR.length)|0],o:.35+Math.random()*.45};}
+function drawParts(){
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i];
+    p.vy+=0.006;
+    if(pointer.on){var dx=p.x-pointer.x,dy=p.y-pointer.y,d2=dx*dx+dy*dy;if(d2<15000&&d2>1){var f=(1-d2/15000)*1.3/Math.sqrt(d2);p.vx+=dx*f;p.vy+=dy*f;}}
+    p.vx*=.985;p.vy*=.99;p.x+=p.vx;p.y+=p.vy;p.a+=p.va+p.vx*.02;
+    if(p.y>H+20||p.x<-30||p.x>W+30){parts[i]=mkP(-20);continue;}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=p.o;
+    ctx.strokeStyle=p.c;ctx.lineWidth=3.2;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(-p.l/2,0);ctx.lineTo(p.l/2,0);ctx.stroke();
+    ctx.restore();
+  }
+}
+function renderStatic(){ctx.clearRect(0,0,W,H);if(gl)drawGL(0);}
+/* spin with inertia + tilt toward the finger */
+function update(dt){
+  if(grab){spin.vel*=Math.exp(-dt*8);}
+  else{
+    spin.vel+=(spin.base-spin.vel)*(1-Math.exp(-dt*0.9));
+    spin.ang+=spin.vel*dt;
+    var cx=box.x+box.s/2,cy=box.y+box.s/2;
+    if(pointer.on&&Math.abs(pointer.x-cx)<box.s*0.7&&Math.abs(pointer.y-cy)<box.s*0.7){
+      spin.ttx=REST_TILT+clamp((pointer.y-cy)/box.s*0.5,-0.22,0.22);
+      spin.ttz=clamp(-(pointer.x-cx)/box.s*0.4,-0.2,0.2);
+    }else{spin.ttx=REST_TILT;spin.ttz=clamp(-(spin.vel-spin.base)*0.006,-0.18,0.18);}
+  }
+  var k=1-Math.exp(-dt*6);
+  spin.tx+=(spin.ttx-spin.tx)*k;spin.tz+=(spin.ttz-spin.tz)*k;
+  spin.ang%=Math.PI*200;
+}
+var raf=null,last=0,inView=true,t0=performance.now();
+function frame(now){
+  var dt=last?Math.min(0.05,(now-last)/1000):1/60;last=now;
+  update(dt);
+  ctx.clearRect(0,0,W,H);
+  if(gl)drawGL((now-t0)/1000);
+  drawParts();
+  raf=requestAnimationFrame(frame);
+}
+function sync(){
+  var go=!reduce&&inView&&!document.hidden;
+  if(go&&!raf){last=0;raf=requestAnimationFrame(frame);}
+  else if(!go&&raf){cancelAnimationFrame(raf);raf=null;}
+}
+function local(e){var r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
+function onCup(p){return p.x>box.x&&p.x<box.x+box.s&&p.y>box.y&&p.y<box.y+box.s;}
+cv.addEventListener("pointerdown",function(e){
+  var p=local(e);pointer.x=p.x;pointer.y=p.y;pointer.on=true;lastX=p.x;
+  if(reduce||!onCup(p))return;
+  grab={x:p.x,y:p.y,t:performance.now()};spin.vel=0;
+  try{cv.setPointerCapture(e.pointerId);}catch(err){}
+});
+cv.addEventListener("pointermove",function(e){
+  var p=local(e);pointer.x=p.x;pointer.y=p.y;pointer.on=true;
+  if(reduce)return;
+  if(grab){
+    var now=performance.now(),dt=Math.max(8,now-grab.t)/1000;
+    var da=((p.x-grab.x)/(box.s*0.35))*0.9;
+    spin.ang+=da;
+    spin.vel=clamp(spin.vel*0.4+(da/dt)*0.6,-30,30);
+    spin.ttz=clamp(-(da/dt)*0.012,-0.24,0.24);
+    spin.ttx=REST_TILT+clamp((p.y-(box.y+box.s/2))/box.s*0.5,-0.22,0.22);
+    grab.x=p.x;grab.y=p.y;grab.t=now;
+  }else if(lastX!==null){spin.vel=clamp(spin.vel+(p.x-lastX)*0.015,-10,10);}
+  lastX=p.x;
+});
+function release(){grab=null;}
+cv.addEventListener("pointerup",release);
+cv.addEventListener("pointercancel",function(){release();pointer.on=false;lastX=null;});
+cv.addEventListener("pointerleave",function(){if(!grab){pointer.on=false;lastX=null;}});
+if(pc)pc.addEventListener("webglcontextlost",function(e){e.preventDefault();if(raf){cancelAnimationFrame(raf);raf=null;}useFallback();sync();});
+if(!initGL())useFallback();
+addEventListener("resize",function(){clearTimeout(size.t);size.t=setTimeout(size,150);},{passive:true});
+size();
+if(reduce){spin.vel=0;renderStatic();}
+else{
+  if("IntersectionObserver" in window){new IntersectionObserver(function(es){es.forEach(function(e){inView=e.isIntersecting;});sync();}).observe(hero);}
+  document.addEventListener("visibilitychange",sync);
+  sync();
+}
+})();
+</script>
+</body>
+</html>
