@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Funky Dory · Soul, disco, funk &amp; house experiences</title>
+    <meta name="description" content="Funky Dory: soul, disco, funk and house experiences with legendary DJs in stunning locations across London and Essex." />
+    <meta name="theme-color" content="#070b1f" />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <script>document.documentElement.classList.add("x-js");</script>
+    <style>
+      :root {
+        --x-navy: #070b1f;
+        --x-midnight: #0e1538;
+        --x-panel: #121838;
+        --x-line: rgba(255, 255, 255, 0.12);
+        --x-ink: #f7f1e6;
+        --x-soft: #bfc3dc;
+        --x-gold: #f6c453;
+        --x-gold-2: #ffdf8a;
+        --x-pink: #ff3d9a;
+        --x-glow: #ff9b4a;
+        --x-display: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Franklin Gothic Heavy", "Helvetica Neue Condensed Black", "Roboto Condensed", "Oswald", "Arial Black", sans-serif;
+        --x-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      html { background: var(--x-navy); }
+      body.x-body {
+        background:
+          radial-gradient(1200px 700px at 85% -10%, rgba(255, 61, 154, 0.16), transparent 60%),
+          radial-gradient(900px 600px at -10% 30%, rgba(246, 196, 83, 0.08), transparent 60%),
+          linear-gradient(180deg, var(--x-navy), #0a0f2a 50%, var(--x-navy));
+        color: var(--x-ink);
+        font: 400 16px/1.55 var(--x-sans);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .x-body ::selection { background: var(--x-pink); color: #fff; }
+      .x-body a:focus-visible, .x-body button:focus-visible, .x-body [tabindex]:focus-visible { outline: 2px solid var(--x-gold); outline-offset: 3px; }
+      .x-body .main { gap: clamp(56px, 9vw, 112px); }
+
+      /* type */
+      .x-display { font-family: var(--x-display); font-weight: 900; font-stretch: condensed; text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; }
+      .x-eyebrow { font: 600 12px/1.2 var(--x-sans); letter-spacing: 0.22em; text-transform: uppercase; color: var(--x-gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+      .x-eyebrow::before { content: ""; width: 26px; height: 2px; background: linear-gradient(90deg, var(--x-gold), var(--x-pink)); border-radius: 2px; }
+      .x-h2 { font-size: clamp(40px, 7vw, 76px); }
+      .x-h2 em { font-style: normal; background: linear-gradient(100deg, var(--x-gold-2), var(--x-gold) 40%, var(--x-pink)); -webkit-background-clip: text; background-clip: text; background-color: transparent; color: var(--x-gold); -webkit-text-fill-color: transparent; }
+      .x-lead { color: var(--x-soft); font-size: clamp(16px, 1.6vw, 18px); max-width: 60ch; margin-top: 16px; }
+      .x-head { margin-bottom: clamp(24px, 4vw, 40px); }
+
+      /* nav */
+      .x-nav { position: sticky; top: 10px; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 20px; margin-bottom: 14px; border-radius: 999px; background: rgba(10, 14, 38, 0.66); border: 1px solid var(--x-line); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+      .x-logo { font-family: var(--x-display); font-weight: 900; font-size: 24px; letter-spacing: 0.04em; text-decoration: none; display: flex; align-items: center; gap: 10px; min-height: 44px; }
+      .x-logo i { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #c9ccd8 30%, #5b6078 70%, #1d2140); box-shadow: 0 0 14px rgba(246, 196, 83, 0.7); }
+      .x-logo b { color: var(--x-gold); font-weight: inherit; }
+      .x-links { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+      .x-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; font: 500 14px var(--x-sans); color: var(--x-soft); text-decoration: none; border-radius: 999px; transition: color 0.2s, background 0.2s; }
+      .x-links a:hover { color: var(--x-ink); background: rgba(255, 255, 255, 0.06); }
+      @media (max-width: 860px) { .x-links { display: none; } }
+
+      /* buttons */
+      .x-btn { --mx: 0px; --my: 0px; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 24px; border-radius: 999px; font: 700 15px/1 var(--x-sans); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; cursor: pointer; border: 1px solid transparent; transform: translate(var(--mx), var(--my)); transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s, background 0.25s; will-change: transform; }
+      .x-btn--gold { background: linear-gradient(135deg, var(--x-gold-2), var(--x-gold) 45%, var(--x-glow)); background-color: var(--x-gold); color: #1a1205; box-shadow: 0 8px 30px -8px rgba(246, 196, 83, 0.65); }
+      .x-btn--gold:hover { box-shadow: 0 12px 40px -6px rgba(255, 155, 74, 0.85); }
+      .x-btn--pink { background: linear-gradient(135deg, #d42a7e, #b0165c); background-color: #b0165c; color: #fff; box-shadow: 0 8px 30px -8px rgba(255, 61, 154, 0.7); }
+      .x-btn--ghost { border-color: rgba(255, 255, 255, 0.28); color: var(--x-ink); background: #161c44; }
+      .x-btn--ghost:hover { border-color: var(--x-gold); color: var(--x-gold-2); }
+      .x-btn--sm { min-height: 44px; padding: 0 18px; font-size: 13px; }
+      .x-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+      /* hero */
+      .x-hero { position: relative; overflow: hidden; border-radius: 32px; min-height: min(860px, calc(100svh - 90px)); display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; padding: clamp(28px, 5vw, 64px); isolation: isolate;
+        background: radial-gradient(60% 70% at 72% 45%, rgba(255, 61, 154, 0.22), transparent 70%), radial-gradient(50% 50% at 75% 40%, rgba(246, 196, 83, 0.14), transparent 70%), linear-gradient(160deg, #111a46, #080c25 60%, #05081a);
+        border: 1px solid var(--x-line); }
+      .x-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.4px) 0 0 / 22px 22px; mask-image: linear-gradient(180deg, transparent, #000 40%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 40%, transparent); }
+      .x-flecks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; mix-blend-mode: screen; }
+      .x-hero__copy { position: relative; z-index: 2; }
+      .x-hero h1 { font-size: clamp(52px, 8.6vw, 124px); margin: 0 0 22px; }
+      .x-hero h1 span { display: block; }
+      .x-hero h1 .x-shine { background: linear-gradient(100deg, var(--x-gold-2) 0%, var(--x-gold) 30%, #fff 45%, var(--x-gold) 55%, var(--x-pink) 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; background-color: transparent; color: var(--x-gold); -webkit-text-fill-color: transparent; animation: x-shine 6s linear infinite; }
+      @keyframes x-shine { from { background-position: 100% 0; } to { background-position: -120% 0; } }
+      .x-hero__sub { font-size: clamp(17px, 1.8vw, 21px); color: var(--x-soft); max-width: 34ch; margin-bottom: 30px; }
+      .x-hero__tag { display: inline-flex; align-items: center; gap: 8px; font: 600 12px var(--x-sans); letter-spacing: 0.18em; text-transform: uppercase; color: var(--x-gold); padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(246, 196, 83, 0.35); background: #1c1c33; margin-bottom: 22px; }
+      .x-hero__tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--x-pink); box-shadow: 0 0 10px var(--x-pink); }
+      .x-ballwrap { position: relative; justify-self: center; width: min(100%, 560px); aspect-ratio: 1; z-index: 1; }
+      .x-ballwrap::before { content: ""; position: absolute; inset: 6%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 220, 160, 0.35), rgba(255, 61, 154, 0.18) 45%, transparent 70%); filter: blur(30px); z-index: -1; }
+      .x-ballwrap::after { content: ""; position: absolute; left: 50%; top: -60%; height: 69%; width: 2px; transform: translateX(-50%); background: linear-gradient(transparent, rgba(255,255,255,0.4)); z-index: -1; }
+      .x-ball { width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; }
+      .x-ball:active { cursor: grabbing; }
+      .x-hint { position: absolute; bottom: 2%; left: 50%; transform: translateX(-50%); font: 500 12px var(--x-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--x-soft); opacity: 0.8; white-space: nowrap; pointer-events: none; }
+      .x-cssball { display: none; position: absolute; inset: 11%; border-radius: 50%; overflow: hidden;
+        background:
+          radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95), rgba(255,255,255,0) 18%),
+          radial-gradient(circle at 70% 70%, rgba(255,61,154,0.45), transparent 40%),
+          linear-gradient(90deg, rgba(0,0,0,0.55) 1px, transparent 1px) 0 0 / 18px 18px,
+          linear-gradient(0deg, rgba(0,0,0,0.55) 1px, transparent 1px) 0 0 / 18px 18px,
+          conic-gradient(from 0deg, #8a8fa6, #f3f4f8, #6b7088, #e2e4ee, #4d5269, #fefefe, #7d8299, #8a8fa6);
+        box-shadow: inset -30px -40px 80px rgba(5, 8, 26, 0.9), inset 14px 10px 40px rgba(255,255,255,0.35), 0 0 80px rgba(246, 196, 83, 0.35);
+        animation: x-cssspin 14s linear infinite; }
+      @keyframes x-cssspin { to { background-position: 0 0, 0 0, 180px 0, 180px 0, 0 0; } }
+      .x-hero.is-fallback .x-cssball { display: block; }
+      .x-hero.is-fallback .x-ball, .x-hero.is-fallback .x-hint { display: none; }
+      @media (max-width: 860px) {
+        .x-hero { grid-template-columns: 1fr; padding: 20px 20px 32px; min-height: 0; align-content: start; }
+        .x-ballwrap { order: -1; width: min(86vw, 400px); margin-top: 8px; }
+        .x-ballwrap::after { display: none; }
+        .x-hero__copy { text-align: left; }
+        .x-btns .x-btn { flex: 1 1 auto; }
+      }
+
+      /* marquee */
+      .x-marquee { overflow: hidden; border-block: 1px solid var(--x-line); padding: 18px 0; margin-inline: calc(-1 * var(--gutter)); margin-top: -40px; background: linear-gradient(90deg, rgba(246,196,83,0.06), rgba(255,61,154,0.08)); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+      .x-marquee__track { display: flex; width: max-content; animation: x-marquee 38s linear infinite; }
+      .x-marquee__track span { font-family: var(--x-display); font-weight: 900; font-size: clamp(22px, 3.2vw, 34px); letter-spacing: 0.06em; padding-right: 0.6em; white-space: nowrap; color: var(--x-gold); -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px rgba(246, 196, 83, 0.8); }
+      .x-marquee__track span:nth-child(odd) { color: var(--x-ink); -webkit-text-fill-color: var(--x-ink); -webkit-text-stroke: 0; }
+      @keyframes x-marquee { to { transform: translateX(-50%); } }
+
+      /* stats */
+      .x-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: -40px; }
+      .x-stat { padding: 26px 24px; border-radius: 24px; background: var(--x-panel); border: 1px solid var(--x-line); position: relative; overflow: hidden; }
+      .x-stat::after { content: ""; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 61, 154, 0.22), transparent 70%); }
+      .x-stat__fig { display: block; font-family: var(--x-display); font-weight: 900; font-size: clamp(48px, 6.5vw, 80px); line-height: 1; background: linear-gradient(180deg, #fff, var(--x-gold-2) 55%, var(--x-gold)); -webkit-background-clip: text; background-clip: text; background-color: transparent; color: var(--x-gold); -webkit-text-fill-color: transparent; }
+      .x-stat__label { display: block; margin-top: 8px; font: 600 13px var(--x-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--x-soft); }
+      @media (max-width: 640px) { .x-stats { grid-template-columns: 1fr; } .x-stat { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 20px; } .x-stat__label { margin: 0; text-align: right; } }
+
+      /* countdown */
+      .x-count { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 26px; border-radius: 24px; margin-bottom: 20px; background: linear-gradient(120deg, rgba(246,196,83,0.14), rgba(255,61,154,0.14)); border: 1px solid rgba(246,196,83,0.3); }
+      .x-count__label { font: 600 12px var(--x-sans); letter-spacing: 0.18em; text-transform: uppercase; color: var(--x-gold); }
+      .x-count__title { font-family: var(--x-display); font-weight: 900; font-size: clamp(22px, 3vw, 30px); text-transform: uppercase; margin-top: 4px; }
+      .x-count__clock { display: flex; gap: 10px; }
+      .x-count__unit { min-width: 68px; text-align: center; padding: 10px 8px; border-radius: 16px; background: rgba(7, 11, 31, 0.6); border: 1px solid var(--x-line); }
+      .x-count__unit b { display: block; font: 700 clamp(26px, 4vw, 34px)/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: #fff; font-variant-numeric: tabular-nums; }
+      .x-count__unit small { display: block; margin-top: 4px; font: 600 12px var(--x-sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-soft); }
+      @media (max-width: 640px) { .x-count__clock { width: 100%; } .x-count__unit { flex: 1; min-width: 0; } }
+
+      /* events */
+      .x-events { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; perspective: 1200px; }
+      .x-event { --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 0%; position: relative; display: flex; flex-direction: column; padding: 26px; border-radius: 28px; background: linear-gradient(170deg, #141d4c, #0b1131); border: 1px solid var(--x-line); transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d; transition: transform 0.4s cubic-bezier(.2,.8,.2,1), border-color 0.3s; overflow: hidden; }
+      .x-event::before { content: ""; position: absolute; inset: 0; background: radial-gradient(400px circle at var(--gx) var(--gy), rgba(246, 196, 83, 0.16), transparent 45%); pointer-events: none; }
+      .x-event:hover { border-color: rgba(246, 196, 83, 0.45); }
+      .x-event.is-next { border-color: rgba(246, 196, 83, 0.55); box-shadow: 0 30px 80px -30px rgba(255, 61, 154, 0.45); }
+      .x-date { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; transform: translateZ(30px); }
+      .x-date__day { font-family: var(--x-display); font-weight: 900; font-size: 64px; line-height: 0.85; color: var(--x-gold); }
+      .x-date__rest { font: 700 13px/1.3 var(--x-sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-soft); }
+      .x-date__rest b { display: block; color: var(--x-ink); }
+      .x-event h3 { font-family: var(--x-display); font-weight: 900; font-size: clamp(28px, 2.8vw, 34px); line-height: 1; text-transform: uppercase; margin-bottom: 12px; transform: translateZ(24px); }
+      .x-venue { color: var(--x-ink); font-weight: 600; font-size: 15px; }
+      .x-venue small { display: block; color: var(--x-soft); font-weight: 400; font-size: 14px; margin-top: 2px; }
+      .x-tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 16px 0; }
+      .x-tags li { font: 600 12px var(--x-sans); padding: 6px 10px; border-radius: 999px; background: #1f2756; color: var(--x-ink); }
+      .x-event p.x-note { color: var(--x-soft); font-size: 14px; }
+      .x-prices { margin: 16px 0 0; padding: 14px 0 0; border-top: 1px dashed var(--x-line); display: grid; gap: 10px; }
+      .x-prices div { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--x-soft); }
+      .x-prices dt { margin: 0; }
+      .x-prices dt small { display: block; font-size: 12px; }
+      .x-prices dd { margin: 0; font: 800 18px var(--x-sans); color: var(--x-gold-2); white-space: nowrap; }
+      .x-event__cta { margin-top: auto; padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transform: translateZ(20px); }
+      .x-badge { font: 700 12px var(--x-sans); letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: #1a1205; background: var(--x-gold); position: absolute; top: 22px; right: 22px; }
+      .x-badge--pink { background: #b0165c; color: #fff; }
+      @media (max-width: 980px) { .x-events { grid-template-columns: 1fr; } }
+
+      /* experiences flip */
+      .x-flips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .x-flip { position: relative; height: 460px; perspective: 1400px; cursor: pointer; border-radius: 28px; }
+      .x-flip__inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(.2,.8,.2,1); }
+      .x-flip.is-flipped .x-flip__inner { transform: rotateY(180deg); }
+
+      .x-flip__face { position: absolute; inset: 0; border-radius: 28px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--x-line); display: flex; flex-direction: column; justify-content: flex-end; padding: 26px; }
+      .x-flip__face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+      .x-flip__front { isolation: isolate; }
+      .x-flip__front::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 30%, rgba(7, 11, 31, 0.92)); }
+      .x-flip__front h3 { font-family: var(--x-display); font-weight: 900; font-size: 44px; line-height: 0.95; text-transform: uppercase; }
+      .x-flip__front p { color: var(--x-soft); margin-top: 6px; font-size: 15px; }
+      .x-flip__turn { display: inline-flex; margin-top: 14px; font: 700 12px var(--x-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--x-gold); }
+      .x-flip__back { transform: rotateY(180deg); justify-content: center; background: linear-gradient(160deg, #1b2459, #0b1131 70%); }
+      .x-flip__back h3 { font-family: var(--x-display); font-weight: 900; font-size: 34px; text-transform: uppercase; color: var(--x-gold); margin-bottom: 12px; }
+      .x-flip__back p { color: var(--x-ink); font-size: 15px; }
+      .x-flip__back p + p { margin-top: 10px; color: var(--x-soft); }
+      .x-flip__back .x-btn { margin-top: 18px; align-self: flex-start; }
+      .x-glitter { isolation: isolate; background:
+          radial-gradient(circle at 20% 30%, rgba(255, 223, 138, 0.9) 0 1.5px, transparent 2px) 0 0 / 38px 41px,
+          radial-gradient(circle at 70% 60%, rgba(255, 61, 154, 0.85) 0 1.2px, transparent 1.8px) 0 0 / 29px 33px,
+          radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.5px) 0 0 / 23px 19px,
+          radial-gradient(80% 60% at 50% 20%, rgba(246, 196, 83, 0.4), transparent 70%),
+          linear-gradient(170deg, #3a1840, #120a2e 60%, #070b1f); }
+      .x-glitter::before { content: "★"; position: absolute; top: 34px; left: 50%; transform: translateX(-50%); font-size: 120px; line-height: 1; color: var(--x-gold); text-shadow: 0 0 40px rgba(246, 196, 83, 0.8); }
+      .x-henley { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 20px 24px; border-radius: 24px; border: 1px dashed rgba(246, 196, 83, 0.4); color: var(--x-soft); }
+      .x-henley strong { color: var(--x-ink); }
+      .x-henley span.x-pilltag { font: 700 12px var(--x-sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-gold); border: 1px solid rgba(246, 196, 83, 0.4); padding: 6px 10px; border-radius: 999px; }
+      @media (max-width: 980px) { .x-flips { grid-template-columns: 1fr; } .x-flip { height: 400px; } }
+
+      /* story */
+      .x-story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: center; }
+      .x-story__img { position: relative; border-radius: 32px; overflow: hidden; aspect-ratio: 4 / 5; border: 1px solid var(--x-line); }
+      .x-story__img img { width: 100%; height: 100%; object-fit: cover; }
+      .x-story__img figcaption { position: absolute; left: 16px; bottom: 16px; right: 16px; padding: 12px 16px; border-radius: 16px; background: rgba(7, 11, 31, 0.7); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); font-size: 13px; color: var(--x-soft); }
+      .x-quote { font-family: var(--x-display); font-weight: 900; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; text-transform: uppercase; margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--x-pink); }
+      .x-founders { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+      .x-founder { padding: 18px; border-radius: 20px; background: var(--x-panel); border: 1px solid var(--x-line); }
+      .x-founder b { display: block; font-family: var(--x-display); font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--x-gold-2); }
+      .x-founder span { font-size: 14px; color: var(--x-soft); }
+      @media (max-width: 860px) { .x-story { grid-template-columns: 1fr; } .x-story__img { aspect-ratio: 4 / 3.4; } }
+      @media (max-width: 420px) { .x-founders { grid-template-columns: 1fr; } }
+
+      /* gallery */
+      .x-gallery { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 300px 300px; gap: 14px; }
+      .x-gallery figure { margin: 0; position: relative; overflow: hidden; border-radius: 28px; border: 1px solid var(--x-line); }
+      .x-gallery figure:first-child { grid-row: span 2; }
+      .x-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s cubic-bezier(.2,.8,.2,1), filter 0.6s; filter: saturate(1.05); }
+      .x-gallery figure:hover img { transform: scale(1.07); filter: saturate(1.25); }
+      .x-gallery figcaption { position: absolute; left: 14px; bottom: 14px; padding: 8px 12px; border-radius: 999px; font: 600 12px var(--x-sans); letter-spacing: 0.1em; text-transform: uppercase; background: rgba(7, 11, 31, 0.65); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      @media (max-width: 760px) { .x-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 380px 220px; } .x-gallery figure:first-child { grid-row: auto; grid-column: span 2; } }
+
+      /* newsletter */
+      .x-news { position: relative; overflow: hidden; text-align: center; padding: clamp(40px, 7vw, 80px) 24px; border-radius: 32px; isolation: isolate; border: 1px solid rgba(246, 196, 83, 0.3);
+        background: radial-gradient(50% 80% at 50% 0%, rgba(255, 61, 154, 0.35), transparent 70%), radial-gradient(40% 60% at 50% 100%, rgba(246, 196, 83, 0.25), transparent 70%), #0d1235; }
+      .x-news .x-eyebrow { justify-content: center; }
+      .x-news .x-eyebrow::before { display: none; }
+      .x-news .x-lead { margin-inline: auto; margin-bottom: 28px; }
+      .x-news .x-btns { justify-content: center; }
+
+      /* contact */
+      .x-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .x-contact a { display: flex; flex-direction: column; gap: 6px; padding: 26px; border-radius: 24px; text-decoration: none; background: var(--x-panel); border: 1px solid var(--x-line); transition: border-color 0.3s, transform 0.3s; }
+      .x-contact a:hover { border-color: var(--x-gold); transform: translateY(-3px); }
+      .x-contact small { font: 600 12px var(--x-sans); letter-spacing: 0.18em; text-transform: uppercase; color: var(--x-gold); }
+      .x-contact b { font: 700 clamp(18px, 2.4vw, 24px) var(--x-sans); word-break: break-word; }
+      @media (max-width: 640px) { .x-contact { grid-template-columns: 1fr; } }
+
+      /* footer */
+      .x-foot { margin-top: 64px; padding: 28px 0 8px; border-top: 1px solid var(--x-line); display: grid; gap: 6px; color: var(--x-soft); font-size: 14px; }
+      .x-foot p:first-child { color: var(--x-ink); font-weight: 600; }
+
+      /* sticky mobile bar */
+      .x-sticky { display: none; }
+      @media (max-width: 760px) {
+        .x-sticky { display: flex; position: fixed; z-index: 60; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 18px; border-radius: 999px; background: rgba(10, 14, 38, 0.82); border: 1px solid rgba(246, 196, 83, 0.35); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7); transition: transform 0.4s, opacity 0.4s; }
+        .x-sticky.is-hidden { transform: translateY(140%); opacity: 0; }
+        .x-sticky p { font: 600 13px/1.25 var(--x-sans); color: var(--x-soft); }
+        .x-sticky p b { color: var(--x-ink); display: block; }
+        body.x-body { padding-bottom: 90px; }
+      }
+
+      /* reveal */
+      .x-js .x-reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s cubic-bezier(.2,.8,.2,1), transform 0.9s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+      .x-js .x-reveal.is-in { opacity: 1; transform: none; }
+      .x-js .x-tilt.x-reveal.is-in { transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform 0.4s cubic-bezier(.2,.8,.2,1), opacity 0.9s, border-color 0.3s; transition-delay: 0s; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-marquee__track, .x-hero h1 .x-shine, .x-cssball { animation: none; }
+        .x-js .x-reveal { opacity: 1; transform: none; transition: none; }
+        .x-flip__inner, .x-event, .x-btn, .x-gallery img { transition: none; }
+        html { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+  <body class="x-body">
+    <div class="page" id="top">
+      <header class="x-nav">
+        <a class="x-logo" href="#top" aria-label="Funky Dory home"><i aria-hidden="true"></i>FUNKY <b>DORY</b></a>
+        <ul class="x-links">
+          <li><a href="#events">Events</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a class="x-btn x-btn--gold x-btn--sm x-mag" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Tickets</a>
+      </header>
+
+      <main class="main">
+        <section class="x-hero" id="hero" aria-label="Funky Dory">
+          <canvas class="x-flecks" id="flecks" aria-hidden="true"></canvas>
+          <div class="x-hero__copy">
+            <p class="x-hero__tag">London &amp; Essex · Since 2017</p>
+            <h1 class="x-display"><span>Where good times</span><span class="x-shine">meet party vibes</span></h1>
+            <p class="x-hero__sub">Soul, disco, funk &amp; house experiences with legendary DJs in stunning locations.</p>
+            <div class="x-btns">
+              <a class="x-btn x-btn--gold x-mag" href="#events">See upcoming events</a>
+              <a class="x-btn x-btn--ghost x-mag" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Get tickets</a>
+            </div>
+          </div>
+          <div class="x-ballwrap">
+            <canvas class="x-ball" id="ball" role="img" aria-label="A spinning mirrorball. Drag to spin it."></canvas>
+            <div class="x-cssball" aria-hidden="true"></div>
+            <p class="x-hint" aria-hidden="true">Drag to spin</p>
+          </div>
+        </section>
+
+        <div class="x-marquee" aria-label="Genres: soul, disco, funk, boogie, R&amp;B, soulful house, party classics">
+          <div class="x-marquee__track" aria-hidden="true">
+            <span>SOUL •</span><span>DISCO •</span><span>FUNK •</span><span>BOOGIE •</span><span>R&amp;B •</span><span>SOULFUL HOUSE •</span><span>PARTY CLASSICS •</span>
+            <span>SOUL •</span><span>DISCO •</span><span>FUNK •</span><span>BOOGIE •</span><span>R&amp;B •</span><span>SOULFUL HOUSE •</span><span>PARTY CLASSICS •</span>
+          </div>
+        </div>
+
+        <section class="x-stats" aria-label="Funky Dory in numbers">
+          <div class="x-stat x-reveal"><span class="x-stat__fig" data-count="50" data-suffix="+">50+</span><span class="x-stat__label">Sold-out events</span></div>
+          <div class="x-stat x-reveal" style="--d: 0.1s"><span class="x-stat__fig" data-count="22500" data-suffix="+">22,500+</span><span class="x-stat__label">Community</span></div>
+          <div class="x-stat x-reveal" style="--d: 0.2s"><span class="x-stat__fig">2017</span><span class="x-stat__label">Partying since</span></div>
+        </section>
+
+        <section id="events" aria-labelledby="events-h">
+          <div class="x-head x-reveal">
+            <p class="x-eyebrow">Upcoming events</p>
+            <h2 class="x-h2 x-display" id="events-h">Get your <em>dancing shoes</em> on</h2>
+          </div>
+
+          <div class="x-count x-reveal" id="countdown">
+            <div>
+              <p class="x-count__label">Next up · Sat 5 Dec 2026, 2pm</p>
+              <p class="x-count__title">Christmas Shindig countdown</p>
+            </div>
+            <div class="x-count__clock" role="timer" aria-live="off">
+              <div class="x-count__unit"><b data-u="d">--</b><small>Days</small></div>
+              <div class="x-count__unit"><b data-u="h">--</b><small>Hours</small></div>
+              <div class="x-count__unit"><b data-u="m">--</b><small>Mins</small></div>
+              <div class="x-count__unit"><b data-u="s">--</b><small>Secs</small></div>
+            </div>
+          </div>
+
+          <div class="x-events">
+            <article class="x-event x-tilt is-next x-reveal">
+              <span class="x-badge">Next up</span>
+              <div class="x-date"><span class="x-date__day">05</span><span class="x-date__rest"><b>Dec 2026</b>Saturday</span></div>
+              <h3>Funky Dory Christmas Shindig</h3>
+              <p class="x-venue">Ashfields Carriage &amp; Polo Club<small>Green Street, Dunmow, Essex, CM6 1JU</small></p>
+              <ul class="x-tags"><li>Heated marquee</li><li>Festive street food</li><li>Cocktails</li><li>Christmas market</li><li>Soulful house &amp; party classics</li></ul>
+              <p class="x-note">Great for office parties.</p>
+              <dl class="x-prices">
+                <div><dt>General entry</dt><dd>from £35pp</dd></div>
+                <div><dt>Early bird VIP, groups of 10+<small>Reserved tables 2pm to midnight, two-course meal, welcome drink and goody bag</small></dt><dd>from £95pp</dd></div>
+              </dl>
+              <div class="x-event__cta"><a class="x-btn x-btn--gold x-btn--sm x-mag" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Get tickets</a></div>
+            </article>
+
+            <article class="x-event x-tilt x-reveal" style="--d: 0.1s">
+              <div class="x-date"><span class="x-date__day">12</span><span class="x-date__rest"><b>Dec 2026</b>Saturday · 12pm to 6pm</span></div>
+              <h3>Funky Dory Soul Brunch</h3>
+              <p class="x-venue">Soul Mama, Angel Central<small>21 Parkfield Street, Islington, London N1 0PS</small></p>
+              <ul class="x-tags"><li>Soul &amp; party classics</li><li>Boogie</li><li>R&amp;B</li><li>Soulful house</li></ul>
+              <p class="x-note">With a Caribbean and South African-inspired brunch. DJs to be announced.</p>
+              <div class="x-event__cta"><a class="x-btn x-btn--gold x-btn--sm x-mag" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Get tickets</a></div>
+            </article>
+
+            <article class="x-event x-tilt x-reveal" style="--d: 0.2s">
+              <span class="x-badge x-badge--pink">Festival</span>
+              <div class="x-date"><span class="x-date__day">14</span><span class="x-date__rest"><b>Aug 2027</b>Saturday</span></div>
+              <h3>Funky Dory Festival 8.0</h3>
+              <p class="x-venue">Ashfields Carriage &amp; Polo Club<small>Dunmow, Essex</small></p>
+              <ul class="x-tags"><li>House</li><li>Disco</li><li>Soul</li><li>Party classics</li></ul>
+              <div class="x-event__cta"><a class="x-btn x-btn--gold x-btn--sm x-mag" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Get tickets</a></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="experiences" aria-labelledby="exp-h">
+          <div class="x-head x-reveal">
+            <p class="x-eyebrow">Experiences</p>
+            <h2 class="x-h2 x-display" id="exp-h">Three ways to <em>party</em></h2>
+            <p class="x-lead">Tap or click a card to flip it.</p>
+          </div>
+          <div class="x-flips">
+            <div class="x-flip x-reveal" tabindex="0" role="button" aria-pressed="false" aria-label="Soul Brunches: flip for details">
+              <div class="x-flip__inner">
+                <div class="x-flip__face x-flip__front">
+                  <img src="fd-brunch.jpg" alt="Guests dressed up at an evening Funky Dory event" loading="lazy" />
+                  <h3>Soul Brunches</h3>
+                  <p>Daytime parties at Soul Mama</p>
+                  <span class="x-flip__turn">Flip ↻</span>
+                </div>
+                <div class="x-flip__face x-flip__back">
+                  <h3>Soul Brunches</h3>
+                  <p>Daytime parties at Soul Mama, Angel Central in Islington: soul &amp; party classics, boogie, R&amp;B and soulful house.</p>
+                  <p>Served with a Caribbean and South African-inspired brunch.</p>
+                  <a class="x-btn x-btn--pink x-btn--sm" href="#events">See dates</a>
+                </div>
+              </div>
+            </div>
+            <div class="x-flip x-reveal" style="--d: 0.1s" tabindex="0" role="button" aria-pressed="false" aria-label="Festivals: flip for details">
+              <div class="x-flip__inner">
+                <div class="x-flip__face x-flip__front">
+                  <img src="fd-crowd.jpg" alt="A crowd of friends dancing in the sun at Funky Dory festival" loading="lazy" />
+                  <h3>Festivals</h3>
+                  <p>From a farmer's field to nearly 1,000 a year</p>
+                  <span class="x-flip__turn">Flip ↻</span>
+                </div>
+                <div class="x-flip__face x-flip__back">
+                  <h3>Festivals</h3>
+                  <p>The Funky Dory Mini Fest began in a farmer's field in August 2020 with 250 people.</p>
+                  <p>It has grown to nearly 1,000 a year in Essex.</p>
+                  <a class="x-btn x-btn--pink x-btn--sm" href="#events">Festival 8.0</a>
+                </div>
+              </div>
+            </div>
+            <div class="x-flip x-reveal" style="--d: 0.2s" tabindex="0" role="button" aria-pressed="false" aria-label="Christmas Shindigs and corporate packages: flip for details">
+              <div class="x-flip__inner">
+                <div class="x-flip__face x-flip__front x-glitter">
+                  <h3>Christmas Shindigs</h3>
+                  <p>&amp; corporate packages</p>
+                  <span class="x-flip__turn">Flip ↻</span>
+                </div>
+                <div class="x-flip__face x-flip__back">
+                  <h3>Shindigs &amp; corporate</h3>
+                  <p>A heated marquee, festive street food, cocktails and a Christmas market.</p>
+                  <p>VIP group packages for 10+ make it a ready-made office party.</p>
+                  <a class="x-btn x-btn--pink x-btn--sm" href="#events">Book the Shindig</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="x-henley x-reveal"><span class="x-pilltag">Henley Royal Regatta</span><span>Funky Dory hosted <strong>three days of parties during Henley Royal Regatta</strong>, 2 to 4 July 2026.</span></p>
+        </section>
+
+        <section id="story" aria-labelledby="story-h">
+          <div class="x-story">
+            <figure class="x-story__img x-reveal" style="margin: 0">
+              <img src="fd-founders.jpg" alt="Funky Dory founders pointing at the camera" loading="lazy" />
+              <figcaption>Founders Ronnie Herel &amp; Rosie Coxshaw</figcaption>
+            </figure>
+            <div class="x-reveal" style="--d: 0.1s">
+              <p class="x-eyebrow">Our story</p>
+              <h2 class="x-h2 x-display" id="story-h">More than a <em>night out</em></h2>
+              <p class="x-quote">Exceptional music, with atmosphere, style and genuine human connection.</p>
+              <p class="x-lead">Funky Dory was founded to move beyond the traditional nightlife model, combining exceptional music with atmosphere, style and genuine human connection.</p>
+              <div class="x-founders">
+                <div class="x-founder"><b>Ronnie Herel</b><span>Legendary UK DJ and broadcaster, Mi-Soul radio</span></div>
+                <div class="x-founder"><b>Rosie Coxshaw</b><span>Co-founder</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="gallery" aria-labelledby="gallery-h">
+          <div class="x-head x-reveal">
+            <p class="x-eyebrow">Gallery</p>
+            <h2 class="x-h2 x-display" id="gallery-h">Good times, <em>caught on camera</em></h2>
+          </div>
+          <div class="x-gallery">
+            <figure class="x-reveal"><img src="fd-disco.jpg" alt="A festival-goer in a mirrorball helmet and silver tassels" loading="lazy" /><figcaption>Disco ready</figcaption></figure>
+            <figure class="x-reveal" style="--d: 0.1s"><img src="fd-dj.jpg" alt="A DJ at the decks" loading="lazy" /><figcaption>On the decks</figcaption></figure>
+            <figure class="x-reveal" style="--d: 0.2s"><img src="fd-festival.jpg" alt="A group of women at Funky Dory festival" loading="lazy" /><figcaption>Festival crew</figcaption></figure>
+          </div>
+        </section>
+
+        <section class="x-news x-reveal" aria-labelledby="news-h">
+          <p class="x-eyebrow">Newsletter</p>
+          <h2 class="x-h2 x-display" id="news-h">Join the Funky Dory <em>family</em></h2>
+          <p class="x-lead">First word on new dates, early bird tickets and line-ups.</p>
+          <div class="x-btns"><a class="x-btn x-btn--gold x-mag" href="https://funkydorylove.co.uk/newsletter/" target="_blank" rel="noopener">Sign up</a></div>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-h">
+          <div class="x-head x-reveal">
+            <p class="x-eyebrow">Contact</p>
+            <h2 class="x-h2 x-display" id="contact-h">Planning a <em>party?</em></h2>
+          </div>
+          <div class="x-contact">
+            <a class="x-reveal" href="tel:+442030111194"><small>Telephone</small><b>+44 (0)203 011 1194</b></a>
+            <a class="x-reveal" style="--d: 0.1s" href="mailto:info@funkydorylove.co.uk"><small>Email</small><b>info@funkydorylove.co.uk</b></a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="x-foot">
+        <p>© Funky Dory Love Ltd</p>
+        <p>Sample website designed by Mayo · +234 903 749 9964</p>
+      </footer>
+    </div>
+
+    <div class="x-sticky is-hidden" id="sticky">
+      <p><b>Christmas Shindig</b>Sat 5 Dec · from £35pp</p>
+      <a class="x-btn x-btn--gold x-btn--sm" href="https://funkydorylove.co.uk/events/" target="_blank" rel="noopener">Get tickets</a>
+    </div>
+    <script>
+      (function () {
+        "use strict";
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        var $ = function (s) { return document.querySelector(s); };
+        var $$ = function (s) { return [].slice.call(document.querySelectorAll(s)); };
+        var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+
+        /* ---------- scroll reveals + count-up ---------- */
+        function countUp(el) {
+          var n = +el.getAttribute("data-count"), suf = el.getAttribute("data-suffix") || "", t0 = null;
+          if (reduce) return;
+          function step(t) {
+            if (!t0) t0 = t;
+            var p = Math.min((t - t0) / 1600, 1), e = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(n * e).toLocaleString("en-GB") + suf;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+        if ("IntersectionObserver" in window) {
+          var ro = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (!en.isIntersecting) return;
+              en.target.classList.add("is-in");
+              var c = en.target.querySelector("[data-count]");
+              if (c) countUp(c);
+              ro.unobserve(en.target);
+            });
+          }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+          $$(".x-reveal").forEach(function (el) { ro.observe(el); });
+        } else {
+          $$(".x-reveal").forEach(function (el) { el.classList.add("is-in"); });
+        }
+
+        /* ---------- countdown: Sat 5 Dec 2026, 14:00 Europe/London (GMT) ---------- */
+        var target = Date.UTC(2026, 11, 5, 14, 0, 0);
+        var units = {};
+        $$("#countdown [data-u]").forEach(function (b) { units[b.getAttribute("data-u")] = b; });
+        function pad(n) { return n < 10 ? "0" + n : "" + n; }
+        function tick() {
+          var d = Math.max(0, target - Date.now()), s = Math.floor(d / 1000);
+          units.d.textContent = Math.floor(s / 86400);
+          units.h.textContent = pad(Math.floor((s % 86400) / 3600));
+          units.m.textContent = pad(Math.floor((s % 3600) / 60));
+          units.s.textContent = pad(s % 60);
+          if (d === 0) { $("#countdown .x-count__title").textContent = "The Shindig is on"; return; }
+          setTimeout(tick, 1000 - (Date.now() % 1000));
+        }
+        tick();
+
+        /* ---------- 3D tilt on event cards ---------- */
+        if (fine && !reduce) {
+          $$(".x-tilt").forEach(function (card) {
+            card.addEventListener("pointermove", function (e) {
+              var r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+              card.style.setProperty("--ry", ((px - 0.5) * 12).toFixed(2) + "deg");
+              card.style.setProperty("--rx", ((0.5 - py) * 10).toFixed(2) + "deg");
+              card.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+              card.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+            });
+            card.addEventListener("pointerleave", function () {
+              card.style.setProperty("--ry", "0deg");
+              card.style.setProperty("--rx", "0deg");
+            });
+          });
+          /* magnetic buttons */
+          $$(".x-mag").forEach(function (b) {
+            b.addEventListener("pointermove", function (e) {
+              var r = b.getBoundingClientRect();
+              b.style.setProperty("--mx", ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + "px");
+              b.style.setProperty("--my", ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + "px");
+            });
+            b.addEventListener("pointerleave", function () { b.style.setProperty("--mx", "0px"); b.style.setProperty("--my", "0px"); });
+          });
+        }
+
+        /* ---------- flip cards ---------- */
+        $$(".x-flip").forEach(function (f) {
+          function toggle() { var on = f.classList.toggle("is-flipped"); f.setAttribute("aria-pressed", on ? "true" : "false"); }
+          f.addEventListener("click", function (e) { if (e.target.closest("a")) return; toggle(); });
+          f.addEventListener("keydown", function (e) {
+            if (e.target !== f) return;
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+          });
+        });
+
+        /* ---------- hero: mirrorball + light flecks ---------- */
+        var hero = $("#hero"), ballCv = $("#ball"), fleckCv = $("#flecks"), sticky = $("#sticky");
+        var heroVisible = true, raf = 0;
+        var ry = 0, rx = 0.28, rz = 0, rxT = 0.28, rzT = 0, AUTO = reduce ? 0 : 0.0045, vy = AUTO, dragging = false, lastX = 0, tStart = performance.now();
+
+        /* WebGL */
+        var gl = null, prog, uRy, uRx, uRz, uT, vCount = 0;
+        var VS = [
+          "attribute vec3 aP; attribute vec3 aN; attribute vec2 aUV; attribute float aR;",
+          "uniform float uRy, uRx, uRz;",
+          "varying vec3 vN; varying vec3 vP; varying vec2 vUV; varying float vR;",
+          "mat3 rY(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s, 0.,1.,0., s,0.,c);}",
+          "mat3 rX(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0., 0.,c,s, 0.,-s,c);}",
+          "mat3 rZ(float a){float c=cos(a),s=sin(a);return mat3(c,s,0., -s,c,0., 0.,0.,1.);}",
+          "void main(){",
+          "  mat3 R = rZ(uRz) * rX(uRx) * rY(uRy);",
+          "  vec3 p = R * aP; vN = R * aN; vP = p; vUV = aUV; vR = aR;",
+          "  vec3 v = p - vec3(0.0, 0.0, 3.4); float w = -v.z; float f = 2.55;",
+          "  gl_Position = vec4(v.x * f, v.y * f, ((w - 2.0) / 3.0 * 2.0 - 1.0) * w, w);",
+          "}"
+        ].join("\n");
+        var FS = [
+          "precision mediump float;",
+          "varying vec3 vN; varying vec3 vP; varying vec2 vUV; varying float vR;",
+          "uniform float uT;",
+          "vec3 env(vec3 r){",
+          "  vec3 c = mix(vec3(0.015,0.02,0.07), vec3(0.12,0.14,0.32), smoothstep(-0.7, 0.9, r.y));",
+          "  c += vec3(1.0,0.74,0.30) * pow(max(dot(r, normalize(vec3(-0.65,0.45,0.6))),0.0), 22.0) * 1.4;",
+          "  c += vec3(1.0,0.22,0.60) * pow(max(dot(r, normalize(vec3(0.75,-0.25,0.6))),0.0), 16.0) * 1.2;",
+          "  c += vec3(0.75,0.82,1.0) * smoothstep(0.7, 1.0, r.y) * 0.7;",
+          "  c += vec3(0.35,0.2,0.5) * smoothstep(0.2, -0.9, r.y) * 0.35;",
+          "  return c;",
+          "}",
+          "void main(){",
+          "  vec3 N = normalize(vN); vec3 G = normalize(vP);",
+          "  vec3 V = normalize(vec3(0.0,0.0,3.4) - vP);",
+          "  vec3 R = reflect(-V, N);",
+          "  vec3 col = env(R) * (0.85 + 0.3 * vR) + vec3(0.13,0.135,0.16) * (0.6 + 0.6 * vR);",
+          "  vec3 L1 = normalize(vec3(0.45, 0.75, 0.75));",
+          "  float s1 = pow(max(dot(N, normalize(L1 + V)), 0.0), 220.0) * 3.2;",
+          "  vec3 L2 = normalize(vec3(sin(uT*0.6)*0.9, 0.25 + 0.3*sin(uT*0.37), 0.7));",
+          "  float s2 = pow(max(dot(N, normalize(L2 + V)), 0.0), 160.0) * 2.2;",
+          "  col += vec3(1.0,0.97,0.9) * s1 + vec3(1.0,0.6,0.75) * s2;",
+          "  float tw = step(0.965, fract(vR * 37.0 + uT * 0.25));",
+          "  col += vec3(1.0,0.95,0.85) * tw * pow(max(dot(N, normalize(L1 + V)), 0.0), 18.0) * 1.6;",
+          "  float rim = pow(1.0 - max(dot(G, V), 0.0), 2.6);",
+          "  col += vec3(1.0,0.45,0.72) * rim * 0.55 + vec3(1.0,0.8,0.45) * rim * rim * 0.4;",
+          "  vec2 e = min(vUV, 1.0 - vUV); float g = smoothstep(0.0, 0.09, min(e.x, e.y));",
+          "  col *= mix(0.12, 1.0, g);",
+          "  col = col / (1.0 + col * 0.18);",
+          "  gl_FragColor = vec4(col, 1.0);",
+          "}"
+        ].join("\n");
+
+        function sph(la, lo) { var c = Math.cos(la); return [c * Math.cos(lo), Math.sin(la), c * Math.sin(lo)]; }
+        function buildBall() {
+          var P = [], Nn = [], U = [], Rr = [], B = 30, PI = Math.PI;
+          for (var i = 0; i < B; i++) {
+            var la0 = -PI / 2 + (i * PI) / B, la1 = la0 + PI / B, lm = (la0 + la1) / 2;
+            var cnt = Math.max(3, Math.round(2 * B * Math.cos(lm))), off = (i % 2) * 0.5 + Math.random() * 0.2;
+            for (var j = 0; j < cnt; j++) {
+              var lo0 = ((j + off) * 2 * PI) / cnt, lo1 = lo0 + (2 * PI) / cnt, lom = (lo0 + lo1) / 2;
+              var n = sph(lm, lom);
+              n = [n[0] + (Math.random() - 0.5) * 0.07, n[1] + (Math.random() - 0.5) * 0.07, n[2] + (Math.random() - 0.5) * 0.07];
+              var l = Math.hypot(n[0], n[1], n[2]); n = [n[0] / l, n[1] / l, n[2] / l];
+              var a = sph(la0, lo0), b = sph(la0, lo1), c = sph(la1, lo1), d = sph(la1, lo0), r = Math.random();
+              [[a, 0, 0], [b, 1, 0], [c, 1, 1], [a, 0, 0], [c, 1, 1], [d, 0, 1]].forEach(function (v) {
+                P.push(v[0][0], v[0][1], v[0][2]); Nn.push(n[0], n[1], n[2]); U.push(v[1], v[2]); Rr.push(r);
+              });
+            }
+          }
+          vCount = P.length / 3;
+          return { P: P, N: Nn, U: U, R: Rr };
+        }
+        function shader(type, src) {
+          var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+          return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+        }
+        function attr(name, data, size) {
+          var loc = gl.getAttribLocation(prog, name); if (loc < 0) return;
+          var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+          gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
+        }
+        function initGL() {
+          try {
+            gl = ballCv.getContext("webgl", { alpha: true, antialias: true, premultipliedAlpha: true }) || ballCv.getContext("experimental-webgl");
+          } catch (e) { gl = null; }
+          if (!gl) return false;
+          var vs = shader(gl.VERTEX_SHADER, VS), fs = shader(gl.FRAGMENT_SHADER, FS);
+          if (!vs || !fs) return false;
+          prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+          if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+          gl.useProgram(prog);
+          var g = buildBall();
+          attr("aP", g.P, 3); attr("aN", g.N, 3); attr("aUV", g.U, 2); attr("aR", g.R, 1);
+          uRy = gl.getUniformLocation(prog, "uRy"); uRx = gl.getUniformLocation(prog, "uRx");
+          uRz = gl.getUniformLocation(prog, "uRz"); uT = gl.getUniformLocation(prog, "uT");
+          gl.enable(gl.DEPTH_TEST); gl.clearColor(0, 0, 0, 0);
+          ballCv.addEventListener("webglcontextlost", function (e) { e.preventDefault(); gl = null; hero.classList.add("is-fallback"); });
+          return true;
+        }
+        if (!initGL()) { gl = null; hero.classList.add("is-fallback"); }
+
+        function drawBall(t) {
+          if (!gl) return;
+          var w = Math.round(ballCv.clientWidth * DPR), h = Math.round(ballCv.clientHeight * DPR);
+          if (ballCv.width !== w || ballCv.height !== h) { ballCv.width = w; ballCv.height = h; }
+          gl.viewport(0, 0, w, h);
+          gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+          gl.uniform1f(uRy, ry); gl.uniform1f(uRx, rx); gl.uniform1f(uRz, rz); gl.uniform1f(uT, reduce ? 1.0 : t);
+          gl.drawArrays(gl.TRIANGLES, 0, vCount);
+        }
+
+        /* light flecks (canvas 2D) */
+        var fx = fleckCv.getContext("2d"), flecks = [], sprites = {}, FW = 0, FH = 0;
+        var COLORS = ["255,223,138", "255,61,154", "255,255,255", "255,155,74", "255,240,210"];
+        COLORS.forEach(function (c) {
+          var s = document.createElement("canvas"); s.width = s.height = 64;
+          var x = s.getContext("2d"), gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+          gr.addColorStop(0, "rgba(" + c + ",1)"); gr.addColorStop(0.35, "rgba(" + c + ",0.55)"); gr.addColorStop(1, "rgba(" + c + ",0)");
+          x.fillStyle = gr; x.fillRect(0, 0, 64, 64); sprites[c] = s;
+        });
+        function sizeFlecks() {
+          var r = hero.getBoundingClientRect(); FW = r.width; FH = r.height;
+          fleckCv.width = Math.round(FW * DPR); fleckCv.height = Math.round(FH * DPR);
+          var n = FW < 700 ? 34 : 64;
+          flecks = [];
+          for (var i = 0; i < n; i++) {
+            flecks.push({ x: Math.random(), y: Math.random(), r: 3 + Math.pow(Math.random(), 2) * 16, c: COLORS[i % COLORS.length], a: 0.25 + Math.random() * 0.55, z: 0.4 + Math.random() * 0.9, st: 1 + Math.random() * 1.4, ph: Math.random() * 6.28, tw: 0.6 + Math.random() * 1.6 });
+          }
+        }
+        function drawFlecks(t, f) {
+          fx.setTransform(1, 0, 0, 1, 0, 0);
+          fx.clearRect(0, 0, fleckCv.width, fleckCv.height);
+          fx.globalCompositeOperation = "lighter";
+          for (var i = 0; i < flecks.length; i++) {
+            var p = flecks[i];
+            p.x -= vy * 0.16 * p.z * f;
+            p.y += Math.sin(t * 0.3 + p.ph) * 0.00015 * f;
+            if (p.x < -0.05) p.x += 1.1; if (p.x > 1.05) p.x -= 1.1;
+            var alpha = p.a * (reduce ? 0.8 : 0.55 + 0.45 * Math.sin(t * p.tw + p.ph));
+            if (alpha <= 0.01) continue;
+            var sx = p.x * FW * DPR, sy = p.y * FH * DPR, s = p.r * DPR;
+            fx.globalAlpha = alpha;
+            fx.setTransform(p.st, 0, 0, 1, sx, sy);
+            fx.drawImage(sprites[p.c], -s, -s, s * 2, s * 2);
+          }
+          fx.setTransform(1, 0, 0, 1, 0, 0);
+          fx.globalAlpha = 1;
+        }
+
+        var last = performance.now();
+        function frame(now) {
+          raf = 0;
+          var f = Math.min((now - last) / 16.667, 3); last = now;
+          var t = (now - tStart) / 1000;
+          if (!dragging) { vy += (AUTO - vy) * 0.012 * f; ry += vy * f; }
+          rx += (rxT - rx) * 0.08 * f; rz += (rzT - rz) * 0.08 * f;
+          drawBall(t); drawFlecks(t, f);
+          if (!reduce || dragging || Math.abs(rx - rxT) > 0.001) schedule();
+        }
+        function schedule() { if (!raf && heroVisible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+        function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
+        /* drag to spin, with inertia and a tilt toward the finger */
+        ballCv.addEventListener("pointerdown", function (e) {
+          dragging = true; lastX = e.clientX; vy = 0;
+          try { ballCv.setPointerCapture(e.pointerId); } catch (err) {}
+          schedule();
+        });
+        ballCv.addEventListener("pointermove", function (e) {
+          if (!dragging) return;
+          var r = ballCv.getBoundingClientRect(), dx = e.clientX - lastX; lastX = e.clientX;
+          var step = (dx / r.width) * 3.2;
+          ry += step; vy = vy * 0.5 + step * 0.5;
+          vy = Math.max(-0.35, Math.min(0.35, vy));
+          rxT = 0.28 + ((e.clientY - r.top) / r.height - 0.5) * 0.7;
+          rzT = -((e.clientX - r.left) / r.width - 0.5) * 0.4;
+          schedule();
+        });
+        function release() {
+          if (!dragging) return;
+          dragging = false; rxT = 0.28; rzT = 0;
+          if (reduce) vy = 0;
+          schedule();
+        }
+        ballCv.addEventListener("pointerup", release);
+        ballCv.addEventListener("pointercancel", release);
+
+        sizeFlecks();
+        window.addEventListener("resize", function () { sizeFlecks(); if (reduce) { drawBall(1); drawFlecks(1, 0); } schedule(); });
+        if (reduce) { drawBall(1); drawFlecks(1, 0); } else schedule();
+
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (en) {
+            heroVisible = en[0].isIntersecting;
+            if (sticky) sticky.classList.toggle("is-hidden", en[0].intersectionRatio > 0.35);
+            heroVisible ? schedule() : stop();
+          }, { threshold: [0, 0.35] }).observe(hero);
+        }
+        document.addEventListener("visibilitychange", function () { document.hidden ? stop() : schedule(); });
+      })();
+    </script>
+    <script src="hark.js"></script>
+  </body>
+</html>
